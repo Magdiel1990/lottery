@@ -8,12 +8,15 @@ $conn = DatabaseClass::dbConnection();
 if(isset($_GET["date"])) {
     $date = $_GET["date"];
 
-    $result = $conn -> query("SELECT id FROM numbers WHERE date = '". $date."';");
+    $stmt = $conn -> prepare("SELECT id FROM numbers WHERE date = ?;");
+    $stmt->bind_param("s", $date);    
+    $stmt -> execute();
+    $result = $stmt -> get_result(); 
 
     if($result -> num_rows > 0) {
-        $result = $conn -> query("DELETE FROM numbers WHERE date = '". $date ."';");
+        $resultDelete = $conn -> query("DELETE FROM numbers WHERE date = '". $date ."';");
 
-        if($result) {
+        if($resultDelete) {
             $_SESSION ["message"] = "Números eliminados correctamente";
             $_SESSION ["message-alert"] = "success";
 
