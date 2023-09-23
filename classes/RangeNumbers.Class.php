@@ -3,15 +3,15 @@ class RangeNumbers {
     private $position;
     private $start;
     
-    private function numberRange($position, $start) {
+    protected function maxNumberRange($position) {
         $conn = DatabaseClass::dbConnection();
         
         $result = $conn -> query("SELECT max(number) FROM numbers WHERE position = " . $position . ";");
         $number = $result -> fetch_array();
-        return rand ($start, $number[0]);
+        return $number[0];
     }
 
-    private function minNumberRange($position) {
+    protected function minNumberRange($position) {
         $conn = DatabaseClass::dbConnection();
         
         $result = $conn -> query("SELECT min(number) FROM numbers WHERE position = " . $position . ";");
@@ -19,12 +19,19 @@ class RangeNumbers {
         return $number[0];
     }
 
-    public function arrayNumbers() {
-        $firstNumber = $this-> numberRange(1, $this-> minNumberRange(1));
-        $secondNumber = $this-> numberRange(2, $this-> minNumberRange(2));
-        $thirdNumber = $this-> numberRange(3, $this-> minNumberRange(3));
-        $fourthNumber = $this-> numberRange(4, $this-> minNumberRange(4));
-        $fifthNumber = $this-> numberRange(5, $this-> minNumberRange(5));
+    private function numberRange($position) {
+        $maxNumber = $this-> maxNumberRange($position);
+        $minNumber = $this-> minNumberRange($position);
+
+        return rand ($minNumber, $maxNumber);
+    }
+
+    protected function arrayNumbers() {
+        $firstNumber = $this-> numberRange(1);
+        $secondNumber = $this-> numberRange(2);
+        $thirdNumber = $this-> numberRange(3);
+        $fourthNumber = $this-> numberRange(4);
+        $fifthNumber = $this-> numberRange(5);
 
         $arrayNumbers = [$firstNumber, $secondNumber, $thirdNumber, $fourthNumber, $fifthNumber]; 
         return $arrayNumbers;
@@ -223,7 +230,7 @@ class RangeNumbers {
 }
 
 class RangeNumbersChild extends RangeNumbers {
-     public function repeatedNumbers($arrayNumbers = null) {
+    public function repeatedNumbers($arrayNumbers = null) {
         $conn = DatabaseClass::dbConnection();    
 
         $arrayUniqueNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
@@ -242,6 +249,65 @@ class RangeNumbersChild extends RangeNumbers {
         }
        
         return $arrayUniqueNumbers;
+    }
+
+    protected function modeNumber($position) {
+        $conn = DatabaseClass::dbConnection();  
+        $result = $conn -> query ("SELECT number, COUNT(*) as mode FROM numbers WHERE position = $position GROUP BY number ORDER BY mode DESC LIMIT 1;");
+
+        $row = $result -> fetch_assoc();
+
+        $mode = $row ["mode"];
+
+        return $mode;
+    }
+
+    protected function mostfrequentNumbers ($arrayNumbers = null) {
+        $conn = DatabaseClass::dbConnection();     
+        $arrayNumbers = $this-> repeatedNumbers($arrayNumbers);
+
+        sort($arrayNumbers);
+       
+        $f1 = $this-> modeNumber(1);
+        $f2 = $this-> modeNumber(2);
+        $f3 = $this-> modeNumber(3);
+        $f4 = $this-> modeNumber(4);
+        $f5 = $this-> modeNumber(5);
+
+        $Range1 = [$this-> minNumberRange(1), $this-> maxNumberRange(1)];
+        $Range2 = [$this-> minNumberRange(2), $this-> maxNumberRange(2)];
+        $Range3 = [$this-> minNumberRange(3), $this-> maxNumberRange(3)];
+        $Range4 = [$this-> minNumberRange(4), $this-> maxNumberRange(4)];
+        $Range5 = [$this-> minNumberRange(5), $this-> maxNumberRange(5)];
+
+        if($arrayNumbers[0] > $Range1[1]) {
+            $arrayNumbers[0] = $f1;
+        }
+
+        if($arrayNumbers[1] > $Range2[1] || $arrayNumbers[1] < $Range2[0]){
+            $arrayNumbers[1] = $f2;
+        }
+
+        if($arrayNumbers[2] > $Range3[1] || $arrayNumbers[2] < $Range3[0]){
+            $arrayNumbers[2] = $f3;
+        }
+
+        if($arrayNumbers[3] > $Range4[1] || $arrayNumbers[3] < $Range4[0]) {
+            $arrayNumbers[3] = $f4;
+        }
+
+        if($arrayNumbers[4] < $Range5[0]){
+            $arrayNumbers[4] = $f5;
+        }
+
+        return $arrayNumbers;
+    }
+
+    public function randomNumbers() {
+        $arrayNumbers = $this-> arrayNumbers();
+        $arrayNumbers = $this-> mostfrequentNumbers($arrayNumbers); 
+
+        return $arrayNumbers;
     }
 }
 ?>
