@@ -10,6 +10,9 @@
       <li class="nav-item">
         <a class="nav-link" href="/lottery/pages/add.php">Agregar</a>
       </li>
+         <li class="nav-item">
+        <a class="nav-link" href="/lottery/pages/random.php">Aleatorio</a>
+      </li>
     </ul>
   </div>
 </nav>

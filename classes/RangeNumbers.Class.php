@@ -19,7 +19,7 @@ class RangeNumbers {
         return $number[0];
     }
 
-    private function arrayNumbers() {
+    public function arrayNumbers() {
         $firstNumber = $this-> numberRange(1, $this-> minNumberRange(1));
         $secondNumber = $this-> numberRange(2, $this-> minNumberRange(2));
         $thirdNumber = $this-> numberRange(3, $this-> minNumberRange(3));
@@ -199,9 +199,32 @@ class RangeNumbers {
         return array_merge($arrayNumbers, $randomNumbersArray);
     }    
 
-    public function repeatedNumbers() {
+    public function repeatedNumbers($arrayNumbers = null) {        
         $conn = DatabaseClass::dbConnection();     
         $arrayNumbers = $this-> missingNumbers();
+
+        $arrayUniqueNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
+
+        $currentDate = date("Y-m-d H:i:s");
+        //Ultimos numeros
+        $lastDates = date("Y-m-d 00:00:00", strtotime ($currentDate."- 1 days"));          
+
+        while(count($arrayUniqueNumbers) < 5) {
+            $result = $conn -> query ("SELECT number FROM numbers WHERE date = '$lastDates' ORDER BY rand() LIMIT 1;");
+            $row = $result -> fetch_assoc();
+
+            array_push($arrayUniqueNumbers, $row["number"]);
+
+            $arrayUniqueNumbers = array_unique($arrayUniqueNumbers, SORT_NUMERIC);
+        }
+       
+        return $arrayUniqueNumbers;
+    }
+}
+
+class RangeNumbersChild extends RangeNumbers {
+     public function repeatedNumbers($arrayNumbers = null) {
+        $conn = DatabaseClass::dbConnection();    
 
         $arrayUniqueNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
 
