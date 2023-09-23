@@ -173,7 +173,7 @@ class RangeNumbers {
         return $arrayNumbers;
     }
 
-    public function missingNumbers(){
+    private function missingNumbers(){
         //Números random
         $arrayNumbers = $this-> oddEvenCalculation ();
         $arrayNumbers =  $this-> nthposition($arrayNumbers, 2);
@@ -198,5 +198,27 @@ class RangeNumbers {
         
         return array_merge($arrayNumbers, $randomNumbersArray);
     }    
+
+    public function repeatedNumbers() {
+        $conn = DatabaseClass::dbConnection();     
+        $arrayNumbers = $this-> missingNumbers();
+
+        $arrayUniqueNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
+
+        $currentDate = date("Y-m-d H:i:s");
+        //Ultimos numeros
+        $lastDates = date("Y-m-d 00:00:00", strtotime ($currentDate."- 1 days"));          
+
+        while(count($arrayUniqueNumbers) < 5) {
+            $result = $conn -> query ("SELECT number FROM numbers WHERE date = '$lastDates' ORDER BY rand() LIMIT 1;");
+            $row = $result -> fetch_assoc();
+
+            array_push($arrayUniqueNumbers, $row["number"]);
+
+            $arrayUniqueNumbers = array_unique($arrayUniqueNumbers, SORT_NUMERIC);
+        }
+       
+        return $arrayUniqueNumbers;
+    }
 }
 ?>
