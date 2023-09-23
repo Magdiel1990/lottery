@@ -19,9 +19,7 @@ $date = $_POST["date"];
             $sql .= "INSERT INTO numbers (number, position, type_id, date) VALUES ('" . $numbers[$i] . "', " . $i+1 . ", 1, '$date');";
         }
 
-        $result = $conn -> multi_query($sql);
-
-        if($result) {
+        if($conn -> multi_query($sql)) {
             $_SESSION ["message"] = "Números agregados con éxito";
             $_SESSION ["message-alert"] = "success";
         } else {
@@ -69,12 +67,7 @@ $date = $_POST["date"];
             </div>
         </div>
         <?php
-            $result = $conn -> query("SELECT id FROM numbers LIMIT 1;");
-            $num_rows = $result -> num_rows > 0;
-
-           // mysqli_store_result($conn);
-
-            if ($num_rows > 0) {   
+            if (isset($_SESSION ["id"])) {   
         ?>
         <div class="row justify-content-center my-4">
             <div class="col-auto table-responsive">
@@ -93,20 +86,21 @@ $date = $_POST["date"];
                     </thead>
                     <tbody>
                         <?php
-                            $resultdate = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date desc;");
-                            while($rowdate = $resultdate -> fetch_assoc()) {
+                            $result = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date desc;");
+                            
+                            while($row = $result -> fetch_assoc()) {
                         ?>
                         <tr>
-                            <th scope="row"><?php echo date("d-M-Y", strtotime($rowdate["date"])) ?></th>
+                            <th scope="row"><?php echo date("d-M-Y", strtotime($row["date"])) ?></th>
                         <?php
-                            $resultNumber = $conn -> query("SELECT number FROM numbers WHERE date = '". $rowdate["date"] ."' ORDER BY date desc;");
+                            $resultNumber = $conn -> query("SELECT number FROM numbers WHERE date = '". $row["date"] ."' ORDER BY date desc;");
                             while($rowNumber =  $resultNumber -> fetch_assoc()) {
                         ?>
                             <td><?php echo $rowNumber["number"]?></td>                                        
                         <?php
                              }
                         ?>
-                        <td><a class="text-danger" href="/lottery/actions/delete.php?date=<?php echo $rowdate["date"]; ?>">Eliminar</a></td>      
+                        <td><a class="text-danger" href="/lottery/actions/delete.php?date=<?php echo $row["date"]; ?>">Eliminar</a></td>      
                         </tr>
                                                                         
                         <?php
