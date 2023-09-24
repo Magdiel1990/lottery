@@ -120,6 +120,24 @@ if(isset($_POST["numbers"])){
             }
         ?>
     </main>
+    <script>
+        deleteMessage("text-danger", "números");
+        //Delete message
+        function deleteMessage(button, pageName){
+        var deleteButtons = document.getElementsByClassName(button);
+
+            for(var i = 0; i<deleteButtons.length; i++) {
+                deleteButtons[i].addEventListener("click", function(event){    
+                    if(confirm("¿Desea eliminar estos " + pageName + "?")) {
+                        return true;
+                    } else {
+                        event.preventDefault();
+                        return false;
+                    }
+                })
+            }
+        }
+    </script>
 </body>
 </html>
 <?php
