@@ -256,15 +256,11 @@ class RangeNumbers {
         //Jugadas impares
         $oddGammes = $count - $evenGames;
 
-        //Si hay más pares que impares en el random y en las tendencias
-        if($evenGames > $oddGammes && $evenRandom >= 3) {           
-            return $arrayNumbers;
-        //Si hay más impares que pares en el random y en las tendencias
-        } else if ($evenGames < $oddGammes && $evenRandom < 3) {
-            return $arrayNumbers;
-        //Cuando el random no va de la mano con las tendencias
-        } else {
+        //Cuando no hay correspondencia
+        if($evenGames > $oddGammes && $evenRandom < 3) {   
             return $this -> arrayNumbers($arrayNumbers);
+        } else {
+            return $arrayNumbers;
         }
     }
 
