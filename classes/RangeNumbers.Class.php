@@ -167,13 +167,12 @@ class RangeNumbers {
         sort($arrayNumbers);
 
         for($i = 0; $i < count($totalNumbers); $i++) {
-            if($totalNumbers[$i] == $arrayNumbers) {
+            if($totalNumbers[$i] != $arrayNumbers) {
                 $this -> arrayNumbers();
                 break;
-            } else {                
-                return $arrayNumbers;
             }
         }
+        return $arrayNumbers;
     }
 }
 
