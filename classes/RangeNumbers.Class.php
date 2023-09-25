@@ -2,8 +2,10 @@
 class RangeNumbers {
     private $position;
     private $start;
-    private $amount;
-    private string $time;
+    private $totalNumbers;
+    protected $amount;
+    protected string $time;
+    protected $arrayNumbers;
 
 
     /************************************* Cálculo del ************************************/
@@ -11,7 +13,7 @@ class RangeNumbers {
 
 
     //Maximo numero en cualquier posicion
-    protected function maxNumberRange($position) {
+    private function maxNumberRange($position) {
         $conn = DatabaseClass::dbConnection();
         
         $result = $conn -> query("SELECT max(number) FROM numbers WHERE position = " . $position . ";");
@@ -20,7 +22,7 @@ class RangeNumbers {
     }
 
     //Mínimo numero en cualquier posicion
-    protected function minNumberRange($position) {
+    private function minNumberRange($position) {
         $conn = DatabaseClass::dbConnection();
         
         $result = $conn -> query("SELECT min(number) FROM numbers WHERE position = " . $position . ";");
@@ -107,7 +109,7 @@ class RangeNumbers {
     }
 
     //Descarte de los números que menos salen
-    private function rareNumbersOut($arrayNumbers = null, $amount) {
+    protected function rareNumbersOut($arrayNumbers = null, $amount) {
         $conn = DatabaseClass::dbConnection();  
         $arrayNumbers = $this-> dateOut();   
        
@@ -240,7 +242,7 @@ class RangeNumbers {
         return $evenGames;
     } 
 
-    protected function oddEvenCalculus() {    
+    private function oddEvenCalculus() {    
         $arrayNumbers = $this-> repeatedNumbers(null, "3");  
 
         $type = $this-> oddEvenArray();  
