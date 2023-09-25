@@ -135,7 +135,7 @@ class RangeNumbers {
 
         $currentDate = date("Y-m-d H:i:s");
         //Ultimos numeros
-        $lastDates = date("Y-m-d 00:00:00", strtotime ($currentDate."- " . $time . " days"));          
+        $lastDates = date("Y-m-d 00:00:00", strtotime ($currentDate." - " . $time . " days"));          
 
         while(count($arrayUniqueNumbers) < 5) {
             $result = $conn -> query ("SELECT number FROM numbers WHERE date = '$lastDates' ORDER BY rand() LIMIT 1;");
