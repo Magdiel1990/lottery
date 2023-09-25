@@ -54,7 +54,6 @@ class RangeNumbers {
         sort($arrayNumbers);
 
         return $arrayNumbers;
-
     }
 
     private function monthOut() {
@@ -74,7 +73,6 @@ class RangeNumbers {
         sort($arrayNumbers);
 
         return $arrayNumbers;
-
     }
 
     private function dateOut() {
@@ -94,121 +92,25 @@ class RangeNumbers {
 
         return $arrayNumbers;
     }
-
-    private function oddEvenLastNumbers() {
-        $conn = DatabaseClass::dbConnection();
         
-        $result = $conn -> query("SELECT number FROM numbers ORDER BY date desc LIMIT 5;");
-        
-        $odd = 0;
-        $even = 0;
-
-        while($row = $result -> fetch_assoc()) {
-            if($row["number"] % 2 == 0) {
-                $even += 1;
-            } else {
-                $odd += 1;
+    protected function unfrequentNumbersOut ($arrayNumbers = null) {
+        $conn = DatabaseClass::dbConnection();  
+        $arrayNumbers = $this-> dateOut();   
+       
+        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total asc LIMIT 2;");
+        while($row = $result -> fetch_assoc()){
+            if(in_array($row["number"], $arrayNumbers)) {
+                $arrayNumbers = array_diff($arrayNumbers, array($row["number"]));         
+                sort($arrayNumbers);       
             }
-        }
-
-        return [$odd, $even];
-    }
-
-    private function oddEvenCurrentNumber() {
-        $arrayNumbers = $this-> dateOut(); 
-
-        $odd = 0;
-        $even = 0;
-
-        for($i = 0; $i < count($arrayNumbers); $i++) {
-            if($arrayNumbers[$i] % 2 == 0) {
-                $even += 1;
-            } else {
-                $odd += 1;
-            }
-        }
-
-        return [$odd, $even];
-    }
-
-    private function oddEvenCalculation () {
-        //Números random
-        $arrayNumbers = $this-> dateOut(); 
-
-        $oddEvenCurrentNumber = $this -> oddEvenCurrentNumber();
-        $oddEvenLastNumbers = $this -> oddEvenLastNumbers();
-        //Si hay más números impares que pares en ambos arrays
-        if($oddEvenLastNumbers[0] > $oddEvenLastNumbers[1] && $oddEvenCurrentNumber[0] > $oddEvenCurrentNumber[1]) {
-            for($i = 0; $i < count($arrayNumbers); $i++) {
-                if($arrayNumbers[$i] % 2 !== 0) {
-                    $arrayNumbers[$i] = $arrayNumbers[$i] + 1;
-                    break;
-                }
-            }
-        } else if($oddEvenLastNumbers[0] < $oddEvenLastNumbers[1] && $oddEvenCurrentNumber[0] < $oddEvenCurrentNumber[1]) {
-            for($i = 0; $i < count($arrayNumbers); $i++) {
-                if($arrayNumbers[$i] % 2 === 0) {
-                    $arrayNumbers[$i] = $arrayNumbers[$i] + 1;
-                    break;
-                }
-            }
-        } 
-
-        sort($arrayNumbers);
+        }  
 
         return $arrayNumbers;
-    }
-
-    private function nthposition($arrayNumbers, $position) {
-        
-        $conn = DatabaseClass::dbConnection();
-        
-        $result = $conn -> query("SELECT number FROM numbers WHERE position = " . $position . " ORDER BY date desc LIMIT 1;");
-        $row = $result -> fetch_assoc();
-        $number = $row["number"];
-
-        if(in_array($number, $arrayNumbers)) {
-            for($i = 0; $i < count($arrayNumbers); $i++) {
-                if($arrayNumbers[$i] == $number) {
-                    unset($arrayNumbers[$i]);
-                }
-            }                        
-        }
-        
-        sort($arrayNumbers);
-
-        return $arrayNumbers;
-    }
-
-    private function missingNumbers(){
-        //Números random
-        $arrayNumbers = $this-> oddEvenCalculation ();
-        $arrayNumbers =  $this-> nthposition($arrayNumbers, 2);
-        $arrayNumbers =  $this->nthposition($arrayNumbers, 3);
-        $arrayNumbers = $this-> nthposition($arrayNumbers, 4);
-        $arrayNumbers = $this-> nthposition($arrayNumbers, 5);
-
-        $arrayCount = count($arrayNumbers);
-        $arrayCountDiff = 5 - $arrayCount;
-
-        $currentDate = date("Y-m-d H:i:s");
-        $thirdLastDates = date("Y-m-d 00:00:00", strtotime ($currentDate."- 3 days"));       
-
-        $conn = DatabaseClass::dbConnection();        
-        $result = $conn -> query("SELECT number FROM numbers WHERE date = '" . $thirdLastDates . "' ORDER BY rand() LIMIT $arrayCountDiff;");
-        
-        $randomNumbersArray = [];
-
-        while($row = $result -> fetch_assoc()) {
-            $randomNumbersArray [] = $row ["number"];
-        }
-        
-        return array_merge($arrayNumbers, $randomNumbersArray);
-    }    
-
-    public function repeatedNumbers($arrayNumbers = null) {        
+    }   
+   
+    protected function repeatedNumbers($arrayNumbers = null) {        
         $conn = DatabaseClass::dbConnection();     
-        $arrayNumbers = $this-> missingNumbers();
+        $arrayNumbers = $this-> unfrequentNumbersOut ();
 
         $arrayUniqueNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
 
@@ -226,13 +128,75 @@ class RangeNumbers {
         }
        
         return $arrayUniqueNumbers;
+    }
+
+
+     private function positionCal($position) {
+        $conn = DatabaseClass::dbConnection();  
+        $result = $conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date;");
+
+        $positionArray = [];
+
+        while($row = $result -> fetch_assoc()) {
+            $positionArray[] = $row["number"];
+        }
+
+        return $positionArray;
+    }
+    
+    private function numbersArrayWinners(){
+        $positionArray1 = $this-> positionCal(1);
+        $positionArray2 = $this-> positionCal(2);
+        $positionArray3 = $this-> positionCal(3);
+        $positionArray4 = $this-> positionCal(4);
+        $positionArray5 = $this-> positionCal(5);
+
+        $totalPosition = [];
+
+        for($i = 0; $i < count($positionArray1); $i++) {
+            $totalPosition[$i] = [$positionArray1[$i], $positionArray2[$i], $positionArray3[$i], $positionArray4[$i], $positionArray5[$i]];
+        }        
+
+        return $totalPosition;
+    }
+
+    public function finalNumbers($totalNumbers = null){
+        $totalNumbers = $this-> numbersArrayWinners();
+        $arrayNumbers = $this-> repeatedNumbers();
+
+        sort($arrayNumbers);
+
+        for($i = 0; $i < count($totalNumbers); $i++) {
+            if($totalNumbers[$i] == $arrayNumbers) {
+                $this -> arrayNumbers();
+                break;
+            } else {                
+                return $arrayNumbers;
+            }
+        }
     }
 }
 
-class RangeNumbersChild extends RangeNumbers {
-    public function repeatedNumbers($arrayNumbers = null) {
-        $conn = DatabaseClass::dbConnection();    
+/********************************************************* */
 
+class RangeNumbersChild extends RangeNumbers {
+    public function unfrequentNumbersOut ($arrayNumbers = null) {
+        $conn = DatabaseClass::dbConnection();  
+        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
+       
+        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total asc LIMIT 2;");
+        while($row = $result -> fetch_assoc()){
+            if(in_array($row["number"], $arrayNumbers)) {
+                $arrayNumbers = array_diff($arrayNumbers, array($row["number"]));         
+                sort($arrayNumbers);       
+            }
+        }  
+
+        return $arrayNumbers;
+    }
+    
+    public function repeatedNumbers($arrayNumbers = null) {        
+        $conn = DatabaseClass::dbConnection();     
         $arrayUniqueNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
 
         $currentDate = date("Y-m-d H:i:s");
@@ -251,61 +215,11 @@ class RangeNumbersChild extends RangeNumbers {
         return $arrayUniqueNumbers;
     }
 
-    protected function modeNumber($position) {
-        $conn = DatabaseClass::dbConnection();  
-        $result = $conn -> query ("SELECT number, COUNT(*) as mode FROM numbers WHERE position = $position GROUP BY number ORDER BY mode DESC LIMIT 1;");
-
-        $row = $result -> fetch_assoc();
-
-        $mode = $row ["mode"];
-
-        return $mode;
-    }
-
-    protected function mostfrequentNumbers ($arrayNumbers = null) {
-        $conn = DatabaseClass::dbConnection();     
-        $arrayNumbers = $this-> repeatedNumbers($arrayNumbers);
-
-        sort($arrayNumbers);
-       
-        $f1 = $this-> modeNumber(1);
-        $f2 = $this-> modeNumber(2);
-        $f3 = $this-> modeNumber(3);
-        $f4 = $this-> modeNumber(4);
-        $f5 = $this-> modeNumber(5);
-
-        $Range1 = [$this-> minNumberRange(1), $this-> maxNumberRange(1)];
-        $Range2 = [$this-> minNumberRange(2), $this-> maxNumberRange(2)];
-        $Range3 = [$this-> minNumberRange(3), $this-> maxNumberRange(3)];
-        $Range4 = [$this-> minNumberRange(4), $this-> maxNumberRange(4)];
-        $Range5 = [$this-> minNumberRange(5), $this-> maxNumberRange(5)];
-
-        if($arrayNumbers[0] > $Range1[1]) {
-            $arrayNumbers[0] = $f1;
-        }
-
-        if($arrayNumbers[1] > $Range2[1] || $arrayNumbers[1] < $Range2[0]){
-            $arrayNumbers[1] = $f2;
-        }
-
-        if($arrayNumbers[2] > $Range3[1] || $arrayNumbers[2] < $Range3[0]){
-            $arrayNumbers[2] = $f3;
-        }
-
-        if($arrayNumbers[3] > $Range4[1] || $arrayNumbers[3] < $Range4[0]) {
-            $arrayNumbers[3] = $f4;
-        }
-
-        if($arrayNumbers[4] < $Range5[0]){
-            $arrayNumbers[4] = $f5;
-        }
-
-        return $arrayNumbers;
-    }
-
+/****Check this */
     public function randomNumbers() {
         $arrayNumbers = $this-> arrayNumbers();
-        $arrayNumbers = $this-> mostfrequentNumbers($arrayNumbers); 
+        $arrayNumbers = $this-> unfrequentNumbersOut($arrayNumbers);
+        $arrayNumbers = $this-> repeatedNumbers($arrayNumbers);
 
         return $arrayNumbers;
     }

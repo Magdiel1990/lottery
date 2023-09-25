@@ -22,9 +22,9 @@ include "partials/head.php";
         <?php 
         if(isset($_POST["generate"])){
             $finalArray = new RangeNumbers();
-            $numbers= $finalArray-> repeatedNumbers(); 
+            $numbers= $finalArray-> finalNumbers(); 
 
-            sort($numbers); 
+            sort($numbers);            
             
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {

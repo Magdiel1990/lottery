@@ -10,10 +10,14 @@ if(isset($_POST["numbers"])){
     $date = $_POST["date"];
     $result = "SELECT id FROM numbers WHERE date = '$date';";
 
+    
+
     if($result -> num_rows == 0) {
         $numbersSorted = array_unique($numbers, SORT_NUMERIC);
-
+        
         if(count($numbersSorted) === count($numbers)) {    
+
+            sort($numbers);
 
             $sql = "";
 
@@ -113,7 +117,7 @@ if(isset($_POST["numbers"])){
                             }
                         ?>                            
                     </tbody>
-                </table>                  
+                </table>                
             </div>
         </div>
         <?php
