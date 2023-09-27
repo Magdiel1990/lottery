@@ -4,7 +4,7 @@ class RangeNumbers {
     private $start;
     private $totalNumbers;
     protected $amount;
-    protected string $time;
+    protected $time;
     protected $arrayNumbers;
 
 
@@ -46,34 +46,19 @@ class RangeNumbers {
     //Números aleatorios
     protected function arrayNumbers($arrayNumbers = null) {
         $arrayNumbers = [$this-> numberRange(1), $this-> numberRange(2), $this-> numberRange(3), $this-> numberRange(4), $this-> numberRange(5)]; 
-        return $arrayNumbers;
-    }
-    
-    //Descarte del año
-    private function yearOut() {
-        date_default_timezone_set ("America/Santo_Domingo");
-
-        $arrayNumbers = $this-> arrayNumbers();
-
-        $toyear = date("y");
-
-        for($i = 0; $i < count($arrayNumbers); $i++) {
-            if($arrayNumbers[$i] == $toyear) {
-                unset($arrayNumbers[$i]);
-                break;
-            }
-        }
+        
+        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
 
         sort($arrayNumbers);
 
         return $arrayNumbers;
     }
-
+    
     //Descarte del mes
     private function monthOut() {
         date_default_timezone_set ("America/Santo_Domingo");
 
-        $arrayNumbers = $this->yearOut();
+        $arrayNumbers = $this-> arrayNumbers();
 
         $tomonth = date("n");
 
@@ -90,7 +75,7 @@ class RangeNumbers {
     }
 
     //Descarte del día
-    private function dateOut() {
+    private function dayOut() {
         date_default_timezone_set ("America/Santo_Domingo");
         $today = date("j");
 
@@ -111,7 +96,7 @@ class RangeNumbers {
     //Descarte de los números que menos salen
     protected function rareNumbersOut($arrayNumbers = null, $amount) {
         $conn = DatabaseClass::dbConnection();  
-        $arrayNumbers = $this-> dateOut();   
+        $arrayNumbers = $this-> dayOut();   
        
         $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total asc LIMIT $amount;");
         while($row = $result -> fetch_assoc()){
@@ -121,32 +106,36 @@ class RangeNumbers {
             }
         }  
 
-        sort($arrayNumbers); 
-
+        sort($arrayNumbers);
+        
         return $arrayNumbers;
     }  
 
     //Incluye números de sorteos anteriores
-    protected function repeatedNumbers($arrayNumbers = null, string $time) {        
+    protected function repeatedNumbers($arrayNumbers = null, $time) {        
         $conn = DatabaseClass::dbConnection();     
         $arrayNumbers = $this-> rareNumbersOut (null, 2);
 
-        $arrayUniqueNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
+        $max = $time * 5; 
 
-        $currentDate = date("Y-m-d H:i:s");
         //Ultimos numeros
-        $lastDates = date("Y-m-d 00:00:00", strtotime ($currentDate." - " . $time . " days"));          
+        $result = $conn -> query ("SELECT number FROM numbers LIMIT 5 OFFSET $max;");
 
-        while(count($arrayUniqueNumbers) < 5) {
-            $result = $conn -> query ("SELECT number FROM numbers WHERE date = '$lastDates' ORDER BY rand() LIMIT 1;");
-            $row = $result -> fetch_assoc();
+        $numbers = [];
+        
+        while($row = $result -> fetch_assoc()){
+            $numbers [] = intval($row["number"]);
+        }        
+   
+        while(count($arrayNumbers) != 5) {
+            array_push($arrayNumbers, $numbers[rand(0,4)]);
 
-            array_push($arrayUniqueNumbers, intval($row["number"]));
-
-            $arrayUniqueNumbers = array_unique($arrayUniqueNumbers, SORT_NUMERIC);
+            $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
         }
-               
-        return $arrayUniqueNumbers;
+        
+        sort($arrayNumbers);
+
+        return $arrayNumbers;
     }
 
 
@@ -184,90 +173,10 @@ class RangeNumbers {
         return $totalPosition;
     }
 
-    /*************************************   Filtrando  ************************************/
-    /*************************************    números   ************************************/
-
-    //Array de combinación par o impar que más sale
-    private function oddEvenArray() {
-        $totalNumbers = $this-> totalNumbers();
-
-        $type = [];
-        $even = 0;
-
-        for($i = 0; $i < count($totalNumbers); $i++) { 
-            for($j = 0; $j < count($totalNumbers[$i]); $j++) {
-                if($totalNumbers[$i][$j] % 2 == 0){
-                    $even += 1;
-                } 
-            }    
-
-            $type [] = $even;    
-            $even = 0;
-        }   
-
-        return $type;
-    }
-
-    //Usar solo el tipo de combinación par o impar de la tendencia
-
-    private function evenOfAnArray() {      
-        //Verificar cantidad de jugadas pares en el array random
-        $arrayNumbers = $this-> repeatedNumbers(null, "3");
-        $evenRandom = 0;
-
-        for($i = 0; $i < count($arrayNumbers); $i++) { 
-            if($arrayNumbers[$i] % 2 == 0) {
-                $evenRandom += 1;                
-            }
-        }   
-        
-        return $evenRandom;
-    }
-
-    //Determinar cuántas jugadas pares hay
-
-    private function evenOfANumberedArray() {        
-        $type = $this-> oddEvenArray();  
-        $count = count($type);
-        $evenGames = 0;
-
-        if($count > 0) {
-            for($i = 0; $i < $count; $i++) { 
-                if($type[$i] >= 3) {
-                    //Cantidad de jugadas pares de las tendencias
-                    $evenGames += 1;
-                }
-            }   
-        } 
-        return $evenGames;
-    } 
-
-    private function oddEvenCalculus() {    
-        $arrayNumbers = $this-> repeatedNumbers(null, "3");  
-
-        $type = $this-> oddEvenArray();  
-        $count = count($type);
-
-        //Jugadas pares del random
-        $evenRandom = $this -> evenOfAnArray(); 
-
-        //Jugadas pares
-        $evenGames = $this -> evenOfANumberedArray();
-        //Jugadas impares
-        $oddGammes = $count - $evenGames;
-
-        //Cuando no hay correspondencia
-        if($evenGames > $oddGammes && $evenRandom < 3) {   
-            return $this -> arrayNumbers($arrayNumbers);
-        } else {
-            return $arrayNumbers;
-        }
-    }
-
     //Verificar si esta jugada ya había salido
     public function finalNumbers($totalNumbers = null){
         $totalNumbers = $this-> totalNumbers();
-        $arrayNumbers = $this-> oddEvenCalculus();
+        $arrayNumbers = $this-> repeatedNumbers(null, 3);
 
         sort($arrayNumbers);
 
@@ -294,43 +203,51 @@ class RangeNumbersChild extends RangeNumbers {
 
     public function rareNumbersOut ($arrayNumbers = null, $amount) {
         $conn = DatabaseClass::dbConnection();  
-        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
+        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);   
        
-        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total asc LIMIT 2;");
+        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total asc LIMIT $amount;");
         while($row = $result -> fetch_assoc()){
-            if(in_array(intval($row["number"]), $arrayNumbers)) {
-                $arrayNumbers = array_diff($arrayNumbers, array(intval($row["number"])));         
-                sort($arrayNumbers);       
+            $number = intval($row["number"]);
+            if(in_array($number, $arrayNumbers) && count($arrayNumbers) > $amount) {
+                $arrayNumbers = array_diff($arrayNumbers, array($number));                               
             }
         }  
 
+        sort($arrayNumbers);
+        
         return $arrayNumbers;
     }
     
-    public function repeatedNumbers($arrayNumbers = null, string $time) {        
+    public function repeatedNumbers($arrayNumbers = null, $time) {        
         $conn = DatabaseClass::dbConnection();     
-        $arrayUniqueNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
+        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
 
-        $currentDate = date("Y-m-d H:i:s");
+        $max = $time * 5; 
+
         //Ultimos numeros
-        $lastDates = date("Y-m-d 00:00:00", strtotime ($currentDate."- " . $time . " days"));          
+        $result = $conn -> query ("SELECT number FROM numbers LIMIT 5 OFFSET $max;");
 
-        while(count($arrayUniqueNumbers) < 5) {
-            $result = $conn -> query ("SELECT number FROM numbers WHERE date = '$lastDates' ORDER BY rand() LIMIT 1;");
-            $row = $result -> fetch_assoc();
+        $numbers = [];
+        
+        while($row = $result -> fetch_assoc()){
+            $numbers [] = intval($row["number"]);
+        }        
+   
+        while(count($arrayNumbers) < 5) {
+            array_push($arrayNumbers, $numbers[rand(0,4)]);
 
-            array_push($arrayUniqueNumbers, intval($row["number"]));
-
-            $arrayUniqueNumbers = array_unique($arrayUniqueNumbers, SORT_NUMERIC);
+            $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
         }
-       
-        return $arrayUniqueNumbers;
+        
+        sort($arrayNumbers);
+
+        return $arrayNumbers;
     }
 
     public function randomNumbers() {
         $arrayNumbers = $this-> arrayNumbers();
         $arrayNumbers = $this-> rareNumbersOut($arrayNumbers, 2);
-        $arrayNumbers = $this-> repeatedNumbers($arrayNumbers, "3");
+        $arrayNumbers = $this-> repeatedNumbers($arrayNumbers, 3);
 
         return $arrayNumbers;
     }

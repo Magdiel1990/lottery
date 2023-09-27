@@ -22,8 +22,8 @@ include "partials/head.php";
         <?php 
         if(isset($_POST["generate"])){
             $finalArray = new RangeNumbers();
-            $numbers= $finalArray-> finalNumbers(); 
-            
+            $numbers = $finalArray-> finalNumbers(); 
+
             sort($numbers);            
             
             if(count($numbers) > 0) {
