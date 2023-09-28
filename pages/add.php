@@ -96,7 +96,7 @@ $conn -> close();
                     </thead>
                     <tbody>
                         <?php                            
-                            $resultDate = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date asc;");
+                            $resultDate = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date desc;");
 
                             $dates = [];
 

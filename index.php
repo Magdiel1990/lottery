@@ -3,7 +3,7 @@
 require "classes/Database.Class.php";
 $conn = DatabaseClass::dbConnection();
 
-require "classes/RangeNumbers.Class.php";
+require "classes/LP.Class.php";
 include "partials/head.php";
 ?>
 
