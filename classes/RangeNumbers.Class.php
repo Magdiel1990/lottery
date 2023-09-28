@@ -54,32 +54,12 @@ class RangeNumbers {
         return $arrayNumbers;
     }
     
-    //Descarte del mes
-    private function monthOut() {
-        date_default_timezone_set ("America/Santo_Domingo");
-
-        $arrayNumbers = $this-> arrayNumbers();
-
-        $tomonth = date("n");
-
-        for($i = 0; $i < count($arrayNumbers); $i++) {
-            if($arrayNumbers[$i] == $tomonth) {
-                unset($arrayNumbers[$i]);
-                break;
-            }
-        }
-
-        sort($arrayNumbers);
-
-        return $arrayNumbers;
-    }
-
     //Descarte del día
     private function dayOut() {
         date_default_timezone_set ("America/Santo_Domingo");
         $today = date("j");
 
-        $arrayNumbers = $this-> monthOut();
+        $arrayNumbers = $this-> arrayNumbers();
 
         for($i = 0; $i < count($arrayNumbers); $i++) {
             if($arrayNumbers[$i] == $today) {
