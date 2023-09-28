@@ -228,7 +228,7 @@ class RangeNumbersChild extends RangeNumbers {
     /*************************************   Generando  ************************************/
     /*************************************    números   ************************************/
 
-    public function rareNumbersOut ($arrayNumbers = null, $amount) {
+    protected function rareNumbersOut ($arrayNumbers = null, $amount) {
         $conn = DatabaseClass::dbConnection();  
         $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);   
        
@@ -245,7 +245,7 @@ class RangeNumbersChild extends RangeNumbers {
         return $arrayNumbers;
     }
     
-    public function repeatedNumbers($arrayNumbers = null, $time) {        
+    protected function repeatedNumbers($arrayNumbers = null, $time) {        
         $conn = DatabaseClass::dbConnection();     
         $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
 
