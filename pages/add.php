@@ -5,12 +5,9 @@ $conn = DatabaseClass::dbConnection();
 include "../partials/head.php";
 
 if(isset($_POST["numbers"])){
-
     $numbers = $_POST["numbers"];
     $date = $_POST["date"];
-    $result = "SELECT id FROM numbers WHERE date = '$date';";
-
-    
+    $result = $conn -> query("SELECT id FROM numbers WHERE date = '$date';");   
 
     if($result -> num_rows == 0) {
         $numbersSorted = array_unique($numbers, SORT_NUMERIC);
@@ -42,6 +39,7 @@ if(isset($_POST["numbers"])){
     }
 }
 
+$conn -> close();
 ?>
     <main class="container p-4">
     <?php
@@ -55,7 +53,6 @@ if(isset($_POST["numbers"])){
             echo $html;
             
             unset($_SESSION ["message"], $_SESSION ["message-alert"]);
-
         }
     ?>  
         <div class="row justify-content-center text-center mt-4"> 
@@ -96,24 +93,26 @@ if(isset($_POST["numbers"])){
                     </thead>
                     <tbody>
                         <?php
-                            $result = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date desc;");
-                            
+                            $conn = DatabaseClass::dbConnection();
+                            $result = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date asc;");
+
+                            $dates = [];
+
                             while($row = $result -> fetch_assoc()) {
-                        ?>
-                        <tr>
-                            <th scope="row"><?php echo date("d-M-Y", strtotime($row["date"])) ?></th>
-                        <?php
-                            $resultNumber = $conn -> query("SELECT number FROM numbers WHERE date = '". $row["date"] ."' ORDER BY date desc;");
-                            while($rowNumber =  $resultNumber -> fetch_assoc()) {
-                        ?>
-                            <td><?php echo $rowNumber["number"]?></td>                                        
-                        <?php
-                             }
-                        ?>
-                        <td><a class="text-danger" href="/lottery/actions/delete.php?date=<?php echo $row["date"]; ?>">Eliminar</a></td>      
-                        </tr>
-                                                                        
-                        <?php
+                                $dates[] = $row ["date"];
+                            }
+
+                            for($i=0; $i < count($dates); $i++) {        
+                                echo '<tr>';
+                                echo '<th scope="row">' . date("d-M-Y", strtotime($dates[$i])) . '</th>';
+                                
+                                $result = $conn -> query("SELECT number FROM numbers WHERE date = '". $dates[$i] ."' ORDER BY date desc;");
+                                while($row =  $result -> fetch_assoc()) {                        
+                                    echo "<td>" . $row ["number"] . "</td>";                      
+                                }
+                                echo '<td><a class="text-danger" href="/lottery/actions/delete.php?date= ' . $dates[$i] . '">Eliminar</a></td>';      
+                                echo '</tr>';                                                                        
+                        
                             }
                         ?>                            
                     </tbody>
