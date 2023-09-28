@@ -193,7 +193,8 @@ class RangeNumbers {
          
         for($i = 0; $i < count($totalNumbers); $i++) {
             if($totalNumbers[$i] == $arrayNumbers) {
-                return $arrayNumbers = [];
+                $arrayNumbers = [];
+                return $arrayNumbers;
             }
         }      
         return $arrayNumbers;
