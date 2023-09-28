@@ -106,7 +106,7 @@ $conn -> close();
                                 echo '<tr>';
                                 echo '<th scope="row">' . date("d-M-Y", strtotime($dates[$i])) . '</th>';
                                 
-                                $result = $conn -> query("SELECT number FROM numbers WHERE date = '". $dates[$i] ."' ORDER BY date desc;");
+                                $result = $conn -> query("SELECT number FROM numbers WHERE date = '". $dates[$i] ."';");
                                 while($row =  $result -> fetch_assoc()) {                        
                                     echo "<td>" . $row ["number"] . "</td>";                      
                                 }
