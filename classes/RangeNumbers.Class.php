@@ -154,19 +154,65 @@ class RangeNumbers {
     }
 
     //Verificar si esta jugada ya había salido
-    public function finalNumbers($totalNumbers = null){
+    private function lastNumbersExceptions() {
         $totalNumbers = $this-> totalNumbers();
         $arrayNumbers = $this-> repeatedNumbers(null, 3);
 
         sort($arrayNumbers);
-
+         
         for($i = 0; $i < count($totalNumbers); $i++) {
             if($totalNumbers[$i] == $arrayNumbers) {
-                return $this -> arrayNumbers($arrayNumbers);
+                return $arrayNumbers = [];
             }
-        }
-      
+        }      
         return $arrayNumbers;
+    }
+
+    //Generador de random
+    private function randomGenerator($amount) {
+        $randomArraysOfTheDay = [];
+
+        while(count($randomArraysOfTheDay) < $amount) {
+            $generatedRandomArray = [];
+            while(count($generatedRandomArray)< 5) {
+                $generatedRandomArray [] = rand(1,31);
+                $generatedRandomArray = array_unique($generatedRandomArray, SORT_NUMERIC);
+            }
+
+            sort($generatedRandomArray);
+            
+            $randomArraysOfTheDay [] = $generatedRandomArray;
+        }
+
+       return $randomArraysOfTheDay;
+    }
+
+    //Verificar si esta jugada ya había salido
+    private function randomNumbersExceptions ($totalNumbers, $arrayNumbers) {
+        sort($arrayNumbers);
+         
+        for($i = 0; $i < count($totalNumbers); $i++) {
+            if($totalNumbers[$i] == $arrayNumbers) {
+                return $arrayNumbers = [];
+            }
+        }      
+        return $arrayNumbers;
+    }
+
+    //Excluir los número aleatorios
+    private function randomOfTheDayException() {
+       $arrayNumbers = $this-> lastNumbersExceptions();
+
+       $randomArraysOfTheDay = $this-> randomGenerator(100);
+
+       $arrayNumbers = $this-> randomNumbersExceptions($randomArraysOfTheDay, $arrayNumbers);
+       
+       return $arrayNumbers;
+    }
+
+    public function finalNumbers () {
+        $totalNumbers = $this -> randomOfTheDayException();
+        return $totalNumbers;
     }
 }
 
