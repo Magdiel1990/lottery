@@ -1,8 +1,8 @@
 <?php
 class RangeNumbers {
-    private $position;
-    private $start;
-    private $totalNumbers;
+    protected $position;
+    protected $start;
+    protected $totalNumbers;
     protected $amount;
     protected $time;
     protected $arrayNumbers;
@@ -13,7 +13,7 @@ class RangeNumbers {
 
 
     //Maximo numero en cualquier posicion
-    private function maxNumberRange($position) {
+    protected function maxNumberRange($position) {
         $conn = DatabaseClass::dbConnection();
         
         $result = $conn -> query("SELECT max(number) FROM numbers WHERE position = " . $position . ";");
@@ -22,7 +22,7 @@ class RangeNumbers {
     }
 
     //Mínimo numero en cualquier posicion
-    private function minNumberRange($position) {
+    protected function minNumberRange($position) {
         $conn = DatabaseClass::dbConnection();
         
         $result = $conn -> query("SELECT min(number) FROM numbers WHERE position = " . $position . ";");
@@ -31,7 +31,7 @@ class RangeNumbers {
     }
 
     //Rango en el que pueden estar los números
-    private function numberRange($position) {
+    protected function numberRange($position) {
         $maxNumber = $this-> maxNumberRange($position);
         $minNumber = $this-> minNumberRange($position);
 
@@ -55,7 +55,7 @@ class RangeNumbers {
     }
     
     //Descarte del día
-    private function dayOut() {
+    protected function dayOut() {
         date_default_timezone_set ("America/Santo_Domingo");
         $today = date("j");
 
@@ -123,7 +123,7 @@ class RangeNumbers {
     /************************************* todas las jugadas **********************************/
 
     //Arreglos de todas las jugadas pasadas
-    private function positionCal($position) {
+    protected function positionCal($position) {
         $conn = DatabaseClass::dbConnection();  
         $result = $conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date;");
 
@@ -137,7 +137,7 @@ class RangeNumbers {
     }
     
     //Arreglo de los arreglos de todas las jugadas pasadas
-    private function totalNumbers(){
+    protected function totalNumbers(){
         $positionArray1 = $this-> positionCal(1);
         $positionArray2 = $this-> positionCal(2);
         $positionArray3 = $this-> positionCal(3);
@@ -154,7 +154,7 @@ class RangeNumbers {
     }
 
     //Verificar si esta jugada ya había salido
-    private function lastNumbersExceptions() {
+    protected function lastNumbersExceptions() {
         $totalNumbers = $this-> totalNumbers();
         $arrayNumbers = $this-> repeatedNumbers(null, 3);
 
@@ -169,7 +169,7 @@ class RangeNumbers {
     }
 
     //Generador de random
-    private function randomGenerator($amount) {
+    protected function randomGenerator($amount) {
         $randomArraysOfTheDay = [];
 
         while(count($randomArraysOfTheDay) < $amount) {
@@ -188,7 +188,7 @@ class RangeNumbers {
     }
 
     //Verificar si esta jugada ya había salido
-    private function randomNumbersExceptions ($totalNumbers, $arrayNumbers) {
+    protected function randomNumbersExceptions ($totalNumbers, $arrayNumbers) {
         sort($arrayNumbers);
          
         for($i = 0; $i < count($totalNumbers); $i++) {
@@ -201,7 +201,7 @@ class RangeNumbers {
     }
 
     //Excluir los número aleatorios
-    private function randomOfTheDayException() {
+    protected function randomOfTheDayException() {
        $arrayNumbers = $this-> lastNumbersExceptions();
 
        $randomArraysOfTheDay = $this-> randomGenerator(100);
@@ -214,69 +214,6 @@ class RangeNumbers {
     public function finalNumbers () {
         $totalNumbers = $this -> randomOfTheDayException();
         return $totalNumbers;
-    }
-}
-
-
-/********************************************************* Clase hija ******************************************************/
-/***************************************************************************************************************************/
-/***************************************************************************************************************************/
-
-
-class RangeNumbersChild extends RangeNumbers {
-
-    /*************************************   Generando  ************************************/
-    /*************************************    números   ************************************/
-
-    protected function rareNumbersOut ($arrayNumbers = null, $amount) {
-        $conn = DatabaseClass::dbConnection();  
-        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);   
-       
-        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total asc LIMIT $amount;");
-        while($row = $result -> fetch_assoc()){
-            $number = intval($row["number"]);
-            if(in_array($number, $arrayNumbers) && count($arrayNumbers) > $amount) {
-                $arrayNumbers = array_diff($arrayNumbers, array($number));                               
-            }
-        }  
-
-        sort($arrayNumbers);
-        
-        return $arrayNumbers;
-    }
-    
-    protected function repeatedNumbers($arrayNumbers = null, $time) {        
-        $conn = DatabaseClass::dbConnection();     
-        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
-
-        $max = $time * 5; 
-
-        //Ultimos numeros
-        $result = $conn -> query ("SELECT number FROM numbers LIMIT 5 OFFSET $max;");
-
-        $numbers = [];
-        
-        while($row = $result -> fetch_assoc()){
-            $numbers [] = intval($row["number"]);
-        }        
-   
-        while(count($arrayNumbers) < 5) {
-            array_push($arrayNumbers, $numbers[rand(0,4)]);
-
-            $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
-        }
-        
-        sort($arrayNumbers);
-
-        return $arrayNumbers;
-    }
-
-    public function randomNumbers() {
-        $arrayNumbers = $this-> arrayNumbers();
-        $arrayNumbers = $this-> rareNumbersOut($arrayNumbers, 2);
-        $arrayNumbers = $this-> repeatedNumbers($arrayNumbers, 3);
-
-        return $arrayNumbers;
     }
 }
 ?>

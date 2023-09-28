@@ -3,7 +3,7 @@
 require "../classes/Database.Class.php";
 $conn = DatabaseClass::dbConnection();
 
-require "../classes/LP.Class.php";
+require "../classes/Random.LP.Class.php";
 include "../partials/head.php";
 ?>
 
