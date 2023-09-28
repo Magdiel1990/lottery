@@ -1,14 +1,6 @@
 <?php
 session_start();
 //error_reporting(0);
-
-$result = $conn -> query("SELECT id FROM numbers LIMIT 1;");
-$num_rows = $result -> num_rows;
-
-if ($num_rows > 0) {   
-    $_SESSION ["id"] = "ok";
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="es">

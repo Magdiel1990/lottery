@@ -74,7 +74,10 @@ $conn -> close();
             </div>
         </div>
         <?php
-            if (isset($_SESSION ["id"])) {   
+            $conn = DatabaseClass::dbConnection();
+            $result = $conn -> query("SELECT id FROM numbers LIMIT 1;");
+
+            if ($result -> num_rows > 0) {   
         ?>
         <div class="row justify-content-center my-4">
             <div class="col-auto table-responsive">
@@ -92,27 +95,25 @@ $conn -> close();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            $conn = DatabaseClass::dbConnection();
-                            $result = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date asc;");
+                        <?php                            
+                            $resultDate = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date asc;");
 
                             $dates = [];
 
-                            while($row = $result -> fetch_assoc()) {
-                                $dates[] = $row ["date"];
+                            while($rowDate = $resultDate -> fetch_assoc()) {
+                                $dates[] = $rowDate ["date"];
                             }
 
                             for($i=0; $i < count($dates); $i++) {        
                                 echo '<tr>';
                                 echo '<th scope="row">' . date("d-M-Y", strtotime($dates[$i])) . '</th>';
                                 
-                                $result = $conn -> query("SELECT number FROM numbers WHERE date = '". $dates[$i] ."';");
-                                while($row =  $result -> fetch_assoc()) {                        
-                                    echo "<td>" . $row ["number"] . "</td>";                      
+                                $resultNumbers = $conn -> query("SELECT number FROM numbers WHERE date = '". $dates[$i] ."';");
+                                while($rowNumbers =  $resultNumbers -> fetch_assoc()) {                        
+                                    echo "<td>" . $rowNumbers ["number"] . "</td>";                      
                                 }
                                 echo '<td><a class="text-danger" href="/lottery/actions/delete.php?date= ' . $dates[$i] . '">Eliminar</a></td>';      
-                                echo '</tr>';                                                                        
-                        
+                                echo '</tr>';   
                             }
                         ?>                            
                     </tbody>
