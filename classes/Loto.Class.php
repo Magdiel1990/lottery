@@ -61,7 +61,7 @@ class LotoClass extends RangeNumbers {
     //Incluye números de sorteos anteriores
     protected function repeatedNumbers($arrayNumbers = null, $time) {        
         $conn = DatabaseClassLoto::dbConnection();     
-        $arrayNumbers = $this-> rareNumbersOut (null, 2);
+        $arrayNumbers = $this-> rareNumbersOut (null, 4);
 
         $max = $time * 6; 
 
