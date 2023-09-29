@@ -55,7 +55,7 @@ class RangeNumbers {
     }
     
     //Descarte del día
-    protected function dayOut() {
+    private function dayOut() {
         date_default_timezone_set ("America/Santo_Domingo");
         $today = date("j");
 

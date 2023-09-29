@@ -1,7 +1,7 @@
 <?php
 require ("LP.Class.php");
 
-class LotoClass {
+class LotoClass extends RangeNumbers {
 
 /************************************* Cálculo del ************************************/
 /*************************************   rango     ************************************/
@@ -10,7 +10,7 @@ class LotoClass {
     protected function maxNumberRange($position) {
         $conn = DatabaseClassLoto::dbConnection();
         
-        $result = $conn -> query("SELECT max(number) FROM Loto WHERE position = " . $position . ";");
+        $result = $conn -> query("SELECT max(number) FROM numbers WHERE position = " . $position . ";");
         $number = $result -> fetch_array();
         return $number[0];
     }
@@ -19,7 +19,7 @@ class LotoClass {
     protected function minNumberRange($position) {
         $conn = DatabaseClassLoto::dbConnection();
         
-        $result = $conn -> query("SELECT min(number) FROM Loto WHERE position = " . $position . ";");
+        $result = $conn -> query("SELECT min(number) FROM numbers WHERE position = " . $position . ";");
         $number = $result -> fetch_array();
         return $number[0];
     }
@@ -43,9 +43,9 @@ class LotoClass {
     //Descarte de los números que menos salen
     protected function rareNumbersOut($arrayNumbers = null, $amount) {
         $conn = DatabaseClassLoto::dbConnection();  
-        $arrayNumbers = $this-> dayOut();   
+        $arrayNumbers = $this-> arrayNumbers();   
        
-        $result = $conn -> query ("SELECT number, count(*) as total FROM Loto GROUP BY number ORDER BY total asc LIMIT $amount;");
+        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total asc LIMIT $amount;");
         while($row = $result -> fetch_assoc()){
             $number = intval($row["number"]);
             if(in_array($number, $arrayNumbers) && count($arrayNumbers) > $amount) {
@@ -66,7 +66,7 @@ class LotoClass {
         $max = $time * 6; 
 
         //Ultimos numeros
-        $result = $conn -> query ("SELECT number FROM Loto LIMIT 6 OFFSET $max;");
+        $result = $conn -> query ("SELECT number FROM numbers LIMIT 6 OFFSET $max;");
 
         $numbers = [];
         
@@ -92,7 +92,7 @@ class LotoClass {
     //Arreglos de todas las jugadas pasadas
     protected function positionCal($position) {
         $conn = DatabaseClassLoto::dbConnection();  
-        $result = $conn -> query ("SELECT number FROM Loto WHERE position = '$position' ORDER BY date;");
+        $result = $conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date;");
 
         $positionArray = [];
 
@@ -140,6 +140,7 @@ class LotoClass {
        return $randomArraysOfTheDay;
     }
 
+    
     public function finalNumbers () {
         $totalNumbers = $this -> randomOfTheDayException();
         return $totalNumbers;
