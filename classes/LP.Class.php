@@ -94,7 +94,7 @@ class RangeNumbers {
     //Incluye números de sorteos anteriores
     protected function repeatedNumbers($arrayNumbers = null, $time) {        
         $conn = DatabaseClass::dbConnection();     
-        $arrayNumbers = $this-> rareNumbersOut (null, 2);
+        $arrayNumbers = $this-> rareNumbersOut (null, 1);
 
         $max = $time * 5; 
 
@@ -118,12 +118,91 @@ class RangeNumbers {
         return $arrayNumbers;
     }
 
+    /*************************************   Suma de números  *************************************/
+    /**********************************************************************************************/
+
+    //Array de la suma
+    protected function sumsArray() {
+        $conn = DatabaseClass::dbConnection();  
+        $result = $conn -> query ("SELECT sum(number) AS suma FROM numbers GROUP BY date ORDER BY suma;");
+
+        $sums = [];
+
+        while($row = $result -> fetch_assoc()) {
+             $sums []  = $row ["suma"];
+        }
+
+        return $sums;
+    }
+    //Suma de los elementos de array
+    private function sumArray ($array) {
+        $count = count($array);
+
+        $sum = 0;
+        for($i = 0; $i < $count; $i++) {
+            $sum += $array[$i];
+        }
+
+        return $sum;
+    }
+    //Promedio del array
+    private function average($array) {
+        $sum = $this -> sumArray ($array);
+       
+        return $media = $sum / count($array);
+    }
+
+    //Desviación estándar
+    private function standardDeviation ($array) {
+        $count = count($array);
+        $media = $this -> average($array);
+
+        $varianza = 0;
+        for($i = 0; $i < $count; $i++) {
+            $varianza += pow(($media - $array[$i]), 2);
+        }
+
+        $standardDesviation = sqrt($varianza / $count);
+
+        return $standardDesviation;
+    }
+
+    //Desviación estandard del array
+    protected function arrayStandardDeviation() {
+        $sumsArray = $this -> sumsArray();
+        return $this -> standardDeviation ($sumsArray);
+    }
+
+    protected function minSum() {
+        $sumsArray = $this -> sumsArray();
+        $arrayStandardDeviation = $this -> arrayStandardDeviation();
+
+        $minSum = floor(($this -> average($sumsArray) - $arrayStandardDeviation)) - 8;
+
+        return $minSum;
+    }
+
+    protected function maxSum() {
+        $sumsArray = $this -> sumsArray();
+        $arrayStandardDeviation = $this -> arrayStandardDeviation();
+
+        $maxSum = ceil(($this -> average($sumsArray) + $arrayStandardDeviation)) + 8;
+
+        return $maxSum;
+    }
+
+    protected function rangeSumArray () {
+        $minSum = $this -> minSum();
+        $maxSum = $this -> maxSum();
+
+        return [$minSum, $maxSum];
+    }
 
     /*************************************    Arreglos de  ************************************/
     /************************************* todas las jugadas **********************************/
 
     //Arreglos de todas las jugadas pasadas
-    protected function positionCal($position) {
+    protected function positionCalculation($position) {
         $conn = DatabaseClass::dbConnection();  
         $result = $conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date;");
 
@@ -138,11 +217,11 @@ class RangeNumbers {
     
     //Arreglo de los arreglos de todas las jugadas pasadas
     protected function totalNumbers(){
-        $positionArray1 = $this-> positionCal(1);
-        $positionArray2 = $this-> positionCal(2);
-        $positionArray3 = $this-> positionCal(3);
-        $positionArray4 = $this-> positionCal(4);
-        $positionArray5 = $this-> positionCal(5);
+        $positionArray1 = $this-> positionCalculation(1);
+        $positionArray2 = $this-> positionCalculation(2);
+        $positionArray3 = $this-> positionCalculation(3);
+        $positionArray4 = $this-> positionCalculation(4);
+        $positionArray5 = $this-> positionCalculation(5);
 
         $totalPosition = [];
 
@@ -204,15 +283,35 @@ class RangeNumbers {
     protected function randomOfTheDayException() {
        $arrayNumbers = $this-> lastNumbersExceptions();
 
-       $randomArraysOfTheDay = $this-> randomGenerator(100);
+       if(count($arrayNumbers) !== 0) {
 
-       $arrayNumbers = $this-> randomNumbersExceptions($randomArraysOfTheDay, $arrayNumbers);
-       
-       return $arrayNumbers;
+        $randomArraysOfTheDay = $this-> randomGenerator(100);
+
+        $arrayNumbers = $this-> randomNumbersExceptions($randomArraysOfTheDay, $arrayNumbers);
+        
+        return $arrayNumbers;
+       } else {
+            return [];
+       }
+    }
+    //Incluir rango de sumas
+    protected function sumRange() {
+        //Array        
+        $totalNumbers = $this -> randomOfTheDayException();
+        //Suma de los elementos del array
+        $sumArray = $this -> sumArray ($totalNumbers);
+        //Array del máximo y mínimo
+        $rangeSumArray = $this -> rangeSumArray ();
+
+        if($sumArray >= $rangeSumArray [0] && $sumArray <= $rangeSumArray [1]) {
+            return $totalNumbers;
+        } else {
+            return [];
+        }
     }
 
     public function finalNumbers () {
-        $totalNumbers = $this -> randomOfTheDayException();
+        $totalNumbers = $this -> sumRange();
         return $totalNumbers;
     }
 }

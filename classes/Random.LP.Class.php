@@ -51,7 +51,7 @@ class RangeNumbersChild extends RangeNumbers {
 
     public function randomNumbers() {
         $arrayNumbers = $this-> arrayNumbers();
-        $arrayNumbers = $this-> rareNumbersOut($arrayNumbers, 2);
+        $arrayNumbers = $this-> rareNumbersOut($arrayNumbers, 1);
         $arrayNumbers = $this-> repeatedNumbers($arrayNumbers, 3);
 
         return $arrayNumbers;
