@@ -23,14 +23,11 @@ class RangeNumbersChild extends RangeNumbers {
         return $arrayNumbers;
     }
     
-    protected function repeatedNumbers($arrayNumbers = null, $time) {        
+    protected function normalNumbers($arrayNumbers = null, $amount) {        
         $conn = DatabaseClass::dbConnection();     
         $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
 
-        $max = $time * 5; 
-
-        //Ultimos numeros
-        $result = $conn -> query ("SELECT number FROM numbers LIMIT 5 OFFSET $max;");
+        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total desc LIMIT $amount;");
 
         $numbers = [];
         
@@ -38,8 +35,8 @@ class RangeNumbersChild extends RangeNumbers {
             $numbers [] = intval($row["number"]);
         }        
    
-        while(count($arrayNumbers) < 5) {
-            array_push($arrayNumbers, $numbers[rand(0,4)]);
+        while(count($arrayNumbers) != $numbers) {
+            array_push($arrayNumbers, $numbers[rand(0, $amount - 1)]);
 
             $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
         }
@@ -52,7 +49,7 @@ class RangeNumbersChild extends RangeNumbers {
     public function randomNumbers() {
         $arrayNumbers = $this-> arrayNumbers();
         $arrayNumbers = $this-> rareNumbersOut($arrayNumbers, 1);
-        $arrayNumbers = $this-> repeatedNumbers($arrayNumbers, 3);
+        $arrayNumbers = $this-> normalNumbers($arrayNumbers, 6);
 
         return $arrayNumbers;
     }

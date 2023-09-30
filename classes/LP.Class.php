@@ -11,6 +11,7 @@ class RangeNumbers {
     /************************************* Cálculo del ************************************/
     /*************************************   rango     ************************************/
 
+    //1.SE ESTABLECE EL RANGO
 
     //Maximo numero en cualquier posicion
     protected function maxNumberRange($position) {
@@ -42,8 +43,8 @@ class RangeNumbers {
     /*************************************   Generando  ************************************/
     /*************************************    números   ************************************/
 
-
-    //Números aleatorios
+    //2. SE GENERA EL NUMERO
+    
     protected function arrayNumbers($arrayNumbers = null) {
         $arrayNumbers = [$this-> numberRange(1), $this-> numberRange(2), $this-> numberRange(3), $this-> numberRange(4), $this-> numberRange(5)]; 
         
@@ -54,7 +55,8 @@ class RangeNumbers {
         return $arrayNumbers;
     }
 
-    //Descarte de los números que menos salen
+    //3. SE EXCLUYE EL O LOS NUMEROS QUE MENOS SALEN
+
     protected function rareNumbersOut($arrayNumbers = null, $amount) {
         $conn = DatabaseClass::dbConnection();  
         $arrayNumbers = $this-> arrayNumbers();   
@@ -72,15 +74,14 @@ class RangeNumbers {
         return $arrayNumbers;
     }  
 
+    //4. SE INCLUYE EL O LOS NUMEROS QUE MAS SALEN
+
     //Incluye números de sorteos anteriores
-    protected function repeatedNumbers($arrayNumbers = null, $time) {        
+    protected function normalNumbers($arrayNumbers = null, $amount) {        
         $conn = DatabaseClass::dbConnection();     
         $arrayNumbers = $this-> rareNumbersOut (null, 1);
 
-        $max = $time * 5; 
-
-        //Ultimos numeros
-        $result = $conn -> query ("SELECT number FROM numbers LIMIT 5 OFFSET $max;");
+        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total desc LIMIT $amount;");
 
         $numbers = [];
         
@@ -88,8 +89,8 @@ class RangeNumbers {
             $numbers [] = intval($row["number"]);
         }        
    
-        while(count($arrayNumbers) != 5) {
-            array_push($arrayNumbers, $numbers[rand(0,4)]);
+        while(count($arrayNumbers) != $amount) {
+            array_push($arrayNumbers, $numbers[rand(0, $amount - 1)]);
 
             $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
         }
@@ -102,6 +103,8 @@ class RangeNumbers {
 
     /*************************************   Suma de números  *************************************/
     /**********************************************************************************************/
+
+    //5. CALCULAR EL RANGO DE LAS SUMAS DE LAS JUGADAS
 
     //Array de la suma
     protected function sumsArrayNumbers() {
@@ -183,6 +186,8 @@ class RangeNumbers {
     /*************************************    Arreglos de  ************************************/
     /************************************* todas las jugadas **********************************/
 
+    //6. CALCULAR LAS POSICIONES DE LAS JUGADAS
+
     //Arreglos de todas las jugadas pasadas
     protected function positionCalculation($position) {
         $conn = DatabaseClass::dbConnection();  
@@ -218,6 +223,8 @@ class RangeNumbers {
     /*******************************   Diferencia de números **************************************/
     /**********************************************************************************************/
 
+    //7. CALCULAR EL RANGO DE LAS RESTAS DE UN NUMERO Y OTRO
+
     protected function number_diff ($down, $up) {
         $positionArrayDown = $this-> positionCalculation($down);
         $positionArrayUp = $this-> positionCalculation($up);
@@ -225,7 +232,7 @@ class RangeNumbers {
         $positionDiferences = [];
 
         for($i = 0; $i < count($positionArrayDown); $i++) {
-            $positionDiferences [] = $positionArrayUp[$i] - $positionArrayDown[$i];
+            $positionDiferences [] = abs($positionArrayUp[$i] - $positionArrayDown[$i]);
         }
 
         return $positionDiferences;
@@ -260,13 +267,13 @@ class RangeNumbers {
         return [$minSum, $maxSum];
     }
 
-    /********************************************************************************************* */
-    /********************************************************************************************* */
     
+    //8. EXCLUIR LAS JUGADAS ANTERIORES
+
     //Verificar si esta jugada ya había salido
     protected function lastNumbersExceptions() {
         $totalNumbers = $this-> totalNumbers();
-        $arrayNumbers = $this-> repeatedNumbers(null, 3);
+        $arrayNumbers = $this-> normalNumbers(null, 5);
 
         sort($arrayNumbers);
          
@@ -277,6 +284,8 @@ class RangeNumbers {
         }      
         return $arrayNumbers;
     }
+
+    //9. GENERADOR DE ALEATORIOS PARA SER EXCLUIDOS
 
     //Generador de random
     protected function randomGenerator($amount) {
@@ -296,6 +305,8 @@ class RangeNumbers {
 
        return $randomArraysOfTheDay;
     }
+
+    //10. EXCLUSION DE ALEATORIOS
 
     //Verificar si esta jugada ya había salido
     protected function randomNumbersExceptions ($totalNumbers, $arrayNumbers) {
@@ -325,6 +336,9 @@ class RangeNumbers {
             return [];
        }
     }
+
+    //11. RANGO DE SUMAS ACEPTADO
+
     //Incluir rango de sumas
     protected function sumRange() {
         //Array        
@@ -341,8 +355,10 @@ class RangeNumbers {
         }
     }
 
+    //12. RANGO DE LA RESTA DE UN NUMERO A OTRO
+
     //Incluir rango de restas
-    protected function diffRange($array = [], $down, $up) {
+    public function diffRange($array = [], $down, $up) {
     
         $array = $this -> sumRange();
 
@@ -350,7 +366,7 @@ class RangeNumbers {
             //Array del máximo y mínimo
             $rangeDiffArray = $this -> rangeDiffArray ($down, $up);
             //Array difference
-            $diff = $array[$up - 1] - $array[$down - 1];
+            $diff = abs($array[$up - 1] - $array[$down - 1]);
 
             if($diff >= $rangeDiffArray [0] && $diff <= $rangeDiffArray [1]) {
                 return $array;
