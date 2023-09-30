@@ -320,7 +320,7 @@ class RangeNumbers {
         }      
         return $arrayNumbers;
     }
-
+/*
     //Excluir los número aleatorios
     protected function randomOfTheDayException() {
        $arrayNumbers = $this-> lastNumbersExceptions();
@@ -336,13 +336,13 @@ class RangeNumbers {
             return [];
        }
     }
-
+*/
     //11. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas
     protected function sumRange() {
         //Array        
-        $totalNumbers = $this -> randomOfTheDayException();
+        $totalNumbers =  $this-> lastNumbersExceptions();
         //Suma de los elementos del array
         $sumArray = $this -> sumArray ($totalNumbers);
         //Array del máximo y mínimo
