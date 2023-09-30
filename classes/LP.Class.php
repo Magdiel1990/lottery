@@ -118,11 +118,12 @@ class RangeNumbers {
         return $arrayNumbers;
     }
 
+
     /*************************************   Suma de números  *************************************/
     /**********************************************************************************************/
 
     //Array de la suma
-    protected function sumsArray() {
+    protected function sumsArrayNumbers() {
         $conn = DatabaseClass::dbConnection();  
         $result = $conn -> query ("SELECT sum(number) AS suma FROM numbers GROUP BY date ORDER BY suma;");
 
@@ -169,31 +170,31 @@ class RangeNumbers {
 
     //Desviación estandard del array
     protected function arrayStandardDeviation() {
-        $sumsArray = $this -> sumsArray();
-        return $this -> standardDeviation ($sumsArray);
+        $sumsArrayNumbers = $this -> sumsArrayNumbers();
+        return $this -> standardDeviation ($sumsArrayNumbers);
     }
 
-    protected function minSum() {
-        $sumsArray = $this -> sumsArray();
+    protected function minSum($margin) {
+        $sumsArrayNumbers = $this -> sumsArrayNumbers();
         $arrayStandardDeviation = $this -> arrayStandardDeviation();
 
-        $minSum = floor(($this -> average($sumsArray) - $arrayStandardDeviation)) - 8;
+        $minSum = floor(($this -> average($sumsArrayNumbers) - $arrayStandardDeviation)) - $margin;
 
         return $minSum;
     }
 
-    protected function maxSum() {
-        $sumsArray = $this -> sumsArray();
+    protected function maxSum($margin) {
+        $sumsArrayNumbers = $this -> sumsArrayNumbers();
         $arrayStandardDeviation = $this -> arrayStandardDeviation();
 
-        $maxSum = ceil(($this -> average($sumsArray) + $arrayStandardDeviation)) + 8;
+        $maxSum = ceil(($this -> average($sumsArrayNumbers) + $arrayStandardDeviation)) + $margin;
 
         return $maxSum;
     }
 
     protected function rangeSumArray () {
-        $minSum = $this -> minSum();
-        $maxSum = $this -> maxSum();
+        $minSum = $this -> minSum(8);
+        $maxSum = $this -> maxSum(8);
 
         return [$minSum, $maxSum];
     }
@@ -204,7 +205,7 @@ class RangeNumbers {
     //Arreglos de todas las jugadas pasadas
     protected function positionCalculation($position) {
         $conn = DatabaseClass::dbConnection();  
-        $result = $conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date;");
+        $result = $conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date desc;");
 
         $positionArray = [];
 
@@ -232,6 +233,55 @@ class RangeNumbers {
         return $totalPosition;
     }
 
+    
+    /*******************************   Diferencia de números **************************************/
+    /**********************************************************************************************/
+
+    protected function number_diff ($down, $up) {
+        $positionArrayDown = $this-> positionCalculation($down);
+        $positionArrayUp = $this-> positionCalculation($up);
+
+        $positionDiferences = [];
+
+        for($i = 0; $i < count($positionArrayDown); $i++) {
+            $positionDiferences [] = $positionArrayUp[$i] - $positionArrayDown[$i];
+        }
+
+        return $positionDiferences;
+    }
+
+    protected function minSumDiff($down, $up) {
+        $array = $this -> number_diff ($down, $up);
+
+        sort($array);
+
+        $minSum = $array[0];
+
+        return $minSum;
+    }
+
+    protected function maxSumDiff($down, $up) {
+        $array = $this -> number_diff ($down, $up);
+
+        sort($array);
+
+        $count = count($array);      
+
+        $maxSum = $array [$count - 1];
+
+        return $maxSum;
+    }
+    
+    protected function rangeDiffArray ($down, $up) {
+        $minSum = $this -> minSumDiff($down, $up);
+        $maxSum = $this -> maxSumDiff($down, $up);
+
+        return [$minSum, $maxSum];
+    }
+
+    /********************************************************************************************* */
+    /********************************************************************************************* */
+    
     //Verificar si esta jugada ya había salido
     protected function lastNumbersExceptions() {
         $totalNumbers = $this-> totalNumbers();
@@ -310,8 +360,44 @@ class RangeNumbers {
         }
     }
 
+    //Incluir rango de restas
+    protected function diffRange($array = [], $down, $up) {
+    
+        $array = $this -> sumRange();
+
+        if(count($array) != 0) {
+            //Array del máximo y mínimo
+            $rangeDiffArray = $this -> rangeDiffArray ($down, $up);
+            //Array difference
+            $diff = $array[$up - 1] - $array[$down - 1];
+
+            if($diff >= $rangeDiffArray [0] && $diff <= $rangeDiffArray [1]) {
+                return $array;
+            } else {
+                return [];
+            }
+        } else {
+            return $array;
+        }
+    }
+    //Patrón de restas
+    protected function subRange() {
+        $array = $this -> diffRange(null, 1, 2);
+        $array = $this -> diffRange($array, 1, 3);
+        $array = $this -> diffRange($array, 1, 4);
+        $array = $this -> diffRange($array, 1, 5);
+        $array = $this -> diffRange($array, 2, 3);
+        $array = $this -> diffRange($array, 2, 4);
+        $array = $this -> diffRange($array, 2, 5);
+        $array = $this -> diffRange($array, 3, 4);
+        $array = $this -> diffRange($array, 3, 5);
+        $array = $this -> diffRange($array, 4, 5);
+
+        return $array;
+    }
+
     public function finalNumbers () {
-        $totalNumbers = $this -> sumRange();
+        $totalNumbers = $this -> subRange();
         return $totalNumbers;
     }
 }
