@@ -6,6 +6,9 @@ class RangeNumbers {
     protected $amount;
     protected $time;
     protected $arrayNumbers;
+    protected $array;
+    protected $down; 
+    protected $up;
 
 
     /************************************* Cálculo del ************************************/
@@ -119,8 +122,8 @@ class RangeNumbers {
 
         return $sums;
     }
-    //Suma de los elementos de array
-    private function sumArray ($array) {
+    //Suma de los elementos de un array
+    protected function sumArray ($array) {
         $count = count($array);
 
         $sum = 0;
@@ -131,56 +134,18 @@ class RangeNumbers {
         return $sum;
     }
     //Promedio del array
-    private function average($array) {
+    protected function average($array) {
         $sum = $this -> sumArray ($array);
        
         return $media = $sum / count($array);
     }
+    
+    //Rango máximo y mínimo
+    protected function minMaxArray($array) {  
+        $min =  min($array);
+        $max =  max($array);
 
-    //Desviación estándar
-    private function standardDeviation ($array) {
-        $count = count($array);
-        $media = $this -> average($array);
-
-        $varianza = 0;
-        for($i = 0; $i < $count; $i++) {
-            $varianza += pow(($media - $array[$i]), 2);
-        }
-
-        $standardDesviation = sqrt($varianza / $count);
-
-        return $standardDesviation;
-    }
-
-    //Desviación estandard del array
-    protected function arrayStandardDeviation() {
-        $sumsArrayNumbers = $this -> sumsArrayNumbers();
-        return $this -> standardDeviation ($sumsArrayNumbers);
-    }
-
-    protected function minSum($margin) {
-        $sumsArrayNumbers = $this -> sumsArrayNumbers();
-        $arrayStandardDeviation = $this -> arrayStandardDeviation();
-
-        $minSum = floor(($this -> average($sumsArrayNumbers) - $arrayStandardDeviation)) - $margin;
-
-        return $minSum;
-    }
-
-    protected function maxSum($margin) {
-        $sumsArrayNumbers = $this -> sumsArrayNumbers();
-        $arrayStandardDeviation = $this -> arrayStandardDeviation();
-
-        $maxSum = ceil(($this -> average($sumsArrayNumbers) + $arrayStandardDeviation)) + $margin;
-
-        return $maxSum;
-    }
-
-    protected function rangeSumArray () {
-        $minSum = $this -> minSum(8);
-        $maxSum = $this -> maxSum(8);
-
-        return [$minSum, $maxSum];
+        return [$min, $max];
     }
 
     /*************************************    Arreglos de  ************************************/
@@ -238,33 +203,11 @@ class RangeNumbers {
         return $positionDiferences;
     }
 
-    protected function minSumDiff($down, $up) {
-        $array = $this -> number_diff ($down, $up);
-
-        sort($array);
-
-        $minSum = $array[0];
-
-        return $minSum;
-    }
-
-    protected function maxSumDiff($down, $up) {
-        $array = $this -> number_diff ($down, $up);
-
-        sort($array);
-
-        $count = count($array);      
-
-        $maxSum = $array [$count - 1];
-
-        return $maxSum;
-    }
-    
+   
     protected function rangeDiffArray ($down, $up) {
-        $minSum = $this -> minSumDiff($down, $up);
-        $maxSum = $this -> maxSumDiff($down, $up);
+        $array = $this -> number_diff ($down, $up);
 
-        return [$minSum, $maxSum];
+        return $this -> minMaxArray($array);
     }
 
     
@@ -320,23 +263,7 @@ class RangeNumbers {
         }      
         return $arrayNumbers;
     }
-/*
-    //Excluir los número aleatorios
-    protected function randomOfTheDayException() {
-       $arrayNumbers = $this-> lastNumbersExceptions();
 
-       if(count($arrayNumbers) !== 0) {
-
-        $randomArraysOfTheDay = $this-> randomGenerator(100);
-
-        $arrayNumbers = $this-> randomNumbersExceptions($randomArraysOfTheDay, $arrayNumbers);
-        
-        return $arrayNumbers;
-       } else {
-            return [];
-       }
-    }
-*/
     //11. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas
@@ -346,7 +273,7 @@ class RangeNumbers {
         //Suma de los elementos del array
         $sumArray = $this -> sumArray ($totalNumbers);
         //Array del máximo y mínimo
-        $rangeSumArray = $this -> rangeSumArray ();
+        $rangeSumArray = $this -> minMaxArray($this -> sumsArrayNumbers());
 
         if($sumArray >= $rangeSumArray [0] && $sumArray <= $rangeSumArray [1]) {
             return $totalNumbers;
@@ -407,33 +334,10 @@ class RangeNumbers {
         return $averageArray;       
     }
 
-    protected function minSumAvg() {
-        $array = $this -> averageArray();
-
-        sort($array);
-
-        $minAvg = $array[0];
-
-        return $minAvg;
-    }
-
-    protected function maxSumAvg() {
-        $array = $this -> averageArray();
-
-        sort($array);
-
-        $count = count($array);      
-
-        $maxAvg = $array [$count - 1];
-
-        return $maxAvg;
-    }
-    
     protected function rangeAvg() {
-        $minAvg = $this -> minSumAvg();
-        $maxAvg = $this -> maxSumAvg();
+        $array = $this -> averageArray();
 
-        return [$minAvg, $maxAvg];
+        return $this -> minMaxArray($array);
     }
 
     protected function rangeAvgArray () {
@@ -473,36 +377,13 @@ class RangeNumbers {
         return $productArray;          
     }
 
-    protected function minProAvg() {
-        $array = $this -> productArray();
-
-        sort($array);
-
-        $minPro = $array[0];
-
-        return $minPro;
-    }
-
-    protected function maxProAvg() {
-        $array = $this -> productArray();
-
-        sort($array);
-
-        $count = count($array);      
-
-        $maxPro = $array [$count - 1];
-
-        return $maxPro;
-    }
-    
     protected function rangePro() {
-        $minPro = $this -> minSumPro();
-        $maxPro = $this -> maxSumPro();
+       $array = $this -> productArray();
 
-        return [$minPro, $maxPro];
+       return $this -> minMaxArray($array);
     }
 
-    private function product($array) {
+    protected function product($array) {
         $product = 1;
 
         for($i = 0; $i < count($array); $i++) {
