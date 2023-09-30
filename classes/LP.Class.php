@@ -53,30 +53,11 @@ class RangeNumbers {
 
         return $arrayNumbers;
     }
-    
-    //Descarte del día
-    private function dayOut() {
-        date_default_timezone_set ("America/Santo_Domingo");
-        $today = date("j");
-
-        $arrayNumbers = $this-> arrayNumbers();
-
-        for($i = 0; $i < count($arrayNumbers); $i++) {
-            if($arrayNumbers[$i] == $today) {
-                unset($arrayNumbers[$i]);
-                break;
-            }
-        }
-
-        sort($arrayNumbers);
-
-        return $arrayNumbers;
-    }
 
     //Descarte de los números que menos salen
     protected function rareNumbersOut($arrayNumbers = null, $amount) {
         $conn = DatabaseClass::dbConnection();  
-        $arrayNumbers = $this-> dayOut();   
+        $arrayNumbers = $this-> arrayNumbers();   
        
         $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total asc LIMIT $amount;");
         while($row = $result -> fetch_assoc()){
