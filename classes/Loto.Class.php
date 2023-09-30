@@ -90,7 +90,7 @@ class LotoClass extends RangeNumbers {
 /************************************* todas las jugadas **********************************/
 
     //Arreglos de todas las jugadas pasadas
-    protected function positionCal($position) {
+    protected function positionCalculation($position) {
         $conn = DatabaseClassLoto::dbConnection();  
         $result = $conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date;");
 

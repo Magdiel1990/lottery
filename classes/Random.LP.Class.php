@@ -35,7 +35,7 @@ class RangeNumbersChild extends RangeNumbers {
             $numbers [] = intval($row["number"]);
         }        
    
-        while(count($arrayNumbers) != $numbers) {
+        while(count($arrayNumbers) != $amount) {
             array_push($arrayNumbers, $numbers[rand(0, $amount - 1)]);
 
             $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
@@ -49,7 +49,7 @@ class RangeNumbersChild extends RangeNumbers {
     public function randomNumbers() {
         $arrayNumbers = $this-> arrayNumbers();
         $arrayNumbers = $this-> rareNumbersOut($arrayNumbers, 1);
-        $arrayNumbers = $this-> normalNumbers($arrayNumbers, 6);
+        $arrayNumbers = $this-> normalNumbers($arrayNumbers, 5);
 
         return $arrayNumbers;
     }
