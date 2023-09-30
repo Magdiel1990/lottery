@@ -24,6 +24,9 @@ include "partials/head.php";
             $finalArray = new RangeNumbers();
             $numbers = $finalArray-> finalNumbers(); 
 
+           /* $numbers = $finalArray-> productArray ();
+            var_dump($numbers);
+            exit;*/
             sort($numbers);            
             
             if(count($numbers) > 0) {

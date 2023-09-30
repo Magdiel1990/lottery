@@ -358,7 +358,7 @@ class RangeNumbers {
     //12. RANGO DE LA RESTA DE UN NUMERO A OTRO
 
     //Incluir rango de restas
-    public function diffRange($array = [], $down, $up) {
+    protected function diffRange($array = [], $down, $up) {
     
         $array = $this -> sumRange();
 
@@ -393,8 +393,146 @@ class RangeNumbers {
         return $array;
     }
 
+    //13. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
+
+    protected function averageArray() {
+        $totalArrayNumbers = $this-> totalNumbers();
+
+        $averageArray = [];
+
+        for($i = 0; $i < count($totalArrayNumbers); $i++) {
+            $averageArray [] = $this -> average($totalArrayNumbers[$i]);
+        }
+
+        return $averageArray;       
+    }
+
+    protected function minSumAvg() {
+        $array = $this -> averageArray();
+
+        sort($array);
+
+        $minAvg = $array[0];
+
+        return $minAvg;
+    }
+
+    protected function maxSumAvg() {
+        $array = $this -> averageArray();
+
+        sort($array);
+
+        $count = count($array);      
+
+        $maxAvg = $array [$count - 1];
+
+        return $maxAvg;
+    }
+    
+    protected function rangeAvg() {
+        $minAvg = $this -> minSumAvg();
+        $maxAvg = $this -> maxSumAvg();
+
+        return [$minAvg, $maxAvg];
+    }
+
+    protected function rangeAvgArray () {
+        $array = $this -> subRange();       
+
+        if(count($array) != 0) {
+            //Array del máximo y mínimo
+            $rangeAvg = $this -> rangeAvg();
+            //Array average
+            $average = $this -> average($array);
+
+            if($average >= $rangeAvg [0] && $average <= $rangeAvg [1]) {
+                return $array;
+            } else {
+                return [];
+            }
+        } else {
+            return $array;
+        }
+    }
+
+    //14. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
+
+    protected function productArray () {
+        $totalArrayNumbers = $this-> totalNumbers();
+
+        $productArray = [];
+
+        for($i = 0; $i < count($totalArrayNumbers); $i++) {
+            $product = 1;
+            for($j = 0; $j < count($totalArrayNumbers[$i]); $j++) { 
+                $product *= $totalArrayNumbers[$i][$j];
+            }
+            $productArray[] = $product;
+        }       
+       
+        return $productArray;          
+    }
+
+    protected function minProAvg() {
+        $array = $this -> productArray();
+
+        sort($array);
+
+        $minPro = $array[0];
+
+        return $minPro;
+    }
+
+    protected function maxProAvg() {
+        $array = $this -> productArray();
+
+        sort($array);
+
+        $count = count($array);      
+
+        $maxPro = $array [$count - 1];
+
+        return $maxPro;
+    }
+    
+    protected function rangePro() {
+        $minPro = $this -> minSumPro();
+        $maxPro = $this -> maxSumPro();
+
+        return [$minPro, $maxPro];
+    }
+
+    private function product($array) {
+        $product = 1;
+
+        for($i = 0; $i < count($array); $i++) {
+            $product *= $array[$i];
+        }
+
+        return $product;
+    }
+
+    protected function rangeProArray () {
+        $array = $this -> rangeAvgArray ();       
+
+        if(count($array) != 0) {
+            //Array del máximo y mínimo
+            $rangePro = $this -> rangePro();
+            //Array average
+            $product = $this -> product($array);
+
+            if($product >= $rangePro [0] && $product <= $rangePro [1]) {
+                return $array;
+            } else {
+                return [];
+            }
+        } else {
+            return $array;
+        }
+    }
+
     public function finalNumbers () {
-        $totalNumbers = $this -> subRange();
+        $totalNumbers = $this -> rangeAvgArray();
         return $totalNumbers;
     }
 }
