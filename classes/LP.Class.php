@@ -412,9 +412,49 @@ class RangeNumbers {
         }
     }
 
+    //14. QUITAR NUMEROS DOBLEMENTE CONSECUTIVOS
+    protected function consecutiveOutArray (){
+        $array = $this -> rangeAvgArray();
+
+        $count = 0;
+
+        for($i = 1; $i < count($array); $i++) {
+            if($array[$i] - $array[$i - 1] == 1) {
+                $count += 1;
+            }            
+        }
+
+        if($count <= 1) {
+            return $array;
+        } else {
+            return [];
+        }        
+    }
+
+    //Final
     public function finalNumbers () {
-        $totalNumbers = $this -> rangeAvgArray();
+        $totalNumbers = $this -> consecutiveOutArray();
+        sort($totalNumbers);
         return $totalNumbers;
     }
 }
+
+/*
+protected function randomGenerator($amount) {
+        $randomArraysOfTheDay = [];
+
+        while(count($randomArraysOfTheDay) < $amount) {
+            $generatedRandomArray = [];
+            while(count($generatedRandomArray)< 5) {
+                $generatedRandomArray [] = rand(1,31);
+                $generatedRandomArray = array_unique($generatedRandomArray, SORT_NUMERIC);
+            }
+
+            sort($generatedRandomArray);
+            
+            $randomArraysOfTheDay [] = $generatedRandomArray;
+        }
+
+       return $randomArraysOfTheDay;
+    */
 ?>
