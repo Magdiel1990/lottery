@@ -83,7 +83,6 @@ class RangeNumbersChild extends RangeNumbers {
         }        
     }
 
-
     public function randomNumbers() {
         $arrayNumbers = $this-> arrayNumbers();
         $arrayNumbers = $this-> normalNumbers($arrayNumbers, 5);
