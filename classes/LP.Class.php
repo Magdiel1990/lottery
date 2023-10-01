@@ -252,7 +252,7 @@ class RangeNumbers {
     //8. EXCLUIR LAS JUGADAS ANTERIORES
 
     //Verificar si esta jugada ya había salido
-    protected function lastNumbersExceptions() {
+    protected function lastNumbersExceptions($arrayNumbers = null) {
         $totalNumbers = $this-> totalNumbers();
         $arrayNumbers = $this-> rangeStandardDeviation();
 
@@ -269,7 +269,7 @@ class RangeNumbers {
     //11. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas
-    protected function sumRange() {
+    protected function sumRange($arrayNumbers = null) {
         //Array        
         $totalNumbers =  $this-> lastNumbersExceptions();
         //Suma de los elementos del array
@@ -334,7 +334,7 @@ class RangeNumbers {
 
         return $this -> minMaxArray($array);
     }
-
+    //Rango de los promedios
     protected function rangeAvgArray () {
         $array = $this -> subRange();       
 
@@ -400,7 +400,7 @@ class RangeNumbers {
     }
 
     //14. QUITAR NUMEROS DOBLEMENTE CONSECUTIVOS
-    protected function consecutiveOutArray (){
+    protected function consecutiveOutArray ($arrayNumbers = null){
         $array = $this -> rangeAvgArray();
 
         $count = 0;
