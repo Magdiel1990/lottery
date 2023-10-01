@@ -9,6 +9,8 @@ class RangeNumbers {
     protected $array;
     protected $down; 
     protected $up;
+    protected $data;
+    protected $range;
 
 
     /************************************* Cálculo del ************************************/
@@ -130,6 +132,14 @@ class RangeNumbers {
 
         return [$min, $max];
     }
+    //Condition range
+    protected function rangeCondition($data, $range, $array) {
+        if($data >= $range [0] && $data <= $range [1]) {
+            return $array;
+        } else {
+            return [];
+        }
+    }
 
     /*************************************    Arreglos de  ************************************/
     /************************************* todas las jugadas **********************************/
@@ -192,7 +202,7 @@ class RangeNumbers {
 
         return $this -> minMaxArray($array);
     }
-    
+
 
      //15. RANGO DE DESVIACION ESTANDAR
     
@@ -236,11 +246,7 @@ class RangeNumbers {
         //Máximo y mínimo de las deviaciónes estándares
         $rangeDev = $this-> minMaxArray($arrayOfStandardDeviation);
 
-        if($standardDeviationOfArray >= $rangeDev [0] && $standardDeviationOfArray <= $rangeDev [1]) {
-            return $array;
-        } else {
-            return [];
-        }
+        return $this -> rangeCondition ($standardDeviationOfArray, $rangeDev, $array);
     }
     
     //8. EXCLUIR LAS JUGADAS ANTERIORES
@@ -271,11 +277,7 @@ class RangeNumbers {
         //Array del máximo y mínimo
         $rangeSumArray = $this -> minMaxArray($this -> sumsArrayNumbers());
 
-        if($sumArray >= $rangeSumArray [0] && $sumArray <= $rangeSumArray [1]) {
-            return $totalNumbers;
-        } else {
-            return [];
-        }
+        return $this -> rangeCondition ($sumArray, $rangeSumArray, $totalNumbers);
     }
 
     //12. RANGO DE LA RESTA DE UN NUMERO A OTRO
@@ -290,12 +292,9 @@ class RangeNumbers {
             $rangeDiffArray = $this -> rangeDiffArray ($down, $up);
             //Array difference
             $diff = abs($array[$up - 1] - $array[$down - 1]);
+            
+            return $this -> rangeCondition ($diff, $rangeDiffArray, $array);
 
-            if($diff >= $rangeDiffArray [0] && $diff <= $rangeDiffArray [1]) {
-                return $array;
-            } else {
-                return [];
-            }
         } else {
             return $array;
         }
@@ -345,11 +344,7 @@ class RangeNumbers {
             //Array average
             $average = $this -> average($array);
 
-            if($average >= $rangeAvg [0] && $average <= $rangeAvg [1]) {
-                return $array;
-            } else {
-                return [];
-            }
+            return $this -> rangeCondition ($average, $rangeAvg, $array);
         } else {
             return $array;
         }
@@ -398,11 +393,7 @@ class RangeNumbers {
             //Array average
             $product = $this -> product($array);
 
-            if($product >= $rangePro [0] && $product <= $rangePro [1]) {
-                return $array;
-            } else {
-                return [];
-            }
+            return $this -> rangeCondition ($product, $rangePro, $array);
         } else {
             return $array;
         }
