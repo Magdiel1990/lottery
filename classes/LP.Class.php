@@ -209,42 +209,6 @@ class RangeNumbers {
         return $arrayNumbers;
     }
 
-    //9. GENERADOR DE ALEATORIOS PARA SER EXCLUIDOS
-
-    //Generador de random
-    protected function randomGenerator($amount) {
-        $randomArraysOfTheDay = [];
-
-        while(count($randomArraysOfTheDay) < $amount) {
-            $generatedRandomArray = [];
-            while(count($generatedRandomArray)< 5) {
-                $generatedRandomArray [] = rand(1,31);
-                $generatedRandomArray = array_unique($generatedRandomArray, SORT_NUMERIC);
-            }
-
-            sort($generatedRandomArray);
-            
-            $randomArraysOfTheDay [] = $generatedRandomArray;
-        }
-
-       return $randomArraysOfTheDay;
-    }
-
-    //10. EXCLUSION DE ALEATORIOS
-
-    //Verificar si esta jugada ya había salido
-    protected function randomNumbersExceptions ($totalNumbers, $arrayNumbers) {
-        sort($arrayNumbers);
-         
-        for($i = 0; $i < count($totalNumbers); $i++) {
-            if($totalNumbers[$i] == $arrayNumbers) {
-                $arrayNumbers = [];
-                return $arrayNumbers;
-            }
-        }      
-        return $arrayNumbers;
-    }
-
     //11. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas

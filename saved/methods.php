@@ -1,7 +1,10 @@
 <?php
 
 /*
-protected function randomGenerator($amount) {
+ //9. GENERADOR DE ALEATORIOS PARA SER EXCLUIDOS
+
+    //Generador de random
+    protected function randomGenerator($amount) {
         $randomArraysOfTheDay = [];
 
         while(count($randomArraysOfTheDay) < $amount) {
@@ -17,6 +20,21 @@ protected function randomGenerator($amount) {
         }
 
        return $randomArraysOfTheDay;
+    }
+
+    //10. EXCLUSION DE ALEATORIOS
+
+    //Verificar si esta jugada ya había salido
+    protected function randomNumbersExceptions ($totalNumbers, $arrayNumbers) {
+        sort($arrayNumbers);
+         
+        for($i = 0; $i < count($totalNumbers); $i++) {
+            if($totalNumbers[$i] == $arrayNumbers) {
+                $arrayNumbers = [];
+                return $arrayNumbers;
+            }
+        }      
+        return $arrayNumbers;
     }
 
     //3. SE EXCLUYE EL O LOS NUMEROS QUE MENOS SALEN
