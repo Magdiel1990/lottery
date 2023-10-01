@@ -1,6 +1,5 @@
 <?php
 require "../classes/Database.Class.php";
-$conn = DatabaseClass::dbConnection();
 
 include "../partials/head.php";
 ?>
@@ -17,6 +16,9 @@ include "../partials/head.php";
             echo $html;
             
             unset($_SESSION ["message"], $_SESSION ["message-alert"]);
+        } else {
+            //Desactivar contador de intentos
+            unset($_SESSION ["try"]);
         }
     ?>  
     <div class="row justify-content-center text-center mt-4"> 
@@ -51,10 +53,17 @@ include "../partials/head.php";
                 <input class="btn btn-primary mt-3" type="submit" value="Test">
             </form>
         </div>
+        <div class="row mt-4">
+            <?php
+            //Mensaje de intentos
+            if(!isset($_SESSION ["try"])) {
+                $_SESSION ["try"] = 0;
+            } else {
+                echo "<p class='text-center text-warning'>Intento: " . $_SESSION ["try"] .  "</p>";
+            }
+            ?>
+        </div>
     </div>
   </main>
 </body>
 </html>
-<?php
-    $conn -> close();
-?>
