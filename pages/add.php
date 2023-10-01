@@ -19,7 +19,7 @@ if(isset($_POST["numbers"])){
             $sql = "";
 
             for($i = 0; $i < count($numbers); $i++) {
-                $sql .= "INSERT INTO numbers (number, position, type_id, date) VALUES ('" . $numbers[$i] . "', " . $i+1 . ", 1, '$date');";
+                $sql .= "INSERT INTO numbers (number, position, date) VALUES ('" . $numbers[$i] . "', " . $i+1 . ", '$date');";
             }
 
             if($conn -> multi_query($sql)) {
