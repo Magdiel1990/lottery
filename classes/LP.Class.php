@@ -116,9 +116,11 @@ class RangeNumbers {
     }
     //Promedio del array
     protected function average($array) {
+        $count = count($array);
+        
         $sum = $this -> sumArray ($array);
        
-        return $media = $sum / count($array);
+        return $media = $sum / $count;
     }
     
     //Rango máximo y mínimo
@@ -190,14 +192,63 @@ class RangeNumbers {
 
         return $this -> minMaxArray($array);
     }
+    
 
+     //15. RANGO DE DESVIACION ESTANDAR
+    
+    //Desviación estándar
+    protected function standardDeviation ($array) {
+        $count = count($array);
+        
+        $media = $this -> average($array);
+
+        $varianza = 0;
+        for($i = 0; $i < $count; $i++) {
+            $varianza += pow(($media - $array[$i]), 2);
+        }
+
+        $standardDesviation = sqrt($varianza / $count);
+
+        return $standardDesviation;
+    }
+
+    protected function standardDeviationArray($multiArray) {
+
+        $standardDevArray = [];
+
+        for($i = 0; $i < count($multiArray); $i++) {
+            $standardDevArray [] = $this -> standardDeviation ($multiArray[$i]);
+        }
+
+        return $standardDevArray;
+    }
+
+    //Desviación estandard del array
+    public function rangeStandardDeviation() {
+        //Desviación standard de la jugada
+        $array = $this-> normalNumbers(null, 5);
+        $standardDeviationOfArray =  $this -> standardDeviation ($array);
+
+        //Desviaciones estandares de jugadas anteriores
+        $totalArrayNumbers = $this-> totalNumbers();
+        $arrayOfStandardDeviation =  $this -> standardDeviationArray($totalArrayNumbers);
+
+        //Máximo y mínimo de las deviaciónes estándares
+        $rangeDev = $this-> minMaxArray($arrayOfStandardDeviation);
+
+        if($standardDeviationOfArray >= $rangeDev [0] && $standardDeviationOfArray <= $rangeDev [1]) {
+            return $array;
+        } else {
+            return [];
+        }
+    }
     
     //8. EXCLUIR LAS JUGADAS ANTERIORES
 
     //Verificar si esta jugada ya había salido
     protected function lastNumbersExceptions() {
         $totalNumbers = $this-> totalNumbers();
-        $arrayNumbers = $this-> normalNumbers(null, 5);
+        $arrayNumbers = $this-> rangeStandardDeviation();
 
         sort($arrayNumbers);
          
@@ -375,7 +426,7 @@ class RangeNumbers {
             return [];
         }        
     }
-
+        
     //Final
     public function finalNumbers () {
         $totalNumbers = $this -> consecutiveOutArray();

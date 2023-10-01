@@ -23,6 +23,10 @@ include "partials/head.php";
         if(isset($_POST["generate"])){
             $finalArray = new RangeNumbers();
             $numbers = $finalArray-> finalNumbers(); 
+
+          /*  $numbers = $finalArray-> rangeStandardDeviation();
+            var_dump($numbers);
+            exit;*/
             
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {

@@ -55,6 +55,37 @@
         
         return $arrayNumbers;
     }  
+
+
+     //Promedio del array
+    private function average($array) {
+        $sum = $this -> sumArray ($array);
+       
+        return $media = $sum / count($array);
+    }
+
+    //Desviación estándar
+    private function standardDeviation ($array) {
+        $count = count($array);
+        $media = $this -> average($array);
+
+        $varianza = 0;
+        for($i = 0; $i < $count; $i++) {
+            $varianza += pow(($media - $array[$i]), 2);
+        }
+
+        $standardDesviation = sqrt($varianza / $count);
+
+        return $standardDesviation;
+    }
+
+    //Desviación estandard del array
+    protected function arrayStandardDeviation() {
+        $sumsArray = $this -> sumsArray();
+        return $this -> standardDeviation ($sumsArray);
+    }
+
+    
     */
 
     ?>

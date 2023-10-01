@@ -13,11 +13,15 @@
       <li class="nav-item">
         <a class="nav-link" href="/lottery/pages/random.php">Aleatorio</a>
       </li>
-      <li class="nav-item">
+    <!--  <li class="nav-item">
         <a class="nav-link" href="/lottery/pages/loto.add.php">Agregar Loto</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/lottery/pages/loto.php">Loto</a>
+      </li>
+-->
+      <li class="nav-item">
+        <a class="nav-link" href="/lottery/pages/random_test.php">Test</a>
       </li>
     </ul>
   </div>
