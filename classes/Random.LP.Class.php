@@ -6,23 +6,6 @@ class RangeNumbersChild extends RangeNumbers {
     /*************************************   Generando  ************************************/
     /*************************************    números   ************************************/
 
-    protected function rareNumbersOut ($arrayNumbers = null, $amount) {
-        $conn = DatabaseClass::dbConnection();  
-        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);   
-       
-        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total asc LIMIT $amount;");
-        while($row = $result -> fetch_assoc()){
-            $number = intval($row["number"]);
-            if(in_array($number, $arrayNumbers) && count($arrayNumbers) > $amount) {
-                $arrayNumbers = array_diff($arrayNumbers, array($number));                               
-            }
-        }  
-
-        sort($arrayNumbers);
-        
-        return $arrayNumbers;
-    }
-    
     protected function normalNumbers($arrayNumbers = null, $amount) {        
         $conn = DatabaseClass::dbConnection();     
         $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
@@ -48,7 +31,6 @@ class RangeNumbersChild extends RangeNumbers {
 
     public function randomNumbers() {
         $arrayNumbers = $this-> arrayNumbers();
-        $arrayNumbers = $this-> rareNumbersOut($arrayNumbers, 1);
         $arrayNumbers = $this-> normalNumbers($arrayNumbers, 5);
 
         return $arrayNumbers;
