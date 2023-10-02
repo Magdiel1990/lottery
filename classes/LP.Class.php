@@ -46,107 +46,7 @@ class RangeNumbers {
         return rand ($minNumber, $maxNumber);
     }
 
-
-    /*************************************   Generando  ************************************/
-    /*************************************    números   ************************************/
-
-    //2. SE GENERA EL NUMERO
-    
-    protected function arrayNumbers($arrayNumbers = null) {
-        $arrayNumbers = [$this-> numberRange(1), $this-> numberRange(2), $this-> numberRange(3), $this-> numberRange(4), $this-> numberRange(5)]; 
-        
-        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
-
-        sort($arrayNumbers);
-
-        return $arrayNumbers;
-    }
-
-    //3. SE INCLUYE EL O LOS NUMEROS QUE MAS SALEN
-
-    //Incluye números de sorteos anteriores
-    protected function normalNumbers($arrayNumbers = null, $amount) {        
-        $conn = DatabaseClass::dbConnection();     
-        $arrayNumbers = $this-> arrayNumbers(); 
-
-        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total desc LIMIT $amount;");
-
-        $numbers = [];
-        
-        while($row = $result -> fetch_assoc()){
-            $numbers [] = intval($row["number"]);
-        }        
-   
-        while(count($arrayNumbers) != $amount) {
-            array_push($arrayNumbers, $numbers[rand(0, $amount - 1)]);
-
-            $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
-        }
-        
-        sort($arrayNumbers);
-
-        return $arrayNumbers;
-    }
-
-
-    /*************************************   Suma de números  *************************************/
-    /**********************************************************************************************/
-
-    //4. CALCULAR EL RANGO DE LAS SUMAS DE LAS JUGADAS
-
-    //Array de la suma
-    protected function sumsArrayNumbers() {
-        $conn = DatabaseClass::dbConnection();  
-        $result = $conn -> query ("SELECT sum(number) AS suma FROM numbers GROUP BY date ORDER BY suma;");
-
-        $sums = [];
-
-        while($row = $result -> fetch_assoc()) {
-             $sums []  = $row ["suma"];
-        }
-
-        return $sums;
-    }
-    //Suma de los elementos de un array
-    protected function sumArray ($array) {
-        $count = count($array);
-
-        $sum = 0;
-        for($i = 0; $i < $count; $i++) {
-            $sum += $array[$i];
-        }
-
-        return $sum;
-    }
-    //Promedio del array
-    protected function average($array) {
-        $count = count($array);
-        
-        $sum = $this -> sumArray ($array);
-       
-        return $media = $sum / $count;
-    }
-    
-    //Rango máximo y mínimo
-    protected function minMaxArray($array) {  
-        $min =  min($array);
-        $max =  max($array);
-
-        return [$min, $max];
-    }
-    //Condition range
-    protected function rangeCondition($data, $range, $array) {
-        if($data >= $range [0] && $data <= $range [1]) {
-            return $array;
-        } else {
-            return [];
-        }
-    }
-
-    /*************************************    Arreglos de  ************************************/
-    /************************************* todas las jugadas **********************************/
-
-    //5. CALCULAR LAS POSICIONES DE LAS JUGADAS
+    //2. CALCULAR LAS POSICIONES DE LAS JUGADAS
 
     //Arreglos de todas las jugadas pasadas
     protected function positionCalculation($position) {
@@ -178,7 +78,119 @@ class RangeNumbers {
 
         return $totalPosition;
     }
+
+    /*************************************   Generando  ************************************/
+    /*************************************    números   ************************************/
+
+    //3. SE GENERA EL NUMERO
     
+    protected function arrayNumbers($arrayNumbers = null) {
+        $arrayNumbers = [$this-> numberRange(1), $this-> numberRange(2), $this-> numberRange(3), $this-> numberRange(4), $this-> numberRange(5)]; 
+        
+        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
+
+        sort($arrayNumbers);
+
+        return $arrayNumbers;
+    }
+
+    //4. SE INCLUYE EL O LOS NUMEROS QUE MAS SALEN
+
+    //Incluye números de sorteos anteriores
+    protected function normalNumbers($arrayNumbers = null, $amount) {        
+        $conn = DatabaseClass::dbConnection();     
+        $arrayNumbers = $this-> arrayNumbers(); 
+
+        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total desc LIMIT $amount;");
+
+        $numbers = [];
+        
+        while($row = $result -> fetch_assoc()){
+            $numbers [] = intval($row["number"]);
+        }        
+   
+        while(count($arrayNumbers) != $amount) {
+            array_push($arrayNumbers, $numbers[rand(0, $amount - 1)]);
+
+            $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
+        }
+        
+        sort($arrayNumbers);
+
+        return $arrayNumbers;
+    }
+
+
+    /*************************************   Suma de números  *************************************/
+    /**********************************************************************************************/
+
+    //5. CALCULAR EL RANGO DE LAS SUMAS DE LAS JUGADAS
+
+    //Array de la suma
+    protected function sumsArrayNumbers() {
+        $conn = DatabaseClass::dbConnection();  
+        $result = $conn -> query ("SELECT sum(number) AS suma FROM numbers GROUP BY date ORDER BY suma;");
+
+        $sums = [];
+
+        while($row = $result -> fetch_assoc()) {
+             $sums []  = $row ["suma"];
+        }
+
+        return $sums;
+    }
+    //Suma de los elementos de un array
+    protected function sumArray ($array) {
+        $count = count($array);
+
+        $sum = 0;
+        for($i = 0; $i < $count; $i++) {
+            $sum += $array[$i];
+        }
+
+        return $sum;
+    }
+  
+    //Promedio del array
+    protected function average($array) {
+        $count = count($array);
+        
+        $sum = $this -> sumArray ($array);
+       
+        return $media = $sum / $count;
+    }
+    
+    //Rango máximo y mínimo
+    protected function minMaxArray($array) {  
+        $min =  min($array);
+        $max =  max($array);
+
+        return [$min, $max];
+    }
+    //Condition range
+    protected function rangeCondition($data, $range, $array) {
+        if($data >= $range [0] && $data <= $range [1]) {
+            return $array;
+        } else {
+            return [];
+        }
+    }
+
+    //Suma de cada elemento
+    protected function number_sum ($down, $up) {
+        $positionArrayDown = $this-> positionCalculation($down);
+        $positionArrayUp = $this-> positionCalculation($up);
+
+        $positionSums = [];
+
+        for($i = 0; $i < count($positionArrayDown); $i++) {
+            $positionSums [] = $positionArrayUp[$i] + $positionArrayDown[$i];
+        }
+
+        return $positionSums;
+    }
+
+
     /*******************************   Diferencia de números **************************************/
     /**********************************************************************************************/
 
@@ -195,8 +207,7 @@ class RangeNumbers {
         }
 
         return $positionDiferences;
-    }
-
+    }   
    
     protected function rangeDiffArray ($down, $up) {
         $array = $this -> number_diff ($down, $up);
@@ -419,9 +430,44 @@ class RangeNumbers {
         }        
     }
 
-    //14. QUITAR LOS ALEATORIOS DE HOY    
-    public function randOutArray ($amount){
+    //14. RANGO PARA LA SUMA DE ELEMENTOS CONSECUTIVOS
+    protected function elementArraySum ($array, $down, $up) {
+        $sum = $array[$down - 1] + $array[$up - 1];
+        return $sum;
+    }
+
+    protected function rangeSumEach($array = [], $down, $up) {
+        //Arreglo de la suma de elementos consecutivos de los números jugados anteriormente
+        $arrayOfTheSumArray = $this -> number_sum ($down,$up);
+        //Arreglo del máximo y el mínimo
+        $maxMinArray = $this -> minMaxArray($arrayOfTheSumArray);
+        //Suma de elemento con elemento de los números candidatos
+        $data = $this -> elementArraySum ($array, $down, $up);
+        //Comparación de esa suma con el rango
+        $array = $this -> rangeCondition($data, $maxMinArray, $array);
+        
+        return $array;
+    }
+    
+    protected function sumEach() {
         $array = $this -> consecutiveOutArray();
+        $array = $this -> rangeSumEach($array, 1, 2);
+        $array = $this -> rangeSumEach($array, 1, 3);
+        $array = $this -> rangeSumEach($array, 1, 4);
+        $array = $this -> rangeSumEach($array, 1, 5);
+        $array = $this -> rangeSumEach($array, 2, 3);
+        $array = $this -> rangeSumEach($array, 2, 4);
+        $array = $this -> rangeSumEach($array, 2, 5);
+        $array = $this -> rangeSumEach($array, 3, 4);
+        $array = $this -> rangeSumEach($array, 3, 5);
+        $array = $this -> rangeSumEach($array, 4, 5);
+
+        return $array;
+    }
+
+    //14. QUITAR LOS ALEATORIOS DE HOY    
+    protected function randOutArray ($amount){
+        $array = $this -> sumEach();
 
         $randomNumbers = new RandomGenerator(1, 31, 5, $amount);
         $randomNumbers = $randomNumbers -> randGen(); 
