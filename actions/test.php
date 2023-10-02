@@ -26,7 +26,7 @@ if(isset($_POST["numbers"]) && isset($_POST["amount"])) {
 
     for($i = 0; $i < count($randomNumbers); $i++) {
         if($randomNumbers[$i] == $numbersInt) {
-            $_SESSION ["message"] = "Números encontrado";
+            $_SESSION ["message"] = "Números encontrados";
             $_SESSION ["message-alert"] = "success";
 
             header('Location: /lottery/pages/random_test.php');

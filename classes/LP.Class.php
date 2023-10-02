@@ -1,4 +1,6 @@
 <?php
+require_once ("classes/Random.Generators.Class.php");
+
 class RangeNumbers {
     protected $position;
     protected $start;
@@ -60,7 +62,7 @@ class RangeNumbers {
         return $arrayNumbers;
     }
 
-    //4. SE INCLUYE EL O LOS NUMEROS QUE MAS SALEN
+    //3. SE INCLUYE EL O LOS NUMEROS QUE MAS SALEN
 
     //Incluye números de sorteos anteriores
     protected function normalNumbers($arrayNumbers = null, $amount) {        
@@ -90,7 +92,7 @@ class RangeNumbers {
     /*************************************   Suma de números  *************************************/
     /**********************************************************************************************/
 
-    //5. CALCULAR EL RANGO DE LAS SUMAS DE LAS JUGADAS
+    //4. CALCULAR EL RANGO DE LAS SUMAS DE LAS JUGADAS
 
     //Array de la suma
     protected function sumsArrayNumbers() {
@@ -144,7 +146,7 @@ class RangeNumbers {
     /*************************************    Arreglos de  ************************************/
     /************************************* todas las jugadas **********************************/
 
-    //6. CALCULAR LAS POSICIONES DE LAS JUGADAS
+    //5. CALCULAR LAS POSICIONES DE LAS JUGADAS
 
     //Arreglos de todas las jugadas pasadas
     protected function positionCalculation($position) {
@@ -180,7 +182,7 @@ class RangeNumbers {
     /*******************************   Diferencia de números **************************************/
     /**********************************************************************************************/
 
-    //7. CALCULAR EL RANGO DE LAS RESTAS DE UN NUMERO Y OTRO
+    //6. CALCULAR EL RANGO DE LAS RESTAS DE UN NUMERO Y OTRO
 
     protected function number_diff ($down, $up) {
         $positionArrayDown = $this-> positionCalculation($down);
@@ -203,7 +205,7 @@ class RangeNumbers {
     }
 
 
-     //15. RANGO DE DESVIACION ESTANDAR
+    //7. RANGO DE DESVIACION ESTANDAR
     
     //Desviación estándar
     protected function standardDeviation ($array) {
@@ -265,7 +267,7 @@ class RangeNumbers {
         return $arrayNumbers;
     }
 
-    //11. RANGO DE SUMAS ACEPTADO
+    //9. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas
     protected function sumRange($arrayNumbers = null) {
@@ -279,7 +281,7 @@ class RangeNumbers {
         return $this -> rangeCondition ($sumArray, $rangeSumArray, $totalNumbers);
     }
 
-    //12. RANGO DE LA RESTA DE UN NUMERO A OTRO
+    //10. RANGO DE LA RESTA DE UN NUMERO A OTRO
 
     //Incluir rango de restas
     protected function diffRange($array = [], $down, $up) {
@@ -314,7 +316,7 @@ class RangeNumbers {
         return $array;
     }
 
-    //13. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
+    //11. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
 
     protected function averageArray() {
         $totalArrayNumbers = $this-> totalNumbers();
@@ -349,7 +351,7 @@ class RangeNumbers {
         }
     }
 
-    //14. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
+    //12. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
 
     protected function productArray () {
         $totalArrayNumbers = $this-> totalNumbers();
@@ -398,7 +400,7 @@ class RangeNumbers {
         }
     }
 
-    //14. QUITAR NUMEROS DOBLEMENTE CONSECUTIVOS
+    //13. QUITAR NUMEROS DOBLEMENTE CONSECUTIVOS
     protected function consecutiveOutArray ($arrayNumbers = null){
         $array = $this -> rangeAvgArray();
 
@@ -416,12 +418,28 @@ class RangeNumbers {
             return [];
         }        
     }
+
+    //14. QUITAR LOS ALEATORIOS DE HOY    
+    public function randOutArray ($amount){
+        $array = $this -> consecutiveOutArray();
+
+        $randomNumbers = new RandomGenerator(1, 31, 5, $amount);
+        $randomNumbers = $randomNumbers -> randGen(); 
+
+        for($i = 0; $i < count($randomNumbers); $i++) {
+            if($randomNumbers[$i] != $array) {
+                return $array;
+            } else {
+                return ["Encontrado en aleatorio"];
+            }
+        }
+    }
         
     //Final
     public function finalNumbers () {
-        $totalNumbers = $this -> consecutiveOutArray();
-        sort($totalNumbers);
-        return $totalNumbers;
+        $array = $this -> randOutArray (1000000);
+        sort($array);
+        return $array;
     }
 }
 
