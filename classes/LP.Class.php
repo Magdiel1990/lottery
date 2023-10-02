@@ -431,22 +431,26 @@ class RangeNumbers {
     }
 
     //14. RANGO PARA LA SUMA DE ELEMENTOS CONSECUTIVOS
-    protected function elementArraySum ($array, $down, $up) {
+    protected function elementArraySum ($array, $down, $up) {        
         $sum = $array[$down - 1] + $array[$up - 1];
-        return $sum;
+        return $sum;        
     }
 
-    protected function rangeSumEach($array = [], $down, $up) {
-        //Arreglo de la suma de elementos consecutivos de los números jugados anteriormente
-        $arrayOfTheSumArray = $this -> number_sum ($down,$up);
-        //Arreglo del máximo y el mínimo
-        $maxMinArray = $this -> minMaxArray($arrayOfTheSumArray);
-        //Suma de elemento con elemento de los números candidatos
-        $data = $this -> elementArraySum ($array, $down, $up);
-        //Comparación de esa suma con el rango
-        $array = $this -> rangeCondition($data, $maxMinArray, $array);
-        
-        return $array;
+    protected function rangeSumEach($array, $down, $up) {
+        if(count($array) != 0) {
+            //Arreglo de la suma de elementos consecutivos de los números jugados anteriormente
+            $arrayOfTheSumArray = $this -> number_sum ($down,$up);
+            //Arreglo del máximo y el mínimo
+            $maxMinArray = $this -> minMaxArray($arrayOfTheSumArray);
+            //Suma de elemento con elemento de los números candidatos
+            $data = $this -> elementArraySum ($array, $down, $up);
+            //Comparación de esa suma con el rango
+            $array = $this -> rangeCondition($data, $maxMinArray, $array);
+            
+            return $array;
+        } else {
+            return $array;
+        }
     }
     
     protected function sumEach() {
@@ -469,15 +473,20 @@ class RangeNumbers {
     protected function randOutArray ($amount){
         $array = $this -> sumEach();
 
-        $randomNumbers = new RandomGenerator(1, 31, 5, $amount);
-        $randomNumbers = $randomNumbers -> randGen(); 
+        if(count($array) != 0) {
+            //Números aleatorios
+            $randomNumbers = new RandomGenerator(1, 31, 5, $amount);
+            $randomNumbers = $randomNumbers -> randGen(); 
 
-        for($i = 0; $i < count($randomNumbers); $i++) {
-            if($randomNumbers[$i] != $array) {
-                return $array;
-            } else {
-                return ["Encontrado en aleatorio"];
+            for($i = 0; $i < count($randomNumbers); $i++) {
+                if($randomNumbers[$i] != $array) {
+                    return $array;
+                } else {
+                    return ["Encontrado en aleatorio"];
+                }
             }
+        } else {
+            return $array;
         }
     }
         
