@@ -492,7 +492,7 @@ class RangeNumbers {
         
     //Final
     public function finalNumbers () {
-        $array = $this -> randOutArray (1000000);
+        $array = $this -> randOutArray (200000);
         sort($array);
         return $array;
     }
