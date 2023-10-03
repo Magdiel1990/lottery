@@ -1,5 +1,5 @@
 <?php
-require_once ("classes/Random.Generators.Class.php");
+require_once ("Random.Generators.Class.php");
 
 class RangeNumbers {
     protected $position;
