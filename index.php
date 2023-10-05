@@ -2,8 +2,8 @@
 <?php
 require "classes/Database.Class.php";
 $conn = DatabaseClass::dbConnection();
-
-require "classes/LP.Class.php";
+require_once ("classes/Previous.Plays.Class.php");
+require_once "classes/LP.Class.php";
 include "partials/head.php";
 ?>
 

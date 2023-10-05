@@ -63,7 +63,7 @@ class RangeNumbers {
     }
     
     //Arreglo de los arreglos de todas las jugadas pasadas
-    protected function totalNumbers(){
+    public function totalNumbers(){
         $positionArray1 = $this-> positionCalculation(1);
         $positionArray2 = $this-> positionCalculation(2);
         $positionArray3 = $this-> positionCalculation(3);
@@ -264,7 +264,7 @@ class RangeNumbers {
     //8. EXCLUIR LAS JUGADAS ANTERIORES
 
     //Verificar si esta jugada ya había salido
-    protected function lastNumbersExceptions($arrayNumbers = null) {
+    public function lastNumbersExceptions($arrayNumbers = null) {
         $totalNumbers = $this-> totalNumbers();
         $arrayNumbers = $this-> rangeStandardDeviation();
 
@@ -282,8 +282,9 @@ class RangeNumbers {
 
     //Incluir rango de sumas
     protected function sumRange($arrayNumbers = null) {
-        //Array        
-        $totalNumbers =  $this-> lastNumbersExceptions();
+        //Array     
+        $totalNumbers = new PreviousPlaysClass();   
+        $totalNumbers =  $totalNumbers-> insersectArrayOut (5);
         //Suma de los elementos del array
         $sumArray = $this -> sumArray ($totalNumbers);
         //Array del máximo y mínimo
