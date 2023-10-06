@@ -569,7 +569,7 @@ class RangeNumbers {
 
         return $array;
     }
-    /*
+    
     //16. QUITAR LOS ALEATORIOS DE HOY    
     protected function randOutArray ($amount){
         $array = $this -> sumEach();
@@ -590,14 +590,12 @@ class RangeNumbers {
             return $array;
         }
     }
-    */
+    
     //Final
     public function finalNumbers () {
-        $array = $this -> sumEach();
+        $array = $this -> randOutArray(80000);
         sort($array);
         return $array;
     }
 }
-
-
 ?>
