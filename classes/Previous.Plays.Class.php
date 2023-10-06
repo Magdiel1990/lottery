@@ -21,7 +21,7 @@ class PreviousPlaysClass {
 
     private function intersectArraysBets ($time) {
         $allArrays = new RangeNumbers ();
-        $allArrays = $allArrays ->  totalNumbers();
+        $allArrays = $allArrays ->  totalNumbers(5);
 
         $intersectionsArrays = $this -> intersectArrays ($allArrays, $time);
 
@@ -54,7 +54,7 @@ class PreviousPlaysClass {
         //position: cantidad de secuencias a tomar en cuenta. Si son 5 bolos puede ser 1,2,3,4 o 5.
         //time: cantidad de días anteriores a la jugada para ser comparados.
         $allArrays = new RangeNumbers ();
-        $allArrays = $allArrays ->  totalNumbers();
+        $allArrays = $allArrays ->  totalNumbers(5);
 
         if(count($array) == 0) {
             return $array;
@@ -90,8 +90,9 @@ class PreviousPlaysClass {
 
         sort($array);
 
-        $array = $this -> intersectCompare($array, 4, $balls, 10, 50);
-        $array = $this -> intersectCompare($array, 3, $balls, 10, 50);       
+        $array = $this -> intersectCompare($array, 4, $balls, 5, 50);
+        $array = $this -> intersectCompare($array, 3, $balls, 5, 50);
+        $array = $this -> intersectCompare($array, 2, $balls, 5, 50);        
 
         return $array;
     }

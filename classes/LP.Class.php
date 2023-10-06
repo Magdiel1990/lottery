@@ -61,6 +61,15 @@ class RangeNumbers {
 
         return $positionArray;
     }
+
+    private function totalPlays() {
+        $conn = DatabaseClass::dbConnection(); 
+        $result = $conn -> query ("SELECT count(*) as total FROM numbers WHERE position = 1 ORDER BY date desc;");
+
+        $row = $result -> fetch_assoc();
+
+        return $row["total"];
+    }
     
     //Arreglo de los arreglos de todas las jugadas pasadas
     public function totalNumbers(){
@@ -252,7 +261,7 @@ class RangeNumbers {
         $standardDeviationOfArray =  $this -> standardDeviation ($array);
 
         //Desviaciones estandares de jugadas anteriores
-        $totalArrayNumbers = $this-> totalNumbers();
+        $totalArrayNumbers = $this-> totalNumbers(5);
         $arrayOfStandardDeviation =  $this -> standardDeviationArray($totalArrayNumbers);
 
         //Máximo y mínimo de las deviaciónes estándares
@@ -265,7 +274,7 @@ class RangeNumbers {
 
     //Verificar si esta jugada ya había salido
     public function lastNumbersExceptions($arrayNumbers = null) {
-        $totalNumbers = $this-> totalNumbers();
+        $totalNumbers = $this-> totalNumbers(5);
         $arrayNumbers = $this-> rangeStandardDeviation();
 
         sort($arrayNumbers);
@@ -331,7 +340,7 @@ class RangeNumbers {
     //11. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
 
     protected function averageArray() {
-        $totalArrayNumbers = $this-> totalNumbers();
+        $totalArrayNumbers = $this-> totalNumbers(5);
 
         $averageArray = [];
 
@@ -366,7 +375,7 @@ class RangeNumbers {
     //12. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
 
     protected function productArray () {
-        $totalArrayNumbers = $this-> totalNumbers();
+        $totalArrayNumbers = $this-> totalNumbers(5);
 
         $productArray = [];
 
