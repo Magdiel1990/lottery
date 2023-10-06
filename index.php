@@ -3,7 +3,6 @@
 require ("classes/Database.Class.php");
 $conn = DatabaseClass::dbConnection();
 require_once ("classes/Random.Generators.Class.php");
-require_once ("classes/Previous.Plays.Class.php");
 require_once ("classes/LP.Class.php");
 include ("partials/head.php");
 ?>
