@@ -264,7 +264,7 @@ class RangeNumbers {
         $standardDeviationOfArray =  $this -> standardDeviation ($array);
 
         //Desviaciones estandares de jugadas anteriores
-        $totalArrayNumbers = $this-> totalNumbers(5);
+        $totalArrayNumbers = $this-> totalNumbers();
         $arrayOfStandardDeviation =  $this -> standardDeviationArray($totalArrayNumbers);
 
         //Máximo y mínimo de las deviaciónes estándares
@@ -277,7 +277,7 @@ class RangeNumbers {
 
     //Verificar si esta jugada ya había salido
     private function lastNumbersExceptions($arrayNumbers = null) {
-        $totalNumbers = $this-> totalNumbers(5);
+        $totalNumbers = $this-> totalNumbers();
         $arrayNumbers = $this-> rangeStandardDeviation();
 
         sort($arrayNumbers);
@@ -305,7 +305,7 @@ class RangeNumbers {
     }
 
     private function intersectArraysBets ($time) {
-        $allArrays = $this ->  totalNumbers(5);
+        $allArrays = $this -> totalNumbers();
 
         $intersectionsArrays = $this -> intersectArrays ($allArrays, $time);
 
@@ -337,7 +337,7 @@ class RangeNumbers {
         //array: Jugada a ser examinada.
         //position: cantidad de secuencias a tomar en cuenta. Si son 5 bolos puede ser 1,2,3,4 o 5.
         //time: cantidad de días anteriores a la jugada para ser comparados.
-        $allArrays = $this ->  totalNumbers(5);
+        $allArrays = $this -> totalNumbers();
 
         if(count($array) == 0) {
             return $array;
@@ -431,7 +431,7 @@ class RangeNumbers {
     //12. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
 
     private function averageArray() {
-        $totalArrayNumbers = $this-> totalNumbers(5);
+        $totalArrayNumbers = $this-> totalNumbers();
 
         $averageArray = [];
 
@@ -466,7 +466,7 @@ class RangeNumbers {
     //13. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
 
     private function productArray () {
-        $totalArrayNumbers = $this-> totalNumbers(5);
+        $totalArrayNumbers = $this-> totalNumbers();
 
         $productArray = [];
 
