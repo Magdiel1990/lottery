@@ -290,14 +290,15 @@ class RangeNumbers {
     //Incluir rango de sumas
     protected function sumRange($arrayNumbers = null) {
         //Array     
-        $totalNumbers = new PreviousPlaysClass();   
-        $totalNumbers =  $totalNumbers-> insersectArrayOut (5);
+        $array = new PreviousPlaysClass();   
+        $array =  $array-> insersectArrayOut (5);
+
         //Suma de los elementos del array
-        $sumArray = $this -> sumArray ($totalNumbers);
+        $sumArray = $this -> sumArray ($array);
         //Array del máximo y mínimo
         $rangeSumArray = $this -> minMaxArray($this -> sumsArrayNumbers());
 
-        return $this -> rangeCondition ($sumArray, $rangeSumArray, $totalNumbers);
+        return $this -> rangeCondition ($sumArray, $rangeSumArray, $array);
     }
 
     //10. RANGO DE LA RESTA DE UN NUMERO A OTRO

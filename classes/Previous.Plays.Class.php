@@ -92,7 +92,6 @@ class PreviousPlaysClass {
 
         $array = $this -> intersectCompare($array, 4, $balls, 5, 50);
         $array = $this -> intersectCompare($array, 3, $balls, 5, 50);
-        $array = $this -> intersectCompare($array, 2, $balls, 5, 50);        
 
         return $array;
     }
