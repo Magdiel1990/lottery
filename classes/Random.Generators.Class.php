@@ -1,9 +1,9 @@
 <?php
 class RandomGenerator {
-    private $down;
-    private $up;
-    private $balls;
-    private $amount;
+    private int $down;
+    private int $up;
+    private int $balls;
+    private int $amount;
 
     function __construct($down, $up, $balls, $amount){
         $this -> down = $down;

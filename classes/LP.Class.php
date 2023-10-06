@@ -3,10 +3,8 @@ require_once ("Random.Generators.Class.php");
 
 class RangeNumbers {
     protected $position;
-    protected $start;
     protected $totalNumbers;
     protected $amount;
-    protected $time;
     protected $arrayNumbers;
     protected $array;
     protected $down; 
