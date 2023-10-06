@@ -292,7 +292,7 @@ class RangeNumbers {
 
     /********************************************Descartar combinaciones anteriores **********************************/
     /*****************************************************************************************************************/
-    
+    /*
     //9. EXCLUIR COMBINACIONES DE 3 Y 4 ANTERIORES
     
     protected function intersectArrays ($allArrays, $time) {
@@ -377,13 +377,13 @@ class RangeNumbers {
 
         return $array;
     }   
-   
+   */
     //10. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas
     protected function sumRange($arrayNumbers = null) {
         //Array     
-        $array =  $this-> insersectArrayOut (5);
+        $array =  $this-> lastNumbersExceptions();
 
         //Suma de los elementos del array
         $sumArray = $this -> sumArray ($array);
@@ -569,7 +569,7 @@ class RangeNumbers {
 
         return $array;
     }
-
+    /*
     //16. QUITAR LOS ALEATORIOS DE HOY    
     protected function randOutArray ($amount){
         $array = $this -> sumEach();
@@ -583,17 +583,17 @@ class RangeNumbers {
                 if($randomNumbers[$i] != $array) {
                     return $array;
                 } else {
-                    return ["Encontrado en aleatorio"];
+                    return [];
                 }
             }
         } else {
             return $array;
         }
     }
-        
+    */
     //Final
     public function finalNumbers () {
-        $array = $this -> randOutArray (200000);
+        $array = $this -> sumEach();
         sort($array);
         return $array;
     }

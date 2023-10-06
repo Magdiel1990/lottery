@@ -23,6 +23,9 @@
       <li class="nav-item">
         <a class="nav-link" href="/lottery/pages/random_test.php">Test</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/lottery/pages/statistics.php">Estadísticas</a>
+      </li>
     </ul>
   </div>
 </nav>
