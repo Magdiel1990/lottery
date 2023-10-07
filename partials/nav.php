@@ -7,12 +7,6 @@
       <li class="nav-item active">
         <a class="nav-link" href="/lottery/index.php">Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/lottery/pages/add.php">Agregar</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/lottery/pages/random.php">Aleatorio</a>
-      </li>
     <!--  <li class="nav-item">
         <a class="nav-link" href="/lottery/pages/loto.add.php">Agregar Loto</a>
       </li>
@@ -20,9 +14,6 @@
         <a class="nav-link" href="/lottery/pages/loto.php">Loto</a>
       </li>
 -->
-      <li class="nav-item">
-        <a class="nav-link" href="/lottery/pages/random_test.php">Test</a>
-      </li>
       <li class="nav-item">
         <a class="nav-link" href="/lottery/pages/statistics.php">Estadísticas</a>
       </li>

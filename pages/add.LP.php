@@ -1,8 +1,9 @@
 <?php
 require "../classes/Database.Class.php";
-$conn = DatabaseClassLoto::dbConnection();
+$conn = DatabaseClass::dbConnection();
 
 include "../partials/head.php";
+include "../partials/nav.php";
 
 if(isset($_POST["numbers"])){
     $numbers = $_POST["numbers"];
@@ -43,8 +44,6 @@ $conn -> close();
 ?>
     <main class="container p-4">
     <?php
-        include "../partials/nav.php";
-
         if(isset($_SESSION ["message"])){
             $html = '<div class="mt-3">';
             $html .= '<h4 class = "text-center text-'. $_SESSION ["message-alert"] .'">' . $_SESSION ["message"] . '</h4>';
@@ -55,14 +54,19 @@ $conn -> close();
             unset($_SESSION ["message"], $_SESSION ["message-alert"]);
         }
     ?>  
-        <div class="row justify-content-center text-center mt-4"> 
+        <div class="row justify-content-center mt-4 text-center"> 
+            <div class="mb-3">
+                <a href="/lottery/pages/loto.pool.php" class="btn btn-outline-info">Generar</a>
+                <a href="/lottery/pages/random.LP.php" class="btn btn-outline-info">Aleatorio</a>
+                <a href="/lottery/pages/random_test.LP.php" class="btn btn-outline-info">Test</a>
+            </div>
             <div class="col-auto">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <label for="numbers" class="form-label">Números</label>
                     <div class="d-flex">
                         <?php
-                            for($i = 0; $i < 6; $i++) {
-                                echo '<input name="numbers[]" class="form-control m-2" type="number" id="numbers" required min="1" max="38">';
+                            for($i = 0; $i < 5; $i++) {
+                                echo '<input name="numbers[]" class="form-control m-2" type="number" id="numbers" required min="1" max="31">';
                             }
                         ?>
                     </div>
@@ -74,7 +78,7 @@ $conn -> close();
             </div>
         </div>
         <?php
-            $conn = DatabaseClassLoto::dbConnection();
+            $conn = DatabaseClass::dbConnection();
             $result = $conn -> query("SELECT id FROM numbers LIMIT 1;");
 
             if ($result -> num_rows > 0) {   
@@ -90,7 +94,6 @@ $conn -> close();
                             <th scope="col">3º</th>
                             <th scope="col">4º</th>
                             <th scope="col">5º</th>
-                            <th scope="col">6º</th>
                             <th class="text-center" scope="col">Acción</th>
 
                         </tr>

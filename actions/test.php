@@ -29,14 +29,14 @@ if(isset($_POST["numbers"]) && isset($_POST["amount"])) {
             $_SESSION ["message"] = "Números encontrados";
             $_SESSION ["message-alert"] = "success";
 
-            header('Location: /lottery/pages/random_test.php');
+            header('Location: /lottery/pages/random_test.LP.php');
             exit;
         } else {
             $_SESSION ["message"] = "Número no encontrado";
             $_SESSION ["message-alert"] = "danger";
             $_SESSION ["try"] += 1; 
             
-            header('Location: /lottery/pages/random_test.php');
+            header('Location: /lottery/pages/random_test.LP.php');
             exit;
         }
     } 

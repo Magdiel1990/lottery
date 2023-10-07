@@ -1,13 +1,16 @@
-<?php
-require "../classes/Database.Class.php";
-$conn = DatabaseClassLoto::dbConnection();
 
-require "../classes/Loto.Class.php";
-include "../partials/head.php";
-include "../partials/nav.php";
+<?php
+require ("../classes/Database.Class.php");
+$conn = DatabaseClass::dbConnection();
+require_once ("../classes/Random.Generators.Class.php");
+require_once ("../classes/LP.Class.php");
+include ("../partials/head.php");
 ?>
 
     <main class="container">
+        <?php
+            include "../partials/nav.php";
+        ?>  
         <div class="text-center mt-4"> 
             <form action="" method="POST">
                 <input type="hidden" value="ok" name="generate">
@@ -18,11 +21,9 @@ include "../partials/nav.php";
 
         <?php 
         if(isset($_POST["generate"])){
-            $finalArray = new LotoClass();
+            $finalArray = new RangeNumbers();
             $numbers = $finalArray-> finalNumbers(); 
 
-            sort($numbers);            
-            
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {
         ?>  
