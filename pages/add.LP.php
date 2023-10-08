@@ -59,10 +59,11 @@ $conn -> close();
                 <a href="/lottery/pages/loto.pool.php" class="btn btn-outline-info">Generar</a>
                 <a href="/lottery/pages/random.LP.php" class="btn btn-outline-info">Aleatorio</a>
                 <a href="/lottery/pages/random_test.LP.php" class="btn btn-outline-info">Test</a>
+                <a href="/lottery/index.php" class="btn btn-outline-info">Inicio</a>
             </div>
             <div class="col-auto">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                    <label for="numbers" class="form-label">Números</label>
+                    <label for="numbers" class="form-label">Agregar números</label>
                     <div class="d-flex">
                         <?php
                             for($i = 0; $i < 5; $i++) {
