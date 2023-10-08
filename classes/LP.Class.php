@@ -75,17 +75,23 @@ class RangeNumbers {
     }
     
     //Arreglo de los arreglos de todas las jugadas pasadas
-    protected function totalNumbers(){
-        $positionArray1 = $this-> positionCalculation(1);
-        $positionArray2 = $this-> positionCalculation(2);
-        $positionArray3 = $this-> positionCalculation(3);
-        $positionArray4 = $this-> positionCalculation(4);
-        $positionArray5 = $this-> positionCalculation(5);
+    protected function totalNumbers($balls){
+        $positionArray = [];
+
+        for ($i = 1; $i <= $balls; $i++) {
+            $positionArray [] = $this-> positionCalculation($i);
+        }
 
         $totalPosition = [];
 
-        for($i = 0; $i < count($positionArray1); $i++) {
-            $totalPosition[$i] = [$positionArray1[$i], $positionArray2[$i], $positionArray3[$i], $positionArray4[$i], $positionArray5[$i]];
+        for($i = 0; $i < count($positionArray[1]); $i++) {
+            $partialPosition = []; 
+
+            for($j=0; $j<count($positionArray); $j++) {
+                $partialPosition [] = $positionArray[$j][$i];
+            }
+
+            $totalPosition [] = $partialPosition;
         }        
 
         return $totalPosition;
@@ -264,7 +270,7 @@ class RangeNumbers {
         $standardDeviationOfArray =  $this -> standardDeviation ($array);
 
         //Desviaciones estandares de jugadas anteriores
-        $totalArrayNumbers = $this-> totalNumbers();
+        $totalArrayNumbers = $this-> totalNumbers(5);
         $arrayOfStandardDeviation =  $this -> standardDeviationArray($totalArrayNumbers);
 
         //Máximo y mínimo de las deviaciónes estándares
@@ -277,7 +283,7 @@ class RangeNumbers {
 
     //Verificar si esta jugada ya había salido
     protected function lastNumbersExceptions($arrayNumbers = null) {
-        $totalNumbers = $this-> totalNumbers();
+        $totalNumbers = $this-> totalNumbers(5);
         $arrayNumbers = $this-> rangeStandardDeviation();
 
         sort($arrayNumbers);
@@ -305,7 +311,7 @@ class RangeNumbers {
     }
 
     protected function intersectArraysBets ($time) {
-        $allArrays = $this -> totalNumbers();
+        $allArrays = $this -> totalNumbers(5);
 
         $intersectionsArrays = $this -> intersectArrays ($allArrays, $time);
 
@@ -337,7 +343,7 @@ class RangeNumbers {
         //array: Jugada a ser examinada.
         //position: cantidad de secuencias a tomar en cuenta. Si son 5 bolos puede ser 1,2,3,4 o 5.
         //time: cantidad de días anteriores a la jugada para ser comparados.
-        $allArrays = $this -> totalNumbers();
+        $allArrays = $this -> totalNumbers(5);
 
         if(count($array) == 0) {
             return $array;
