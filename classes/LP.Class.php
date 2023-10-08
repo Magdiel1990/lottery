@@ -437,7 +437,7 @@ class RangeNumbers {
     //12. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
 
     protected function averageArray() {
-        $totalArrayNumbers = $this-> totalNumbers();
+        $totalArrayNumbers = $this-> totalNumbers(5);
 
         $averageArray = [];
 
@@ -472,7 +472,7 @@ class RangeNumbers {
     //13. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
 
     protected function productArray () {
-        $totalArrayNumbers = $this-> totalNumbers();
+        $totalArrayNumbers = $this-> totalNumbers(5);
 
         $productArray = [];
 
