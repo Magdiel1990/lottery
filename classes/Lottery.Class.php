@@ -12,7 +12,7 @@ abstract class LotteryClass {
     protected $range;
     protected int $time = 1;
     protected $allArray;
-    protected int $positions = 3;
+    protected int $position = 3;
     protected int $frequency;
     protected int $balls;
     protected int $count;
