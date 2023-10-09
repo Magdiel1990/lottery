@@ -1,7 +1,5 @@
 <?php
-require "../classes/Database.Class.php";
-
-include "../partials/head.php";
+    include "../partials/head.php";
 ?>
 
 <main class="container">
@@ -23,17 +21,17 @@ include "../partials/head.php";
     ?>  
     <div class="row justify-content-center text-center mt-4"> 
         <div class="col-auto">
-            <form action="../actions/test.php" method="POST">
+            <form action="../actions/test.Loto.php" method="POST">
                 <label for="numbers" class="form-label">Números</label>
                 <div class="d-flex">
                     <?php
                         if(!isset($_SESSION ["lastnumbers"])) {
-                            for($i = 0; $i < 5; $i++) {
-                                echo '<input name="numbers[]" class="form-control m-2" type="number" id="numbers" required min="1" max="31">';
+                            for($i = 0; $i < 6; $i++) {
+                                echo '<input name="numbers[]" class="form-control m-2" type="number" id="numbers" required min="1" max="38">';
                             }
                         } else {
-                            for($i = 0; $i < 5; $i++) {
-                                echo '<input name="numbers[]" value="' . $_SESSION ["lastnumbers"] [$i]. '" class="form-control m-2" type="number" id="numbers" required min="1" max="31">';
+                            for($i = 0; $i < 6; $i++) {
+                                echo '<input name="numbers[]" value="' . $_SESSION ["lastnumbers"] [$i]. '" class="form-control m-2" type="number" id="numbers" required min="1" max="38">';
                             }
                         }
                     ?>
