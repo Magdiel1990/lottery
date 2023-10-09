@@ -119,11 +119,11 @@ class RangeNumbers {
     //4. SE INCLUYE EL O LOS NUMEROS QUE MAS SALEN
 
     //Incluye números de sorteos anteriores
-    protected function normalNumbers($arrayNumbers = null, $amount, $balls) {        
+    protected function normalNumbers($arrayNumbers = null, $balls) {        
         $conn = DatabaseClass::dbConnection();     
         $arrayNumbers = $this-> arrayNumbers(null, $balls); 
 
-        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total desc LIMIT $amount;");
+        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total desc LIMIT $balls;");
 
         $numbers = [];
         
@@ -131,8 +131,8 @@ class RangeNumbers {
             $numbers [] = intval($row["number"]);
         }        
    
-        while(count($arrayNumbers) != $amount) {
-            array_push($arrayNumbers, $numbers[rand(0, $amount - 1)]);
+        while(count($arrayNumbers) != $balls) {
+            array_push($arrayNumbers, $numbers[rand(0, $balls - 1)]);
 
             $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
         }
@@ -270,7 +270,7 @@ class RangeNumbers {
     //Desviación estandard del array
     protected function rangeStandardDeviation($balls) {
         //Desviación standard de la jugada
-        $array = $this-> normalNumbers(null, 5, $balls);
+        $array = $this-> normalNumbers(null, $balls);
         $standardDeviationOfArray =  $this -> standardDeviation ($array);
 
         //Desviaciones estandares de jugadas anteriores

@@ -28,36 +28,6 @@ class LotoClass extends RangeNumbers {
 /*************************************   Generando  ************************************/
 /*************************************    números   ************************************/
 
-     //Números aleatorios
-    protected function arrayNumbers($arrayNumbers = null) {
-        $arrayNumbers = [$this-> numberRange(1), $this-> numberRange(2), $this-> numberRange(3), $this-> numberRange(4), $this-> numberRange(5), $this-> numberRange(6)]; 
-        
-        $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
-
-        sort($arrayNumbers);
-
-        return $arrayNumbers;
-    }
- 
-
-    //Descarte de los números que menos salen
-    protected function rareNumbersOut($arrayNumbers = null, $amount) {
-        $conn = DatabaseClassLoto::dbConnection();  
-        $arrayNumbers = $this-> arrayNumbers();   
-       
-        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total asc LIMIT $amount;");
-        while($row = $result -> fetch_assoc()){
-            $number = intval($row["number"]);
-            if(in_array($number, $arrayNumbers) && count($arrayNumbers) > $amount) {
-                $arrayNumbers = array_diff($arrayNumbers, array($number));                               
-            }
-        }  
-
-        sort($arrayNumbers);
-        
-        return $arrayNumbers;
-    }  
-
     //Incluye números de sorteos anteriores
     protected function repeatedNumbers($arrayNumbers = null, $time) {        
         $conn = DatabaseClassLoto::dbConnection();     
