@@ -508,6 +508,18 @@ abstract class LotteryClass {
             return $array;
         }
     }
+    //Ultimo rango
+    protected function range_filter($array, $position, $up) {   
+        if(count($array) == 0) {
+            return [];
+        }
+
+        if($array [$position - 1] <= $up) {
+            return $array;
+        } else {
+            return [];
+        }
+    }
     
     //Final
     abstract protected function finalNumbers ($balls, $up, $conn);
