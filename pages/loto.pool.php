@@ -5,12 +5,9 @@ $conn = DatabaseClass::dbConnection();
 require_once ("../classes/Random.Generators.Class.php");
 require_once ("../classes/LP.Class.php");
 include ("../partials/head.php");
+include "../partials/nav.php";
 ?>
-
     <main class="container">
-        <?php
-            include "../partials/nav.php";
-        ?>  
         <div class="text-center mt-4"> 
             <form action="" method="POST">
                 <input type="hidden" value="ok" name="generate">
