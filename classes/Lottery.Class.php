@@ -25,14 +25,14 @@ abstract class LotteryClass {
     //1.SE ESTABLECE EL RANGO
 
     //Maximo numero en cualquier posicion
-    protected function maxNumberRange($position, $conn) {       
+    private function maxNumberRange($position, $conn) {       
         $result = $conn -> query("SELECT max(number) FROM numbers WHERE position = " . $position . ";");
         $number = $result -> fetch_array();
         return $number[0];
     }
 
     //Mínimo numero en cualquier posicion
-    protected function minNumberRange($position, $conn) {       
+    private function minNumberRange($position, $conn) {       
         $result = $conn -> query("SELECT min(number) FROM numbers WHERE position = " . $position . ";");
         $number = $result -> fetch_array();
         return $number[0];
@@ -49,7 +49,7 @@ abstract class LotteryClass {
     //2. CALCULAR LAS POSICIONES DE LAS JUGADAS
 
     //Arreglos de todas las jugadas pasadas
-    protected function positionCalculation($position, $conn) {
+    private function positionCalculation($position, $conn) {
         $result = $conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date desc;");
 
         $positionArray = [];
@@ -61,7 +61,7 @@ abstract class LotteryClass {
         return $positionArray;
     }
 
-    protected function totalPlays($conn) {
+    private function totalPlays($conn) {
         $result = $conn -> query ("SELECT count(*) as total FROM numbers WHERE position = 1 ORDER BY date desc;");
 
         $row = $result -> fetch_assoc();
@@ -143,7 +143,7 @@ abstract class LotteryClass {
     //5. CALCULAR EL RANGO DE LAS SUMAS DE LAS JUGADAS
 
     //Array de la suma
-    protected function sumsArrayNumbers($conn) {
+    private function sumsArrayNumbers($conn) {
         $result = $conn -> query ("SELECT sum(number) AS suma FROM numbers GROUP BY date ORDER BY suma;");
 
         $sums = [];
@@ -155,7 +155,7 @@ abstract class LotteryClass {
         return $sums;
     }
     //Suma de los elementos de un array
-    protected function sumArray ($array) {
+    private function sumArray ($array) {
         $count = count($array);
 
         $sum = 0;
@@ -167,7 +167,7 @@ abstract class LotteryClass {
     }
   
     //Promedio del array
-    protected function average($array) {
+    private function average($array) {
         $count = count($array);
         
         $sum = $this -> sumArray ($array);
@@ -176,14 +176,14 @@ abstract class LotteryClass {
     }
     
     //Rango máximo y mínimo
-    protected function minMaxArray($array) {  
+    private function minMaxArray($array) {  
         $min =  min($array);
         $max =  max($array);
 
         return [$min, $max];
     }
     //Condition range
-    protected function rangeCondition($data, $range, $array) {
+    private function rangeCondition($data, $range, $array) {
         if($data >= $range [0] && $data <= $range [1]) {
             return $array;
         } else {
@@ -298,7 +298,7 @@ abstract class LotteryClass {
     /*
     //9. EXCLUIR COMBINACIONES DE 3 Y 4 ANTERIORES
     
-    protected function intersectArrays ($allArrays, $time) {
+    private function intersectArrays ($allArrays, $time) {
         $intersectionsArrays = [];
         for($i = 0; $i < count($allArrays) - $time; $i++) {
             $intersectionsArrays [] = array_intersect($allArrays[$i], $allArrays[$i + $time]);
@@ -329,7 +329,7 @@ abstract class LotteryClass {
         return $repeat;
     }
 
-    protected function intersection ($array, $time, $allArrays) {
+    private function intersection ($array, $time, $allArrays) {
         $intersection = array_intersect($allArrays [$time - 1], $array);
 
         return $intersection;
@@ -359,7 +359,7 @@ abstract class LotteryClass {
         }      
     }
 
-    protected function intersectCompare($array, $positions, $balls, $frequency, $count, $conn) {
+    private function intersectCompare($array, $positions, $balls, $frequency, $count, $conn) {
 
         for($i = 1; $i <= $count; $i++) {
             $array = $this -> intersectCondition ($array, $positions, $i, $frequency, $conn);
@@ -478,7 +478,7 @@ abstract class LotteryClass {
        return $this -> minMaxArray($array);
     }
 
-    protected function product($array) {
+    private function product($array) {
         $product = 1;
 
         for($i = 0; $i < count($array); $i++) {
@@ -523,7 +523,7 @@ abstract class LotteryClass {
     }
 
     //15. RANGO PARA LA SUMA DE ELEMENTOS CONSECUTIVOS
-    protected function elementArraySum ($array, $down, $up) {        
+    private function elementArraySum ($array, $down, $up) {        
         $sum = $array[$down - 1] + $array[$up - 1];
         return $sum;        
     }
