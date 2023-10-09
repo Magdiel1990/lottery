@@ -39,7 +39,7 @@ class LotoClass extends LotteryClass {
     }
 
     public function finalNumbers ($balls, $up, $conn) {
-        $array = $this -> randOutArray(80000, $balls, $up, $conn);
+        $array = $this -> randOutArray(1000000, $balls, $up, $conn);
         sort($array);
         return $array;
     }
