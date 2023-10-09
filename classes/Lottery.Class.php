@@ -532,7 +532,7 @@ abstract class LotteryClass {
         return $intersectionsArrays;
     }
 
-    protected function intersectArraysBets ($time, $balls, $conn) {
+    private function intersectArraysBets ($time, $balls, $conn) {
         $allArrays = $this -> totalNumbers($balls, $conn);
 
         $intersectionsArrays = $this -> intersectArrays ($allArrays, $time);
@@ -540,7 +540,7 @@ abstract class LotteryClass {
         return $intersectionsArrays;
     }
 
-    protected function frequencyCalculation ($position, $time, $balls, $conn){
+    private function frequencyCalculation ($position, $time, $balls, $conn){
         $intersectArrays = $this -> intersectArraysBets ($time, $balls, $conn);
 
         $repeat = 0;
@@ -560,7 +560,7 @@ abstract class LotteryClass {
         return $intersection;
     }
 
-    protected function intersectCondition ($array, $position, $time, $frequency, $balls, $conn) {
+    private function intersectCondition ($array, $position, $time, $frequency, $balls, $conn) {
         //frequency: cantidad máxima de apariciones aceptadas de la repetición de esa secuencia.
         //array: Jugada a ser examinada.
         //position: cantidad de secuencias a tomar en cuenta. Si son 5 bolos puede ser 1,2,3,4 o 5.
