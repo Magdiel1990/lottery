@@ -3,7 +3,7 @@ require_once ("Lottery.Class.php");
 
 class LPClass extends LotteryClass {  
     protected function lastRange($amount, $balls, $up, $conn) {
-        $array = $this -> randOutArray($amount, $balls, $up, $conn);
+        $array = $this -> insersectArrayOut ($amount, $up, $balls, $conn);
         for($i = 1; $i <= $balls - 3; $i++) {
             $array = $this -> range_filter($array, $i, $i*10);
         }

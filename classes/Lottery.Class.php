@@ -293,7 +293,7 @@ abstract class LotteryClass {
         return $arrayNumbers;
     }
     
-    //10. RANGO DE SUMAS ACEPTADO
+    //9. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas
     protected function sumRange($arrayNumbers = [], $balls, $conn) {
@@ -308,7 +308,7 @@ abstract class LotteryClass {
         return $this -> rangeCondition ($sumArray, $rangeSumArray, $array);
     }
 
-    //11. RANGO DE LA RESTA DE UN NUMERO A OTRO
+    //10. RANGO DE LA RESTA DE UN NUMERO A OTRO
 
     //Incluir rango de restas
     protected function diffRange($array, $down, $up, $balls, $conn) {
@@ -343,7 +343,7 @@ abstract class LotteryClass {
         return $array;
     }
 
-    //12. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
+    //11. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
 
     protected function averageArray($balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
@@ -379,7 +379,7 @@ abstract class LotteryClass {
         }
     }
 
-    //13. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
+    //12. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
 
     protected function productArray ($balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
@@ -428,7 +428,7 @@ abstract class LotteryClass {
         }
     }
 
-    //14. QUITAR NUMEROS DOBLEMENTE CONSECUTIVOS
+    //13. QUITAR NUMEROS DOBLEMENTE CONSECUTIVOS
     protected function consecutiveOutArray ($arrayNumbers = [], $balls, $conn){
         $array = $this -> rangeProArray ($balls, $conn);
 
@@ -447,7 +447,7 @@ abstract class LotteryClass {
         }        
     }
 
-    //15. RANGO PARA LA SUMA DE ELEMENTOS CONSECUTIVOS
+    //14. RANGO PARA LA SUMA DE ELEMENTOS CONSECUTIVOS
     private function elementArraySum ($array, $down, $up) {        
         $sum = $array[$down - 1] + $array[$up - 1];
         return $sum;        
@@ -488,7 +488,7 @@ abstract class LotteryClass {
         return $array;
     }
 
-    //16. QUITAR LOS ALEATORIOS DE HOY    
+    //15. QUITAR LOS ALEATORIOS DE HOY    
     protected function randOutArray ($amount, $balls, $up, $conn){
         $array = $this -> sumEach($balls, $conn);
 
@@ -508,6 +508,96 @@ abstract class LotteryClass {
             return $array;
         }
     }
+
+    /********************************************Descartar combinaciones anteriores **********************************/
+    /*****************************************************************************************************************/
+
+    //16. EXCLUIR COMBINACIONES DE 3 Y 4 ANTERIORES
+    private function intersectArrays ($allArrays, $time) {
+        $intersectionsArrays = [];
+        for($i = 0; $i < count($allArrays) - $time; $i++) {
+            $intersectionsArrays [] = array_intersect($allArrays[$i], $allArrays[$i + $time]);
+        } 
+        
+        return $intersectionsArrays;
+    }
+
+    protected function intersectArraysBets ($time, $balls, $conn) {
+        $allArrays = $this -> totalNumbers($balls, $conn);
+
+        $intersectionsArrays = $this -> intersectArrays ($allArrays, $time);
+
+        return $intersectionsArrays;
+    }
+
+    protected function frequencyCalculation ($positions, $time, $balls, $conn){
+        $intersectArrays = $this -> intersectArraysBets ($time, $balls, $conn);
+
+        $repeat = 0;
+
+        for($i = 0; $i < count($intersectArrays); $i++) {
+            if(count($intersectArrays[$i]) == $positions) {
+                $repeat += 1;
+            }
+        } 
+
+        return $repeat;
+    }
+
+    private function intersection ($array, $time, $allArrays) {
+        $intersection = array_intersect($allArrays [$time - 1], $array);
+
+        return $intersection;
+    }
+
+    protected function intersectCondition ($array, $positions, $time, $frequency, $balls, $conn) {
+        //frequency: cantidad máxima de apariciones aceptadas de la repetición de esa secuencia.
+        //array: Jugada a ser examinada.
+        //position: cantidad de secuencias a tomar en cuenta. Si son 5 bolos puede ser 1,2,3,4 o 5.
+        //time: cantidad de días anteriores a la jugada para ser comparados.
+        $allArrays = $this -> totalNumbers($balls, $conn);
+
+        if(count($array) == 0) {
+            return $array;
+        }
+
+        $frequencyCalculation = $this -> frequencyCalculation ($positions, $time, $balls, $conn);
+
+        $intersection = $this -> intersection ($array, $time, $allArrays);
+   
+        if($frequencyCalculation <= $frequency && count($intersection) == $positions) {
+            return $array;
+        } else if (count($intersection) < $positions) {
+            return $array;
+        } else {
+            return [];
+        }      
+    }
+
+    private function intersectCompare($array, $positions, $balls, $frequency, $time, $conn) {
+
+        for($i = 1; $i <= $time; $i++) {
+            $array = $this -> intersectCondition ($array, $positions, $time, $frequency, $balls, $conn);
+            if(count($array) == 0) {
+                break;
+            }
+        }        
+        return $array;
+    }
+
+    protected function insersectArrayOut ($amount, $up, $balls, $conn) {
+        $array = $this -> randOutArray($amount, $balls, $up, $conn);
+        $totalPlays = $this -> totalPlays($conn);
+
+        sort($array);
+
+        $array = $this -> intersectCompare($array, 4, $balls, ceil(($totalPlays - 1) * 0.02), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 3, $balls, ceil(($totalPlays - 1) * 0.02), $totalPlays - 1, $conn);
+
+        return $array;
+    }  
+
+
     //Ultimo rango
     protected function range_filter($array, $position, $up) {   
         if(count($array) == 0) {
@@ -519,7 +609,7 @@ abstract class LotteryClass {
         } else {
             return [];
         }
-    }
+    }    
 
     abstract protected function lastRange ($amount, $balls, $up, $conn);
     
