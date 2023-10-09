@@ -176,7 +176,18 @@
         $array = $this -> intersectCompare($array, 2, $balls, 5, $totalPlays - 1, $conn);
 
         return $array;
-    }   
+    }  
+    CALCULO DE DECENAS
+    protected function decena_filtering($array, $decena) {
+        $count = 0;
+        for($i = 0; $i < count($array); $i++) {
+            if(floor($array[$i] / 10) == $decena) {
+                $count += 1;
+            }
+        }
+        return $count;
+    }
+    
     */
 
     ?>
