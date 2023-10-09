@@ -530,13 +530,13 @@ abstract class LotteryClass {
         return $intersectionsArrays;
     }
 
-    protected function frequencyCalculation ($positions, $time, $balls, $conn){
+    protected function frequencyCalculation ($position, $time, $balls, $conn){
         $intersectArrays = $this -> intersectArraysBets ($time, $balls, $conn);
 
         $repeat = 0;
 
         for($i = 0; $i < count($intersectArrays); $i++) {
-            if(count($intersectArrays[$i]) == $positions) {
+            if(count($intersectArrays[$i]) == $position) {
                 $repeat += 1;
             }
         } 
@@ -550,7 +550,7 @@ abstract class LotteryClass {
         return $intersection;
     }
 
-    protected function intersectCondition ($array, $positions, $time, $frequency, $balls, $conn) {
+    protected function intersectCondition ($array, $position, $time, $frequency, $balls, $conn) {
         //frequency: cantidad máxima de apariciones aceptadas de la repetición de esa secuencia.
         //array: Jugada a ser examinada.
         //position: cantidad de secuencias a tomar en cuenta. Si son 5 bolos puede ser 1,2,3,4 o 5.
@@ -561,23 +561,23 @@ abstract class LotteryClass {
             return $array;
         }
 
-        $frequencyCalculation = $this -> frequencyCalculation ($positions, $time, $balls, $conn);
+        $frequencyCalculation = $this -> frequencyCalculation ($position, $time, $balls, $conn);
 
         $intersection = $this -> intersection ($array, $time, $allArrays);
    
-        if($frequencyCalculation <= $frequency && count($intersection) == $positions) {
+        if($frequencyCalculation <= $frequency && count($intersection) == $position) {
             return $array;
-        } else if (count($intersection) < $positions) {
+        } else if (count($intersection) < $position) {
             return $array;
         } else {
             return [];
         }      
     }
 
-    private function intersectCompare($array, $positions, $balls, $frequency, $time, $conn) {
+    private function intersectCompare($array, $position, $balls, $frequency, $time, $conn) {
 
         for($i = 1; $i <= $time; $i++) {
-            $array = $this -> intersectCondition ($array, $positions, $time, $frequency, $balls, $conn);
+            $array = $this -> intersectCondition ($array, $position, $time, $frequency, $balls, $conn);
             if(count($array) == 0) {
                 break;
             }
