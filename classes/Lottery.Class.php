@@ -295,9 +295,9 @@ abstract class LotteryClass {
 
     /********************************************Descartar combinaciones anteriores **********************************/
     /*****************************************************************************************************************/
-    /*
+
     //9. EXCLUIR COMBINACIONES DE 3 Y 4 ANTERIORES
-    
+    /*
     private function intersectArrays ($allArrays, $time) {
         $intersectionsArrays = [];
         for($i = 0; $i < count($allArrays) - $time; $i++) {
@@ -315,7 +315,7 @@ abstract class LotteryClass {
         return $intersectionsArrays;
     }
 
-    protected function frequencyCalculation ($positions, $time, $conn){
+    protected function frequencyCalculation ($positions, $time, $balls, $conn){
         $intersectArrays = $this -> intersectArraysBets ($time, $balls, $conn);
 
         $repeat = 0;
@@ -340,13 +340,13 @@ abstract class LotteryClass {
         //array: Jugada a ser examinada.
         //position: cantidad de secuencias a tomar en cuenta. Si son 5 bolos puede ser 1,2,3,4 o 5.
         //time: cantidad de días anteriores a la jugada para ser comparados.
-        $allArrays = $this -> totalNumbers($balls);
+        $allArrays = $this -> totalNumbers($balls, $conn);
 
         if(count($array) == 0) {
             return $array;
         }
 
-        $frequencyCalculation = $this -> frequencyCalculation ($positions, $time, $conn);
+        $frequencyCalculation = $this -> frequencyCalculation ($positions, $time, $balls, $conn);
 
         $intersection = $this -> intersection ($array, $time, $allArrays);
    
@@ -359,10 +359,10 @@ abstract class LotteryClass {
         }      
     }
 
-    private function intersectCompare($array, $positions, $balls, $frequency, $count, $conn) {
+    private function intersectCompare($array, $positions, $balls, $frequency, $time, $conn) {
 
-        for($i = 1; $i <= $count; $i++) {
-            $array = $this -> intersectCondition ($array, $positions, $i, $frequency, $conn);
+        for($i = 1; $i <= $time; $i++) {
+            $array = $this -> intersectCondition ($array, $positions, $time, $frequency, $balls, $conn);
             if(count($array) == 0) {
                 break;
             }
@@ -372,21 +372,23 @@ abstract class LotteryClass {
 
     protected function insersectArrayOut ($balls, $conn) {
         $array = $this -> lastNumbersExceptions(null, $balls, $conn);
+        $totalPlays = $this -> totalPlays($conn);
 
         sort($array);
 
-        $array = $this -> intersectCompare($array, 4, $balls, 5, 50, $conn);
-        $array = $this -> intersectCompare($array, 3, $balls, 5, 50, $conn);
+        $array = $this -> intersectCompare($array, 4, $balls, 5, $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 3, $balls, 5, $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 2, $balls, 5, $totalPlays - 1, $conn);
 
         return $array;
     }   
-   */
+    */
     //10. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas
     protected function sumRange($arrayNumbers = null, $balls, $conn) {
         //Array     
-        $array =  $this-> lastNumbersExceptions(null, $balls, $conn);
+        $array = $this -> lastNumbersExceptions(null, $balls, $conn);
 
         //Suma de los elementos del array
         $sumArray = $this -> sumArray ($array);
