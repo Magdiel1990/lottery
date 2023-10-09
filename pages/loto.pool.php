@@ -22,7 +22,7 @@ include ("../partials/head.php");
         <?php 
         if(isset($_POST["generate"])){
             $finalArray = new RangeNumbers();
-            $numbers = $finalArray-> finalNumbers(); 
+            $numbers = $finalArray-> finalNumbers(5); 
 
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {

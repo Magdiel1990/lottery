@@ -28,25 +28,6 @@ class LotoClass extends RangeNumbers {
 /*************************************   Generando  ************************************/
 /*************************************    números   ************************************/
 
-   
-    //Arreglo de los arreglos de todas las jugadas pasadas
-    protected function totalNumbers(){
-        $positionArray1 = $this-> positionCalculation(1);
-        $positionArray2 = $this-> positionCalculation(2);
-        $positionArray3 = $this-> positionCalculation(3);
-        $positionArray4 = $this-> positionCalculation(4);
-        $positionArray5 = $this-> positionCalculation(5);
-        $positionArray6 = $this-> positionCalculation(6);
-
-        $totalPosition = [];
-
-        for($i = 0; $i < count($positionArray1); $i++) {
-            $totalPosition[$i] = [$positionArray1[$i], $positionArray2[$i], $positionArray3[$i], $positionArray4[$i], $positionArray5[$i], $positionArray6[$i]];
-        }        
-
-        return $totalPosition;
-    }
-
      //Números aleatorios
     protected function arrayNumbers($arrayNumbers = null) {
         $arrayNumbers = [$this-> numberRange(1), $this-> numberRange(2), $this-> numberRange(3), $this-> numberRange(4), $this-> numberRange(5), $this-> numberRange(6)]; 

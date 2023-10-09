@@ -102,9 +102,13 @@ class RangeNumbers {
 
     //3. SE GENERA EL NUMERO
     
-    protected function arrayNumbers($arrayNumbers = null) {
-        $arrayNumbers = [$this-> numberRange(1), $this-> numberRange(2), $this-> numberRange(3), $this-> numberRange(4), $this-> numberRange(5)]; 
-        
+    protected function arrayNumbers($arrayNumbers = null, $balls) {
+        $arrayNumbers = [];
+
+        for($i = 1; $i <= $balls; $i++) {
+            $arrayNumbers [] = $this-> numberRange($i);
+        }     
+       
         $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
 
         sort($arrayNumbers);
@@ -115,9 +119,9 @@ class RangeNumbers {
     //4. SE INCLUYE EL O LOS NUMEROS QUE MAS SALEN
 
     //Incluye números de sorteos anteriores
-    protected function normalNumbers($arrayNumbers = null, $amount) {        
+    protected function normalNumbers($arrayNumbers = null, $amount, $balls) {        
         $conn = DatabaseClass::dbConnection();     
-        $arrayNumbers = $this-> arrayNumbers(); 
+        $arrayNumbers = $this-> arrayNumbers(null, $balls); 
 
         $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total desc LIMIT $amount;");
 
@@ -264,13 +268,13 @@ class RangeNumbers {
     }
 
     //Desviación estandard del array
-    protected function rangeStandardDeviation() {
+    protected function rangeStandardDeviation($balls) {
         //Desviación standard de la jugada
-        $array = $this-> normalNumbers(null, 5);
+        $array = $this-> normalNumbers(null, 5, $balls);
         $standardDeviationOfArray =  $this -> standardDeviation ($array);
 
         //Desviaciones estandares de jugadas anteriores
-        $totalArrayNumbers = $this-> totalNumbers(5);
+        $totalArrayNumbers = $this-> totalNumbers($balls);
         $arrayOfStandardDeviation =  $this -> standardDeviationArray($totalArrayNumbers);
 
         //Máximo y mínimo de las deviaciónes estándares
@@ -282,9 +286,9 @@ class RangeNumbers {
     //8. EXCLUIR LAS JUGADAS ANTERIORES
 
     //Verificar si esta jugada ya había salido
-    protected function lastNumbersExceptions($arrayNumbers = null) {
-        $totalNumbers = $this-> totalNumbers(5);
-        $arrayNumbers = $this-> rangeStandardDeviation();
+    protected function lastNumbersExceptions($arrayNumbers = null, $balls) {
+        $totalNumbers = $this-> totalNumbers($balls);
+        $arrayNumbers = $this-> rangeStandardDeviation($balls);
 
         sort($arrayNumbers);
          
@@ -310,8 +314,8 @@ class RangeNumbers {
         return $intersectionsArrays;
     }
 
-    protected function intersectArraysBets ($time) {
-        $allArrays = $this -> totalNumbers(5);
+    protected function intersectArraysBets ($time, $balls) {
+        $allArrays = $this -> totalNumbers($balls);
 
         $intersectionsArrays = $this -> intersectArrays ($allArrays, $time);
 
@@ -338,12 +342,12 @@ class RangeNumbers {
         return $intersection;
     }
 
-    protected function intersectCondition ($array, $positions, $time, $frequency) {
+    protected function intersectCondition ($array, $positions, $time, $frequency, $balls) {
         //frequency: cantidad máxima de apariciones aceptadas de la repetición de esa secuencia.
         //array: Jugada a ser examinada.
         //position: cantidad de secuencias a tomar en cuenta. Si son 5 bolos puede ser 1,2,3,4 o 5.
         //time: cantidad de días anteriores a la jugada para ser comparados.
-        $allArrays = $this -> totalNumbers(5);
+        $allArrays = $this -> totalNumbers($balls);
 
         if(count($array) == 0) {
             return $array;
@@ -374,7 +378,7 @@ class RangeNumbers {
     }
 
     protected function insersectArrayOut ($balls) {
-        $array = $this -> lastNumbersExceptions();
+        $array = $this -> lastNumbersExceptions(null, $balls);
 
         sort($array);
 
@@ -387,9 +391,9 @@ class RangeNumbers {
     //10. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas
-    protected function sumRange($arrayNumbers = null) {
+    protected function sumRange($arrayNumbers = null, $balls) {
         //Array     
-        $array =  $this-> lastNumbersExceptions();
+        $array =  $this-> lastNumbersExceptions(null, $balls);
 
         //Suma de los elementos del array
         $sumArray = $this -> sumArray ($array);
@@ -402,9 +406,9 @@ class RangeNumbers {
     //11. RANGO DE LA RESTA DE UN NUMERO A OTRO
 
     //Incluir rango de restas
-    protected function diffRange($array = [], $down, $up) {
+    protected function diffRange($array = [], $down, $up, $balls) {
     
-        $array = $this -> sumRange();
+        $array = $this -> sumRange(null, $balls);
 
         if(count($array) != 0) {
             //Array del máximo y mínimo
@@ -419,25 +423,25 @@ class RangeNumbers {
         }
     }
     //Patrón de restas
-    protected function subRange() {
-        $array = $this -> diffRange(null, 1, 2);
-        $array = $this -> diffRange($array, 1, 3);
-        $array = $this -> diffRange($array, 1, 4);
-        $array = $this -> diffRange($array, 1, 5);
-        $array = $this -> diffRange($array, 2, 3);
-        $array = $this -> diffRange($array, 2, 4);
-        $array = $this -> diffRange($array, 2, 5);
-        $array = $this -> diffRange($array, 3, 4);
-        $array = $this -> diffRange($array, 3, 5);
-        $array = $this -> diffRange($array, 4, 5);
+    protected function subRange($balls) {
+        $array = $this -> diffRange(null, 1, 2, $balls);
+        $array = $this -> diffRange($array, 1, 3, $balls);
+        $array = $this -> diffRange($array, 1, 4, $balls);
+        $array = $this -> diffRange($array, 1, 5, $balls);
+        $array = $this -> diffRange($array, 2, 3, $balls);
+        $array = $this -> diffRange($array, 2, 4, $balls);
+        $array = $this -> diffRange($array, 2, 5, $balls);
+        $array = $this -> diffRange($array, 3, 4, $balls);
+        $array = $this -> diffRange($array, 3, 5, $balls);
+        $array = $this -> diffRange($array, 4, 5, $balls);
 
         return $array;
     }
 
     //12. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
 
-    protected function averageArray() {
-        $totalArrayNumbers = $this-> totalNumbers(5);
+    protected function averageArray($balls) {
+        $totalArrayNumbers = $this-> totalNumbers($balls);
 
         $averageArray = [];
 
@@ -448,18 +452,18 @@ class RangeNumbers {
         return $averageArray;       
     }
 
-    protected function rangeAvg() {
-        $array = $this -> averageArray();
+    protected function rangeAvg($balls) {
+        $array = $this -> averageArray($balls);
 
         return $this -> minMaxArray($array);
     }
     //Rango de los promedios
-    protected function rangeAvgArray () {
-        $array = $this -> subRange();       
+    protected function rangeAvgArray ($balls) {
+        $array = $this -> subRange($balls);       
 
         if(count($array) != 0) {
             //Array del máximo y mínimo
-            $rangeAvg = $this -> rangeAvg();
+            $rangeAvg = $this -> rangeAvg($balls);
             //Array average
             $average = $this -> average($array);
 
@@ -471,8 +475,8 @@ class RangeNumbers {
 
     //13. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
 
-    protected function productArray () {
-        $totalArrayNumbers = $this-> totalNumbers(5);
+    protected function productArray ($balls) {
+        $totalArrayNumbers = $this-> totalNumbers($balls);
 
         $productArray = [];
 
@@ -487,8 +491,8 @@ class RangeNumbers {
         return $productArray;          
     }
 
-    protected function rangePro() {
-       $array = $this -> productArray();
+    protected function rangePro($balls) {
+       $array = $this -> productArray($balls);
 
        return $this -> minMaxArray($array);
     }
@@ -503,12 +507,12 @@ class RangeNumbers {
         return $product;
     }
 
-    protected function rangeProArray () {
-        $array = $this -> rangeAvgArray ();       
+    protected function rangeProArray ($balls) {
+        $array = $this -> rangeAvgArray ($balls);       
 
         if(count($array) != 0) {
             //Array del máximo y mínimo
-            $rangePro = $this -> rangePro();
+            $rangePro = $this -> rangePro($balls);
             //Array average
             $product = $this -> product($array);
 
@@ -519,8 +523,8 @@ class RangeNumbers {
     }
 
     //14. QUITAR NUMEROS DOBLEMENTE CONSECUTIVOS
-    protected function consecutiveOutArray ($arrayNumbers = null){
-        $array = $this -> rangeAvgArray();
+    protected function consecutiveOutArray ($arrayNumbers = null, $balls){
+        $array = $this -> rangeAvgArray($balls);
 
         $count = 0;
 
@@ -560,8 +564,8 @@ class RangeNumbers {
         }
     }
     
-    protected function sumEach() {
-        $array = $this -> consecutiveOutArray();
+    protected function sumEach($balls) {
+        $array = $this -> consecutiveOutArray(null, $balls);
         $array = $this -> rangeSumEach($array, 1, 2);
         $array = $this -> rangeSumEach($array, 1, 3);
         $array = $this -> rangeSumEach($array, 1, 4);
@@ -577,8 +581,8 @@ class RangeNumbers {
     }
     
     //16. QUITAR LOS ALEATORIOS DE HOY    
-    protected function randOutArray ($amount){
-        $array = $this -> sumEach();
+    protected function randOutArray ($amount, $balls){
+        $array = $this -> sumEach($balls);
 
         if(count($array) != 0) {
             //Números aleatorios
@@ -598,8 +602,8 @@ class RangeNumbers {
     }
     
     //Final
-    public function finalNumbers () {
-        $array = $this -> randOutArray(80000);
+    public function finalNumbers ($balls) {
+        $array = $this -> randOutArray(80000, $balls);
         sort($array);
         return $array;
     }
