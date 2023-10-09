@@ -20,20 +20,20 @@ if(isset($_GET["date"])) {
             $_SESSION ["message"] = "Números eliminados correctamente";
             $_SESSION ["message-alert"] = "success";
 
-            header('Location: /lottery/pages/add.LP.php');
+            header('Location: /lottery/pages/add.Loto.php');
             exit;
         } else {
             $_SESSION ["message"] = "Error al eliminar números";
             $_SESSION ["message-alert"] = "danger";
             
-            header('Location: /lottery/pages/add.LP.php');
+            header('Location: /lottery/pages/add.Loto.php');
             exit;
         }  
     } else {
         $_SESSION ["message"] = "Estos números ya fueron eliminados";
         $_SESSION ["message-alert"] = "success";
 
-        header('Location: /lottery/pages/add.LP.php');
+        header('Location: /lottery/pages/add.Loto.php');
         exit;
     }
 }
