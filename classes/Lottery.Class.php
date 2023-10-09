@@ -520,6 +520,8 @@ abstract class LotteryClass {
             return [];
         }
     }
+
+    abstract protected function lastRange ($amount, $balls, $up, $conn);
     
     //Final
     abstract protected function finalNumbers ($balls, $up, $conn);
