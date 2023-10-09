@@ -31,4 +31,4 @@ session_start();
         }
     </style>
 </head>
-<body>
+<body class="px-2">
