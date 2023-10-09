@@ -1,11 +1,10 @@
 <?php
     include "../partials/head.php";
+    include "../partials/nav.php";
 ?>
 
 <main class="container">
     <?php
-        include "../partials/nav.php";
-
         if(isset($_SESSION ["message"])){
             $html = '<div class="mt-3">';
             $html .= '<h4 class = "text-center text-'. $_SESSION ["message-alert"] .'">' . $_SESSION ["message"] . '</h4>';
