@@ -569,6 +569,6 @@ abstract class LotteryClass {
     }
     
     //Final
-    abstract public function finalNumbers ($balls, $up, $conn);
+    abstract protected function finalNumbers ($balls, $up, $conn);
 }
 ?>
