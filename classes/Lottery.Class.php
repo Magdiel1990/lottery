@@ -97,7 +97,7 @@ abstract class LotteryClass {
 
     //3. SE GENERA EL NUMERO
     
-    protected function arrayNumbers($arrayNumbers = null, $balls, $conn) {
+    protected function arrayNumbers($arrayNumbers = [], $balls, $conn) {
         $arrayNumbers = [];
 
         for($i = 1; $i <= $balls; $i++) {
@@ -114,8 +114,8 @@ abstract class LotteryClass {
     //4. SE INCLUYE EL O LOS NUMEROS QUE MAS SALEN
 
     //Incluye números de sorteos anteriores
-    protected function normalNumbers($arrayNumbers = null, $balls, $conn) {        
-        $arrayNumbers = $this-> arrayNumbers(null, $balls, $conn); 
+    protected function normalNumbers($arrayNumbers = [], $balls, $conn) {        
+        $arrayNumbers = $this-> arrayNumbers([], $balls, $conn); 
 
         $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total desc LIMIT $balls;");
 
@@ -263,7 +263,7 @@ abstract class LotteryClass {
     //Desviación estandard del array
     protected function rangeStandardDeviation($balls, $conn) {
         //Desviación standard de la jugada
-        $array = $this-> normalNumbers(null, $balls, $conn);
+        $array = $this-> normalNumbers([], $balls, $conn);
         $standardDeviationOfArray =  $this -> standardDeviation ($array);
 
         //Desviaciones estandares de jugadas anteriores
@@ -279,7 +279,7 @@ abstract class LotteryClass {
     //8. EXCLUIR LAS JUGADAS ANTERIORES
 
     //Verificar si esta jugada ya había salido
-    protected function lastNumbersExceptions($arrayNumbers = null, $balls, $conn) {
+    protected function lastNumbersExceptions($arrayNumbers = [], $balls, $conn) {
         $totalNumbers = $this-> totalNumbers($balls, $conn);
         $arrayNumbers = $this-> rangeStandardDeviation($balls, $conn);
 
@@ -296,9 +296,9 @@ abstract class LotteryClass {
     //10. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas
-    protected function sumRange($arrayNumbers = null, $balls, $conn) {
+    protected function sumRange($arrayNumbers = [], $balls, $conn) {
         //Array     
-        $array = $this -> lastNumbersExceptions(null, $balls, $conn);
+        $array = $this -> lastNumbersExceptions([], $balls, $conn);
 
         //Suma de los elementos del array
         $sumArray = $this -> sumArray ($array);
@@ -336,7 +336,7 @@ abstract class LotteryClass {
 
     //Patrón de restas
     protected function subRange($balls, $conn) {            
-        $array = $this -> sumRange(null, $balls, $conn);
+        $array = $this -> sumRange([], $balls, $conn);
 
         $array = $this -> diffRangeLoop ($array, $balls, $conn);
 
@@ -429,7 +429,7 @@ abstract class LotteryClass {
     }
 
     //14. QUITAR NUMEROS DOBLEMENTE CONSECUTIVOS
-    protected function consecutiveOutArray ($arrayNumbers = null, $balls, $conn){
+    protected function consecutiveOutArray ($arrayNumbers = [], $balls, $conn){
         $array = $this -> rangeProArray ($balls, $conn);
 
         $count = 0;
@@ -481,7 +481,7 @@ abstract class LotteryClass {
     }
 
     protected function sumEach($balls, $conn) {
-        $array = $this -> consecutiveOutArray(null, $balls, $conn);
+        $array = $this -> consecutiveOutArray([], $balls, $conn);
         
         $array = $this -> sumEachLoop($array, $balls, $conn);
    
