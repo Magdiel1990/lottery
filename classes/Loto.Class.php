@@ -5,43 +5,43 @@ class LotoClass extends RangeNumbers {
     protected int $frequency = 6;
 
     //Patrón de restas
-    protected function subRange($balls) {
-        $array = $this -> diffRange(null, 1, 2, $balls);
-        $array = $this -> diffRange($array, 1, 3, $balls);
-        $array = $this -> diffRange($array, 1, 4, $balls);
-        $array = $this -> diffRange($array, 1, 5, $balls);
-        $array = $this -> diffRange($array, 2, 3, $balls);
-        $array = $this -> diffRange($array, 2, 4, $balls);
-        $array = $this -> diffRange($array, 2, 5, $balls);
-        $array = $this -> diffRange($array, 3, 4, $balls);
-        $array = $this -> diffRange($array, 3, 5, $balls);
-        $array = $this -> diffRange($array, 4, 5, $balls);
-        $array = $this -> diffRange($array, 4, 6, $balls);
-        $array = $this -> diffRange($array, 5, 6, $balls);
+    protected function subRange($balls, $conn) {
+        $array = $this -> diffRange(null, 1, 2, $balls, $conn);
+        $array = $this -> diffRange($array, 1, 3, $balls, $conn);
+        $array = $this -> diffRange($array, 1, 4, $balls, $conn);
+        $array = $this -> diffRange($array, 1, 5, $balls, $conn);
+        $array = $this -> diffRange($array, 2, 3, $balls, $conn);
+        $array = $this -> diffRange($array, 2, 4, $balls, $conn);
+        $array = $this -> diffRange($array, 2, 5, $balls, $conn);
+        $array = $this -> diffRange($array, 3, 4, $balls, $conn);
+        $array = $this -> diffRange($array, 3, 5, $balls, $conn);
+        $array = $this -> diffRange($array, 4, 5, $balls, $conn);
+        $array = $this -> diffRange($array, 4, 6, $balls, $conn);
+        $array = $this -> diffRange($array, 5, 6, $balls, $conn);
 
         return $array;
     }
     
-    protected function sumEach($balls) {
-        $array = $this -> consecutiveOutArray(null, $balls);
-        $array = $this -> rangeSumEach($array, 1, 2);
-        $array = $this -> rangeSumEach($array, 1, 3);
-        $array = $this -> rangeSumEach($array, 1, 4);
-        $array = $this -> rangeSumEach($array, 1, 5);
-        $array = $this -> rangeSumEach($array, 2, 3);
-        $array = $this -> rangeSumEach($array, 2, 4);
-        $array = $this -> rangeSumEach($array, 2, 5);
-        $array = $this -> rangeSumEach($array, 3, 4);
-        $array = $this -> rangeSumEach($array, 3, 5);
-        $array = $this -> rangeSumEach($array, 4, 5);
-        $array = $this -> rangeSumEach($array, 4, 6);
-        $array = $this -> rangeSumEach($array, 5, 6);
+    protected function sumEach($balls, $conn) {
+        $array = $this -> consecutiveOutArray(null, $balls, $conn);
+        $array = $this -> rangeSumEach($array, 1, 2, $conn);
+        $array = $this -> rangeSumEach($array, 1, 3, $conn);
+        $array = $this -> rangeSumEach($array, 1, 4, $conn);
+        $array = $this -> rangeSumEach($array, 1, 5, $conn);
+        $array = $this -> rangeSumEach($array, 2, 3, $conn);
+        $array = $this -> rangeSumEach($array, 2, 4, $conn);
+        $array = $this -> rangeSumEach($array, 2, 5, $conn);
+        $array = $this -> rangeSumEach($array, 3, 4, $conn);
+        $array = $this -> rangeSumEach($array, 3, 5, $conn);
+        $array = $this -> rangeSumEach($array, 4, 5, $conn);
+        $array = $this -> rangeSumEach($array, 4, 6, $conn);
+        $array = $this -> rangeSumEach($array, 5, 6, $conn);
 
         return $array;
     }
 
-    public function finalNumbers ($balls, $up) {
-        $array = $this -> randOutArray(80000, $balls, $up);
+    public function finalNumbers ($balls, $up, $conn) {
+        $array = $this -> randOutArray(80000, $balls, $up, $conn);
         sort($array);
         return $array;
     }

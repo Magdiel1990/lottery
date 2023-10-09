@@ -18,15 +18,9 @@ include "../partials/nav.php";
 
         <?php 
         if(isset($_POST["generate"])){
-            //$finalArray = new LotoClass();
-           // $numbers = $finalArray-> finalNumbers(6, 38); 
-
             $finalArray = new LotoClass();
-            $numbers = $finalArray-> numberRange(6); 
-            
-            var_dump($numbers);
-            exit;
-            
+            $numbers = $finalArray-> finalNumbers(6, 38, $conn); 
+           
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {
         ?>  

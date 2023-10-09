@@ -39,7 +39,7 @@ class RangeNumbers {
     }
 
     //Rango en el que pueden estar los números
-    public function numberRange($position, $conn) {
+    protected function numberRange($position, $conn) {
         $maxNumber = $this-> maxNumberRange($position, $conn);
         $minNumber = $this-> minNumberRange($position, $conn);
 
