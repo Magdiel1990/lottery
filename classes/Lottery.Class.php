@@ -311,10 +311,7 @@ abstract class LotteryClass {
     //11. RANGO DE LA RESTA DE UN NUMERO A OTRO
 
     //Incluir rango de restas
-    protected function diffRange($array = [], $down, $up, $balls, $conn) {
-    
-        $array = $this -> sumRange(null, $balls, $conn);
-
+    protected function diffRange($array, $down, $up, $balls, $conn) {
         if(count($array) != 0) {
             //Array del máximo y mínimo
             $rangeDiffArray = $this -> rangeDiffArray ($down, $up, $conn);
@@ -328,7 +325,23 @@ abstract class LotteryClass {
         }
     }
     //Patrón de restas
-    abstract protected function subRange($balls, $conn);
+    private function diffRangeLoop($array, $balls, $conn) {
+        for($i = 1; $i < $balls; $i++) {
+            for($j = $i + 1; $j <= $balls; $j++) {
+                $array = $this -> diffRange($array, $i, $j, $balls, $conn);
+            }
+        }
+        return $array;
+    }
+
+    //Patrón de restas
+    protected function subRange($balls, $conn) {            
+        $array = $this -> sumRange(null, $balls, $conn);
+
+        $array = $this -> diffRangeLoop ($array, $balls, $conn);
+
+        return $array;
+    }
 
     //12. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
 
@@ -456,9 +469,25 @@ abstract class LotteryClass {
             return $array;
         }
     }
-    
-    abstract protected function sumEach($balls, $conn);
-    
+
+    //Patrón de restas
+    private function sumEachLoop($array, $balls, $conn) {
+        for($i = 1; $i < $balls; $i++) {
+            for($j = $i + 1; $j <= $balls; $j++) {
+                $array = $this -> rangeSumEach($array, $i, $j, $conn);;
+            }
+        }
+        return $array;
+    }
+
+    protected function sumEach($balls, $conn) {
+        $array = $this -> consecutiveOutArray(null, $balls, $conn);
+        
+        $array = $this -> sumEachLoop($array, $balls, $conn);
+   
+        return $array;
+    }
+
     //16. QUITAR LOS ALEATORIOS DE HOY    
     protected function randOutArray ($amount, $balls, $up, $conn){
         $array = $this -> sumEach($balls, $conn);
