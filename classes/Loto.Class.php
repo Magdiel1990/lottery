@@ -2,87 +2,48 @@
 require ("LP.Class.php");
 
 class LotoClass extends RangeNumbers {
+    protected int $frequency = 6;
 
-/************************************* Cálculo del ************************************/
-/*************************************   rango     ************************************/
+    //Patrón de restas
+    protected function subRange($balls) {
+        $array = $this -> diffRange(null, 1, 2, $balls);
+        $array = $this -> diffRange($array, 1, 3, $balls);
+        $array = $this -> diffRange($array, 1, 4, $balls);
+        $array = $this -> diffRange($array, 1, 5, $balls);
+        $array = $this -> diffRange($array, 2, 3, $balls);
+        $array = $this -> diffRange($array, 2, 4, $balls);
+        $array = $this -> diffRange($array, 2, 5, $balls);
+        $array = $this -> diffRange($array, 3, 4, $balls);
+        $array = $this -> diffRange($array, 3, 5, $balls);
+        $array = $this -> diffRange($array, 4, 5, $balls);
+        $array = $this -> diffRange($array, 4, 6, $balls);
+        $array = $this -> diffRange($array, 5, 6, $balls);
 
-    //Maximo numero en cualquier posicion
-    protected function maxNumberRange($position) {
-        $conn = DatabaseClassLoto::dbConnection();
-        
-        $result = $conn -> query("SELECT max(number) FROM numbers WHERE position = " . $position . ";");
-        $number = $result -> fetch_array();
-        return $number[0];
+        return $array;
     }
-
-    //Mínimo numero en cualquier posicion
-    protected function minNumberRange($position) {
-        $conn = DatabaseClassLoto::dbConnection();
-        
-        $result = $conn -> query("SELECT min(number) FROM numbers WHERE position = " . $position . ";");
-        $number = $result -> fetch_array();
-        return $number[0];
-    }
-
-
-/*************************************   Generando  ************************************/
-/*************************************    números   ************************************/
-
-    //Incluye números de sorteos anteriores
-    protected function repeatedNumbers($arrayNumbers = null, $time) {        
-        $conn = DatabaseClassLoto::dbConnection();     
-        $arrayNumbers = $this-> rareNumbersOut (null, 4);
-
-        $max = $time * 6; 
-
-        //Ultimos numeros
-        $result = $conn -> query ("SELECT number FROM numbers LIMIT 6 OFFSET $max;");
-
-        $numbers = [];
-        
-        while($row = $result -> fetch_assoc()){
-            $numbers [] = intval($row["number"]);
-        }        
-   
-        while(count($arrayNumbers) != 6) {
-            array_push($arrayNumbers, $numbers[rand(0,5)]);
-
-            $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
-        }
-        
-        sort($arrayNumbers);
-
-        return $arrayNumbers;
-    }
-
-
-/*************************************    Arreglos de  ************************************/
-/************************************* todas las jugadas **********************************/
-
-
-    //Generador de random
-    protected function randomGenerator($amount) {
-        $randomArraysOfTheDay = [];
-
-        while(count($randomArraysOfTheDay) < $amount) {
-            $generatedRandomArray = [];
-            while(count($generatedRandomArray)< 6) {
-                $generatedRandomArray [] = rand(1,38);
-                $generatedRandomArray = array_unique($generatedRandomArray, SORT_NUMERIC);
-            }
-
-            sort($generatedRandomArray);
-            
-            $randomArraysOfTheDay [] = $generatedRandomArray;
-        }
-
-       return $randomArraysOfTheDay;
-    }
-
     
-    public function finalNumbers () {
-        $totalNumbers = $this -> randomOfTheDayException();
-        return $totalNumbers;
+    protected function sumEach($balls) {
+        $array = $this -> consecutiveOutArray(null, $balls);
+        $array = $this -> rangeSumEach($array, 1, 2);
+        $array = $this -> rangeSumEach($array, 1, 3);
+        $array = $this -> rangeSumEach($array, 1, 4);
+        $array = $this -> rangeSumEach($array, 1, 5);
+        $array = $this -> rangeSumEach($array, 2, 3);
+        $array = $this -> rangeSumEach($array, 2, 4);
+        $array = $this -> rangeSumEach($array, 2, 5);
+        $array = $this -> rangeSumEach($array, 3, 4);
+        $array = $this -> rangeSumEach($array, 3, 5);
+        $array = $this -> rangeSumEach($array, 4, 5);
+        $array = $this -> rangeSumEach($array, 4, 6);
+        $array = $this -> rangeSumEach($array, 5, 6);
+
+        return $array;
+    }
+
+    public function finalNumbers ($balls, $up) {
+        $array = $this -> randOutArray(80000, $balls, $up);
+        sort($array);
+        return $array;
     }
 }
 
