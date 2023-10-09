@@ -1,9 +1,7 @@
 <?php
-require ("LP.Class.php");
+require_once ("Lottery.Class.php");
 
-class LotoClass extends RangeNumbers {
-    protected int $frequency = 6;
-
+class LotoClass extends LotteryClass {
     //Patrón de restas
     protected function subRange($balls, $conn) {
         $array = $this -> diffRange(null, 1, 2, $balls, $conn);

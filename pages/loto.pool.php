@@ -21,7 +21,7 @@ include ("../partials/head.php");
 
         <?php 
         if(isset($_POST["generate"])){
-            $finalArray = new RangeNumbers();
+            $finalArray = new LPClass();
             $numbers = $finalArray-> finalNumbers(5, 31, $conn); 
 
             if(count($numbers) > 0) {
