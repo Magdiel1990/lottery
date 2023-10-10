@@ -66,14 +66,28 @@ $conn -> close();
                     <div class="d-flex flex-column p-2">
                         <div class="row">
                         <?php
-                                for($i = 0; $i < 10; $i++) {
+                                for($i = 0; $i < 5; $i++) {
+                                    echo '<input name="numbers[]" class="form-control m-2 col" type="number" id="numbers' . $i . '" required min="1" max="80">';
+                                }
+                        ?>
+                        </div>
+                        <div class="row">
+                        <?php
+                                for($i = 6; $i < 11; $i++) {
+                                    echo '<input name="numbers[]" class="form-control m-2 col" type="number" id="numbers' . $i . '" required min="1" max="80">';
+                                }
+                        ?>
+                        </div>
+                        <div class="row">
+                        <?php
+                                for($i = 11; $i < 16; $i++) {
                                     echo '<input name="numbers[]" class="form-control m-2 col" type="number" id="numbers' . $i . '" required min="1" max="80">';
                                 }
                         ?>
                         </div>
                         <div class="row">
                             <?php
-                                for($i = 10; $i < 20; $i++) {
+                                for($i = 15; $i < 20; $i++) {
                                     echo '<input name="numbers[]" class="form-control m-2 col" type="number" id="numbers' . $i . '" required min="1" max="80">';
                                 }
                             ?>
