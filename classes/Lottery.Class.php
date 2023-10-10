@@ -596,14 +596,14 @@ abstract class LotteryClass {
     }
 
     //Filter 12
-    protected function insersectArrayOut ($amount, $up, $balls, $conn) {
+    protected function insersectArrayOut ($amount, $up, $balls, $conn, $frequency) {
         $array = $this -> randOutArray($amount, $balls, $up, $conn);
         $totalPlays = $this -> totalPlays($conn);
 
         sort($array);
 
         for($i = $balls - 2; $i < $balls; $i++) {
-            $array = $this -> intersectCompare($array, $i, $balls, ceil(($totalPlays - 1) * 0.02), $totalPlays - 1, $conn);
+            $array = $this -> intersectCompare($array, $i, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
         }
 
         return $array;
