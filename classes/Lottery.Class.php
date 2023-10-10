@@ -602,8 +602,9 @@ abstract class LotteryClass {
 
         sort($array);
 
-        $array = $this -> intersectCompare($array, 4, $balls, ceil(($totalPlays - 1) * 0.02), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 3, $balls, ceil(($totalPlays - 1) * 0.02), $totalPlays - 1, $conn);
+        for($i = $balls - 2; $i < $balls; $i++) {
+            $array = $this -> intersectCompare($array, $i, $balls, ceil(($totalPlays - 1) * 0.02), $totalPlays - 1, $conn);
+        }
 
         return $array;
     }  
