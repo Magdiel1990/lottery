@@ -20,18 +20,44 @@
     ?>  
     <div class="row justify-content-center text-center mt-4"> 
         <div class="col-auto">
-            <form action="../actions/test.Loto.php" method="POST">
+            <form action="../actions/test.Kino.php" method="POST">
                 <label for="numbers" class="form-label">Números</label>
-                <div class="d-flex">
+                <div class="d-flex flex-column p-2">                    
                     <?php
                         if(!isset($_SESSION ["lastnumbers"])) {
-                            for($i = 0; $i < 6; $i++) {
-                                echo '<input name="numbers[]" class="form-control m-2" type="number" id="numbers' . $i . '" required min="1" max="38">';
+                    ?>
+                    <div class="row">
+                    <?php
+                            for($i = 0; $i < 10; $i++) {
+                                echo '<input name="numbers[]" class="form-control m-2 col" type="number" id="numbers' . $i . '" required min="1" max="80">';
                             }
+                    ?>
+                    </div>
+                    <div class="row">
+                        <?php
+                            for($i = 10; $i < 20; $i++) {
+                                echo '<input name="numbers[]" class="form-control m-2 col" type="number" id="numbers' . $i . '" required min="1" max="80">';
+                            }
+                        ?>
+                    </div>
+                        <?php                            
                         } else {
-                            for($i = 0; $i < 6; $i++) {
-                                echo '<input name="numbers[]" value="' . $_SESSION ["lastnumbers"] [$i]. '" class="form-control m-2" type="number" id="numbers' . $i . '" required min="1" max="38">';
+                        ?>
+                    <div class="row">
+                        <?php
+                            for($i = 0; $i < 10; $i++) {
+                                echo '<input name="numbers[]" value="' . $_SESSION ["lastnumbers"] [$i]. '" class="form-control m-2 col" type="number" id="numbers' . $i . '" required min="1" max="80">';
                             }
+                        ?>
+                    </div>
+                    <div class="row">
+                        <?php
+                            for($i = 10; $i < 20; $i++) {
+                                echo '<input name="numbers[]" value="' . $_SESSION ["lastnumbers"] [$i]. '" class="form-control m-2 col" type="number" id="numbers' . $i . '" required min="1" max="80">';
+                            }
+                        ?>
+                    </div>
+                    <?php
                         }
                     ?>
                 </div>
@@ -47,7 +73,7 @@
                         ?>
                     </div>
                 </div>
-                <input class="btn btn-primary mt-3" type="submit" value="Test">
+                <input class="btn btn-primary mt-3 col-auto" type="submit" value="Test">
             </form>
         </div>
         <div class="row mt-4">

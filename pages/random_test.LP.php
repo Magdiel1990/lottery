@@ -29,11 +29,11 @@ include "../partials/head.php";
                     <?php
                         if(!isset($_SESSION ["lastnumbers"])) {
                             for($i = 0; $i < 5; $i++) {
-                                echo '<input name="numbers[]" class="form-control m-2" type="number" id="numbers" required min="1" max="31">';
+                                echo '<input name="numbers[]" class="form-control m-2" type="number" id="numbers' . $i . '" required min="1" max="31">';
                             }
                         } else {
                             for($i = 0; $i < 5; $i++) {
-                                echo '<input name="numbers[]" value="' . $_SESSION ["lastnumbers"] [$i]. '" class="form-control m-2" type="number" id="numbers" required min="1" max="31">';
+                                echo '<input name="numbers[]" value="' . $_SESSION ["lastnumbers"] [$i]. '" class="form-control m-2" type="number" id="numbers' . $i . '" required min="1" max="31">';
                             }
                         }
                     ?>

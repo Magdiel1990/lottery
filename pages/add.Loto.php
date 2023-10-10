@@ -70,8 +70,10 @@ $conn -> close();
                             }
                         ?>
                     </div>
-                    <div>
-                        <input class="form-control m-2" type="date" name="date" required>
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <input class="form-control m-2" type="date" name="date" required>
+                        </div>
                     </div>
                     <input class="btn btn-primary m-2" type="submit" value="Agregar">
                 </form>

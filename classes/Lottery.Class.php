@@ -113,7 +113,7 @@ abstract class LotteryClass {
 
     //4. SE INCLUYE EL O LOS NUMEROS QUE MAS SALEN
 
-    //Incluye números de sorteos anteriores
+    //Incluye números que más se  repiten de sorteos anteriores
     //Filter 2
     protected function normalNumbers($arrayNumbers = [], $balls, $conn) {        
         $arrayNumbers = $this-> arrayNumbers([], $balls, $conn); 

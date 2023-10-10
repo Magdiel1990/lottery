@@ -1,6 +1,6 @@
 <?php
 require "../classes/Database.Class.php";
-$conn = DatabaseClass::dbConnection();
+$conn = DatabaseClassKino::dbConnection();
 
 include "../partials/head.php";
 include "../partials/nav.php";
@@ -56,19 +56,28 @@ $conn -> close();
     ?>  
         <div class="row justify-content-center mt-4 text-center"> 
             <div class="mb-3">
-                <a href="/lottery/pages/loto.pool.php" class="btn btn-outline-info">Generar</a>
-                <a href="/lottery/pages/random_test.LP.php" class="btn btn-outline-info">Test</a>
+                <a href="/lottery/pages/kino.tv.php" class="btn btn-outline-info">Generar</a>
+                <a href="/lottery/pages/random_test.kino.php" class="btn btn-outline-info">Test</a>
                 <a href="/lottery/index.php" class="btn btn-outline-info">Inicio</a>
             </div>
             <div class="col-auto">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <label for="numbers" class="form-label">Agregar números</label>
-                    <div class="d-flex">
+                    <div class="d-flex flex-column p-2">
+                        <div class="row">
                         <?php
-                            for($i = 0; $i < 5; $i++) {
-                                echo '<input name="numbers[]" class="form-control m-2" type="number" id="numbers" required min="1" max="31">';
-                            }
+                                for($i = 0; $i < 10; $i++) {
+                                    echo '<input name="numbers[]" class="form-control m-2 col" type="number" id="numbers' . $i . '" required min="1" max="80">';
+                                }
                         ?>
+                        </div>
+                        <div class="row">
+                            <?php
+                                for($i = 10; $i < 20; $i++) {
+                                    echo '<input name="numbers[]" class="form-control m-2 col" type="number" id="numbers' . $i . '" required min="1" max="80">';
+                                }
+                            ?>
+                        </div>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-auto">
@@ -80,7 +89,7 @@ $conn -> close();
             </div>
         </div>
         <?php
-            $conn = DatabaseClass::dbConnection();
+            $conn = DatabaseClassKino::dbConnection();
             $result = $conn -> query("SELECT id FROM numbers LIMIT 1;");
 
             if ($result -> num_rows > 0) {   
@@ -96,6 +105,21 @@ $conn -> close();
                             <th scope="col">3º</th>
                             <th scope="col">4º</th>
                             <th scope="col">5º</th>
+                            <th scope="col">6º</th>
+                            <th scope="col">7º</th>
+                            <th scope="col">8º</th>
+                            <th scope="col">9º</th>
+                            <th scope="col">10º</th>
+                            <th scope="col">11º</th>
+                            <th scope="col">12º</th>
+                            <th scope="col">13º</th>
+                            <th scope="col">14º</th>
+                            <th scope="col">15º</th>
+                            <th scope="col">16º</th>
+                            <th scope="col">17º</th>
+                            <th scope="col">18º</th>
+                            <th scope="col">19º</th>
+                            <th scope="col">20º</th>
                             <th class="text-center" scope="col">Acción</th>
 
                         </tr>
