@@ -14,6 +14,7 @@ abstract class LotteryClass {
     protected $allArray;
     protected int $position;
     protected int $frequency;
+    protected int $ball;
     protected int $balls;
     protected int $count;
     protected $conn;
@@ -171,9 +172,11 @@ abstract class LotteryClass {
     protected function average($array) {
         $count = count($array);
         
-        $sum = $this -> sumArray ($array);
-       
-        return $media = $sum / $count;
+        if($count != 0) {
+            $sum = $this -> sumArray ($array);
+        
+            return $media = $sum / $count;
+        }
     }
     
     //Rango máximo y mínimo
@@ -609,6 +612,84 @@ abstract class LotteryClass {
         return $array;
     }  
 
+    /*********************************Descartar los numeros por la frecuencia en que salen ***************************/
+    /*****************************************************************************************************************/
+
+    //17. EXCLUIR NUMEROS QUE SALEN CADA CUANTOS DIAS
+    private function datesArray ($ball, $conn) {
+        $result = $conn -> query ("SELECT date FROM numbers WHERE number = $ball ORDER by date asc;");
+        
+        $array = [];
+
+        while($row = $result -> fetch_array()) {
+            $array [] = $row[0];
+        }
+
+        return $array;
+    }
+
+    private function diffDatesArray ($ball, $conn) {
+        $dateArray = $this -> datesArray ($ball, $conn);
+
+        $diffDateArray = [];
+
+        for ($i = 0; $i < count($dateArray) - 1; $i++) {
+            $diffDateArray [] = intval(date("j", strtotime($dateArray[$i+1]) - strtotime($dateArray[$i])));
+        }
+
+        return $diffDateArray;
+    }
+
+    private function last_appearance ($ball, $conn) {
+        date_default_timezone_set("America/Santo_Domingo");       
+
+        $datesArray = $this -> datesArray ($ball, $conn);
+        rsort($datesArray);
+        
+        $lastappearance = $datesArray[0];
+
+        $difference = strtotime(date("Y-m-d h:i:s")) - strtotime($lastappearance);
+        
+        $difference = intval(date("j", $difference));
+
+        return $difference;
+    }
+
+    private function numberPeriodValue ($ball, $conn) {
+        $array = $this -> diffDatesArray ($ball, $conn);
+        $promedio = $this -> average($array);
+        $min = min($array);
+
+        $average = round(($promedio + $min)/2);
+
+        $difference = $this -> last_appearance ($ball, $conn);
+
+        if($difference < $average) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    //Filter 13
+    protected function number_period_filter ($amount, $up, $balls, $conn, $frequency) {        
+        $array = $this -> insersectArrayOut ($amount, $up, $balls, $conn, $frequency);
+
+        $value = true;
+
+        for($i = 0; $i < count($array); $i++) {
+            $numberPeriodValue = $this -> numberPeriodValue ($array[$i], $conn);
+            if($numberPeriodValue == false) {
+                $value = false;
+                break;
+            }
+        }
+
+        if($value == true) {
+            return $array;
+        } else {
+            return [];
+        }
+    }
 
     //Ultimo rango
     protected function range_filter($array, $position, $up) {   
@@ -623,11 +704,11 @@ abstract class LotteryClass {
         }
     }    
 
-    //Filter 13
+    //Filter 14
     abstract protected function lastRange ($amount, $balls, $up, $conn);
     
     //Final
-    //Filter 14
+    //Filter 15
     abstract protected function finalNumbers ($balls, $up, $conn);
 }
 ?>
