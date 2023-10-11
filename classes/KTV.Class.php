@@ -10,7 +10,7 @@ class KTVClass extends LotteryClass {
 
         return $array;
     }
-    //Filter 9
+    
     protected function consecutiveOutArray ($balls, $conn){
         return $this -> rangeProArray ($balls, $conn);    
     }
