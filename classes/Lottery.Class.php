@@ -168,7 +168,7 @@ abstract class LotteryClass {
     }
   
     //Promedio del array
-    private function average($array) {
+    protected function average($array) {
         $count = count($array);
         
         $sum = $this -> sumArray ($array);

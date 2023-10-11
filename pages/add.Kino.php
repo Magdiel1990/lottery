@@ -156,7 +156,7 @@ $conn -> close();
                                 while($rowNumbers =  $resultNumbers -> fetch_assoc()) {                        
                                     echo "<td>" . $rowNumbers ["number"] . "</td>";                      
                                 }
-                                echo '<td><a class="text-danger" href="/lottery/actions/delete.php?date= ' . $dates[$i] . '">Eliminar</a></td>';      
+                                echo '<td><a class="text-danger" href="/lottery/actions/deleteKino.php?date= ' . $dates[$i] . '">Eliminar</a></td>';      
                                 echo '</tr>';   
                             }
                         ?>                            

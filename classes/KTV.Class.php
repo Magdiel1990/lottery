@@ -26,11 +26,25 @@ class KTVClass extends LotteryClass {
 
     protected function lastRange($amount, $balls, $up, $conn) {
         $array = $this -> insersectArrayOut ($amount, $up, $balls, $conn, 0.02);
-        /*for($i = 1; $i <= $balls - 3; $i++) {
-            $array = $this -> range_filter($array, $i, $i*10);
+        
+        for($i = 1; $i<=6; $i++) {
+            $array = $this -> range_filter($array, $i, 5*$i);
         }
-        $array = $this -> range_filter($array, 3, 25);
-        $array = $this -> range_filter($array, 4, 30);*/
+        
+        $array = $this -> range_filter($array, 7, 30);
+        $array = $this -> range_filter($array, 8, 40);
+        $array = $this -> range_filter($array, 9, 45);
+        $array = $this -> range_filter($array, 10, 50);
+        $array = $this -> range_filter($array, 11, 55);
+        $array = $this -> range_filter($array, 12, 60);
+        $array = $this -> range_filter($array, 13, 60);
+        $array = $this -> range_filter($array, 14, 60);
+        $array = $this -> range_filter($array, 15, 65);
+        $array = $this -> range_filter($array, 16, 70);
+        $array = $this -> range_filter($array, 17, 75);
+        $array = $this -> range_filter($array, 18, 75);
+        $array = $this -> range_filter($array, 19, 80);
+        $array = $this -> range_filter($array, 20, 80);
         return $array;
     }
 
