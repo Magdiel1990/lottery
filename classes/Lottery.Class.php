@@ -71,12 +71,17 @@ abstract class LotteryClass {
     }
     
     //Arreglo de los arreglos de todas las jugadas pasadas
-    private function totalNumbers($balls, $conn){
+    private function totalNumbersArrays($balls, $conn){
         $positionArray = [];
 
         for ($i = 1; $i <= $balls; $i++) {
             $positionArray [] = $this-> positionCalculation($i, $conn);
         }
+        return $positionArray;
+    }
+
+    private function totalNumbers($balls, $conn){
+        $positionArray = $this -> totalNumbersArrays($balls, $conn);
 
         $totalPosition = [];
 

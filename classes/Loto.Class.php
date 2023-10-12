@@ -43,11 +43,9 @@ class LotoClass extends LotteryClass {
     }
     protected function lastRange($amount, $balls, $up, $conn) {
         $array = $this -> number_period_filter ($amount, $up, $balls, $conn, 0.02);
-
-        for($i = 1; $i <= $balls - 3; $i++) {
-            $array = $this -> range_filter($array, $i, $i*10);
-        }
-
+        $array = $this -> range_filter($array, 1, 10);
+        $array = $this -> range_filter($array, 2, 20);
+        $array = $this -> range_filter($array, 3, 30);
         $array = $this -> range_filter($array, 4, 30);
         $array = $this -> range_filter($array, 5, 36);
 
@@ -55,7 +53,7 @@ class LotoClass extends LotteryClass {
     }
 //Final
     public function finalNumbers ($balls, $up, $conn) {
-        $array = $this -> lastRange(500000, $balls, $up, $conn);
+        $array = $this -> lastRange(10000, $balls, $up, $conn);
         sort($array);
         return $array;
     }

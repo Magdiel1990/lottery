@@ -95,6 +95,46 @@
         }
         return $count;
     }
+
+    
+
+    private function diffLastPlays($position, $balls, $conn) {
+        $positionCalculation = $this -> positionCalculation($position, $conn);
+
+        $diffArray = [];
+
+        for($i = 1; $i < count($positionCalculation); $i++) {
+            $diffArray [] = abs($positionCalculation[$i - 1] - $positionCalculation[$i]);
+        } 
+        
+        return $diffArray;
+    }
+
+    protected function diffLastPlaysComparison ($amount, $up, $balls, $conn, $frequency) {
+        $array = $this -> number_period_filter ($amount, $up, $balls, $conn, $frequency);
+
+        if(count($array) == 0) {
+            return [];
+        }
+        
+        for($i = 0; $i < $balls; $i++) {
+            //Arreglo de diferencias
+            $nPosition = $this -> diffLastPlays($i + 1, $balls, $conn);
+            //Diferencia actual
+            $currentDiff = abs($nPosition [0] - $array[$i]);
+            //Rango
+            $minMaxArray = $this -> minMaxArray($nPosition);
+            //Condicion
+            $rangeCondition = $this -> rangeCondition($currentDiff, $minMaxArray, $array);
+
+            if(count($rangeCondition) == 0) {
+                break;
+            }
+        }
+
+        return $rangeCondition;
+    }
+
     
     */
 
