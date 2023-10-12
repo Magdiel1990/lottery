@@ -24,6 +24,28 @@ class KTVClass extends LotteryClass {
         return $array;
     }
 
+    protected function insersectArrayOut ($amount, $up, $balls, $conn, $frequency) {
+        $array = $this -> randOutArray($amount, $balls, $up, $conn);
+        $totalPlays = $this -> totalPlays($conn);
+
+        sort($array);
+
+        $array = $this -> intersectCompare($array, 19, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 18, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 17, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 16, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 15, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 14, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 13, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 12, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 11, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 10, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 9, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        $array = $this -> intersectCompare($array, 8, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
+        
+        return $array;
+    }  
+
     protected function lastRange($amount, $balls, $up, $conn) {
         $array = $this -> number_period_filter ($amount, $up, $balls, $conn, 0.02);
         

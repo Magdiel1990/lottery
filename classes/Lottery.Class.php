@@ -62,7 +62,7 @@ abstract class LotteryClass {
         return $positionArray;
     }
 
-    private function totalPlays($conn) {
+    protected function totalPlays($conn) {
         $result = $conn -> query ("SELECT count(*) as total FROM numbers WHERE position = 1 ORDER BY date desc;");
 
         $row = $result -> fetch_assoc();
@@ -501,7 +501,7 @@ abstract class LotteryClass {
 
     //15. QUITAR LOS ALEATORIOS DE HOY    
     //Filter 11
-    private function randOutArray ($amount, $balls, $up, $conn){
+    protected function randOutArray ($amount, $balls, $up, $conn){
         $array = $this -> sumEach($balls, $conn);
 
         if(count($array) != 0) {
@@ -586,7 +586,7 @@ abstract class LotteryClass {
         }      
     }
 
-    private function intersectCompare($array, $position, $balls, $frequency, $time, $conn) {
+    protected function intersectCompare($array, $position, $balls, $frequency, $time, $conn) {
 
         for($i = 1; $i <= $time; $i++) {
             $array = $this -> intersectCondition ($array, $position, $time, $frequency, $balls, $conn);
@@ -598,18 +598,7 @@ abstract class LotteryClass {
     }
 
     //Filter 12
-    protected function insersectArrayOut ($amount, $up, $balls, $conn, $frequency) {
-        $array = $this -> randOutArray($amount, $balls, $up, $conn);
-        $totalPlays = $this -> totalPlays($conn);
-
-        sort($array);
-
-        for($i = $balls - 2; $i < $balls; $i++) {
-            $array = $this -> intersectCompare($array, $i, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        }
-
-        return $array;
-    }  
+    abstract protected function insersectArrayOut ($amount, $up, $balls, $conn, $frequency);
 
     /*********************************Descartar los numeros por la frecuencia en que salen ***************************/
     /*****************************************************************************************************************/
