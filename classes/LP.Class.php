@@ -2,6 +2,22 @@
 require_once ("Lottery.Class.php");
 
 class LPClass extends LotteryClass {  
+    //Patrón de restas
+    protected function diffRangeLoop($array, $balls, $conn) {
+        $array = $this -> diffRange($array, 1, 2, $balls, $conn);
+        $array = $this -> diffRange($array, 1, 3, $balls, $conn);
+        $array = $this -> diffRange($array, 1, 4, $balls, $conn);
+        $array = $this -> diffRange($array, 1, 5, $balls, $conn);
+        $array = $this -> diffRange($array, 2, 3, $balls, $conn);
+        $array = $this -> diffRange($array, 2, 4, $balls, $conn);
+        $array = $this -> diffRange($array, 2, 5, $balls, $conn);
+        $array = $this -> diffRange($array, 3, 4, $balls, $conn);
+        $array = $this -> diffRange($array, 3, 5, $balls, $conn);
+        $array = $this -> diffRange($array, 4, 5, $balls, $conn);
+  
+        return $array;
+    }
+
     protected function insersectArrayOut ($amount, $up, $balls, $conn, $frequency) {
         $array = $this -> randOutArray($amount, $balls, $up, $conn);
         $totalPlays = $this -> totalPlays($conn);

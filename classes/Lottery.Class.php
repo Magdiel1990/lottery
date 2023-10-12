@@ -317,7 +317,7 @@ abstract class LotteryClass {
     //10. RANGO DE LA RESTA DE UN NUMERO A OTRO
 
     //Incluir rango de restas
-    private function diffRange($array, $down, $up, $balls, $conn) {
+    protected function diffRange($array, $down, $up, $balls, $conn) {
         if(count($array) != 0) {
             //Array del máximo y mínimo
             $rangeDiffArray = $this -> rangeDiffArray ($down, $up, $conn);
@@ -331,14 +331,7 @@ abstract class LotteryClass {
         }
     }
     //Patrón de restas
-    protected function diffRangeLoop($array, $balls, $conn) {
-        for($i = 1; $i < $balls; $i++) {
-            for($j = $i + 1; $j <= $balls; $j++) {
-                $array = $this -> diffRange($array, $i, $j, $balls, $conn);
-            }
-        }
-        return $array;
-    }
+    abstract protected function diffRangeLoop($array, $balls, $conn);
 
     //Patrón de restas
     //Filter 6
