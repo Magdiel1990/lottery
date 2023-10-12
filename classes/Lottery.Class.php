@@ -172,11 +172,10 @@ abstract class LotteryClass {
     protected function average($array) {
         $count = count($array);
         
-        if($count != 0) {
-            $sum = $this -> sumArray ($array);
-        
-            return $media = $sum / $count;
-        }
+        $sum = $this -> sumArray ($array);
+    
+        return $media = $sum / $count;
+
     }
     
     //Rango máximo y mínimo
