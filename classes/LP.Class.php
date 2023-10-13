@@ -34,8 +34,9 @@ class LPClass extends LotteryClass {
         return $array;
     }
 
-    protected function insersectArrayOut ($amount, $up, $balls, $conn, $frequency) {
-        $array = $this -> randOutArray($amount, $balls, $up, $conn);
+    protected function insersectArrayOut ($balls, $conn, $frequency) {
+        $array = $this -> sumEach($balls, $conn);
+
         $totalPlays = $this -> totalPlays($conn);
 
         sort($array);
@@ -46,8 +47,8 @@ class LPClass extends LotteryClass {
         return $array;
     }  
     
-    protected function lastRange($amount, $balls, $up, $conn) {
-        $array = $this -> number_period_filter ($amount, $up, $balls, $conn, 0.02);
+    protected function lastRange($balls, $up, $conn) {
+        $array = $this -> number_period_filter ($balls, $conn, 0.02);
         $array = $this -> range_filter($array, 1, 10);
         $array = $this -> range_filter($array, 2, 20);
         $array = $this -> range_filter($array, 3, 25);
@@ -56,7 +57,7 @@ class LPClass extends LotteryClass {
     }
 //Final
     public function finalNumbers ($balls, $up, $conn) {
-        $array = $this -> lastRange(10000, $balls, $up, $conn);
+        $array = $this -> lastRange($balls, $up, $conn);
         sort($array);
         return $array;
     }

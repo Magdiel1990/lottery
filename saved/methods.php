@@ -135,6 +135,28 @@
         return $rangeCondition;
     }
 
+    //15. QUITAR LOS ALEATORIOS DE HOY    
+    //Filter 11
+ protected function randOutArray ($amount, $balls, $up, $conn){
+        $array = $this -> sumEach($balls, $conn);
+
+        if(count($array) != 0) {
+            //Números aleatorios
+            $randomNumbers = new RandomGenerator(1, $up, $balls, $amount);
+            $randomNumbers = $randomNumbers -> randGen(); 
+
+            for($i = 0; $i < count($randomNumbers); $i++) {
+                if($randomNumbers[$i] != $array) {
+                    return $array;
+                } else {
+                    return [];
+                }
+            }
+        } else {
+            return $array;
+        }
+    }
+
     
     */
 

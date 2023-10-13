@@ -44,27 +44,26 @@ class LotoClass extends LotteryClass {
         return $array;
     }
 
-    protected function insersectArrayOut ($amount, $up, $balls, $conn, $frequency) {
-        $array = $this -> randOutArray($amount, $balls, $up, $conn);
+    protected function insersectArrayOut ($balls, $conn, $frequency) {
+        $array = $this -> sumEach($balls, $conn);
         $totalPlays = $this -> totalPlays($conn);
 
         sort($array);
 
         $array = $this -> intersectCompare($array, 5, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
         $array = $this -> intersectCompare($array, 4, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 3, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        
+               
         return $array;
     }  
     
     //Filter 13
-    protected function number_period_filter ($amount, $up, $balls, $conn, $frequency) {        
-        $array = $this -> insersectArrayOut ($amount, $up, $balls, $conn, $frequency);  
+    protected function number_period_filter ($balls, $conn, $frequency) {        
+        $array = $this -> insersectArrayOut ($balls, $conn, $frequency);  
 
         return $array;
     }
-    protected function lastRange($amount, $balls, $up, $conn) {
-        $array = $this -> number_period_filter ($amount, $up, $balls, $conn, 0.02);
+    protected function lastRange($balls, $up, $conn) {
+        $array = $this -> number_period_filter ($balls, $conn, 0.02);
         $array = $this -> range_filter($array, 1, 10);
         $array = $this -> range_filter($array, 2, 20);
         $array = $this -> range_filter($array, 3, 30);
@@ -75,7 +74,7 @@ class LotoClass extends LotteryClass {
     }
 //Final
     public function finalNumbers ($balls, $up, $conn) {
-        $array = $this -> lastRange(10000, $balls, $up, $conn);
+        $array = $this -> lastRange($balls, $up, $conn);
         sort($array);
         return $array;
     }
