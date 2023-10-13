@@ -18,6 +18,22 @@ class LPClass extends LotteryClass {
         return $array;
     }
 
+    //Patrón de restas
+    protected function sumEachLoop($array, $balls, $conn) {        
+        $array = $this -> rangeSumEach($array, 1, 2, $conn);
+        $array = $this -> rangeSumEach($array, 1, 3, $conn);
+        $array = $this -> rangeSumEach($array, 1, 4, $conn);
+        $array = $this -> rangeSumEach($array, 1, 5, $conn);
+        $array = $this -> rangeSumEach($array, 2, 3, $conn);
+        $array = $this -> rangeSumEach($array, 2, 4, $conn);
+        $array = $this -> rangeSumEach($array, 2, 5, $conn);
+        $array = $this -> rangeSumEach($array, 3, 4, $conn);
+        $array = $this -> rangeSumEach($array, 3, 5, $conn);
+        $array = $this -> rangeSumEach($array, 4, 5, $conn);
+
+        return $array;
+    }
+
     protected function insersectArrayOut ($amount, $up, $balls, $conn, $frequency) {
         $array = $this -> randOutArray($amount, $balls, $up, $conn);
         $totalPlays = $this -> totalPlays($conn);

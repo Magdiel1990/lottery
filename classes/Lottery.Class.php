@@ -3,20 +3,20 @@ require_once ("Random.Generators.Class.php");
 
 abstract class LotteryClass {
     protected $totalNumbers;
-    protected int $amount;
+    protected $amount;
     protected $arrayNumbers;
     protected $array;
-    protected int $down; 
-    protected int $up;
+    protected $down; 
+    protected $up;
     protected $data;
     protected $range;
-    protected int $time;
+    protected $time;
     protected $allArray;
-    protected int $position;
-    protected int $frequency;
-    protected int $ball;
-    protected int $balls;
-    protected int $count;
+    protected $position;
+    protected $frequency;
+    protected $ball;
+    protected $balls;
+    protected $count;
     protected $conn;
 
 
@@ -201,11 +201,12 @@ abstract class LotteryClass {
 
     //Suma de cada elemento
     private function number_sum ($down, $up, $conn) {
+        //Posiciones a sumar
         $positionArrayDown = $this-> positionCalculation($down, $conn);
         $positionArrayUp = $this-> positionCalculation($up, $conn);
 
         $positionSums = [];
-
+        //Suma de posiciones
         for($i = 0; $i < count($positionArrayDown); $i++) {
             $positionSums [] = $positionArrayUp[$i] + $positionArrayDown[$i];
         }
@@ -461,7 +462,7 @@ abstract class LotteryClass {
         return $sum;        
     }
 
-    private function rangeSumEach($array, $down, $up, $conn) {
+    protected function rangeSumEach($array, $down, $up, $conn) {
         if(count($array) != 0) {
             //Arreglo de la suma de elementos consecutivos de los números jugados anteriormente
             $arrayOfTheSumArray = $this -> number_sum ($down, $up, $conn);
@@ -479,14 +480,7 @@ abstract class LotteryClass {
     }
 
     //Patrón de restas
-    protected function sumEachLoop($array, $balls, $conn) {
-        for($i = 1; $i < $balls; $i++) {
-            for($j = $i + 1; $j <= $balls; $j++) {
-                $array = $this -> rangeSumEach($array, $i, $j, $conn);;
-            }
-        }
-        return $array;
-    }
+    abstract protected function sumEachLoop($array, $balls, $conn);
 
     //Filter 10
     protected function sumEach($balls, $conn) {
@@ -574,6 +568,9 @@ abstract class LotteryClass {
         $frequencyCalculation = $this -> frequencyCalculation ($position, $time, $balls, $conn);
 
         $intersection = $this -> intersection ($array, $time, $allArrays);
+
+        $totalPlays = $this -> totalPlays($conn);
+        $frequency = ceil($frequency * ($totalPlays - 1));
    
         if($frequencyCalculation <= $frequency && count($intersection) == $position) {
             return $array;
