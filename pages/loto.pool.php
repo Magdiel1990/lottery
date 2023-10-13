@@ -19,8 +19,8 @@ include "../partials/nav.php";
         <?php 
         if(isset($_POST["generate"])){
             $finalArray = new LPClass();
-            $numbers = $finalArray-> finalNumbers(5, 31, $conn); 
-
+            $numbers = $finalArray-> finalNumbers(15, 5, $conn, 0.02); 
+            
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {
         ?>  

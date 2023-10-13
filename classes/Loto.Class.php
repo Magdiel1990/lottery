@@ -3,28 +3,28 @@ require_once ("Lottery.Class.php");
 
 class LotoClass extends LotteryClass {
     //Patrón de restas
-    protected function diffRangeLoop($array, $balls, $conn) {
-        $array = $this -> diffRange($array, 1, 2, $balls, $conn);
-        $array = $this -> diffRange($array, 1, 3, $balls, $conn);
-        $array = $this -> diffRange($array, 1, 4, $balls, $conn);
-        $array = $this -> diffRange($array, 1, 5, $balls, $conn);
-        $array = $this -> diffRange($array, 1, 6, $balls, $conn);
-        $array = $this -> diffRange($array, 2, 3, $balls, $conn);
-        $array = $this -> diffRange($array, 2, 4, $balls, $conn);
-        $array = $this -> diffRange($array, 2, 5, $balls, $conn);
-        $array = $this -> diffRange($array, 2, 6, $balls, $conn);
-        $array = $this -> diffRange($array, 3, 4, $balls, $conn);
-        $array = $this -> diffRange($array, 3, 5, $balls, $conn);
-        $array = $this -> diffRange($array, 3, 6, $balls, $conn);
-        $array = $this -> diffRange($array, 4, 5, $balls, $conn);
-        $array = $this -> diffRange($array, 4, 6, $balls, $conn);
-        $array = $this -> diffRange($array, 5, 6, $balls, $conn);
+    protected function diffRangeLoop($array, $conn) {
+        $array = $this -> diffRange($array, 1, 2, $conn);
+        $array = $this -> diffRange($array, 1, 3, $conn);
+        $array = $this -> diffRange($array, 1, 4, $conn);
+        $array = $this -> diffRange($array, 1, 5, $conn);
+        $array = $this -> diffRange($array, 1, 6, $conn);
+        $array = $this -> diffRange($array, 2, 3, $conn);
+        $array = $this -> diffRange($array, 2, 4, $conn);
+        $array = $this -> diffRange($array, 2, 5, $conn);
+        $array = $this -> diffRange($array, 2, 6, $conn);
+        $array = $this -> diffRange($array, 3, 4, $conn);
+        $array = $this -> diffRange($array, 3, 5, $conn);
+        $array = $this -> diffRange($array, 3, 6, $conn);
+        $array = $this -> diffRange($array, 4, 5, $conn);
+        $array = $this -> diffRange($array, 4, 6, $conn);
+        $array = $this -> diffRange($array, 5, 6, $conn);
   
         return $array;
     }
 
     //Patrón de restas
-    protected function sumEachLoop($array, $balls, $conn) {        
+    protected function sumEachLoop($array, $conn) {        
         $array = $this -> rangeSumEach($array, 1, 2, $conn);
         $array = $this -> rangeSumEach($array, 1, 3, $conn);
         $array = $this -> rangeSumEach($array, 1, 4, $conn);
@@ -44,8 +44,8 @@ class LotoClass extends LotteryClass {
         return $array;
     }
 
-    protected function insersectArrayOut ($balls, $conn, $frequency) {
-        $array = $this -> sumEach($balls, $conn);
+    protected function insersectArrayOut ($days, $balls, $conn, $frequency) {
+        $array = $this -> sumEach($days, $balls, $conn);
         $totalPlays = $this -> totalPlays($conn);
 
         sort($array);
@@ -57,13 +57,13 @@ class LotoClass extends LotteryClass {
     }  
     
     //Filter 13
-    protected function number_period_filter ($balls, $conn, $frequency) {        
-        $array = $this -> insersectArrayOut ($balls, $conn, $frequency);  
+    protected function number_period_filter ($days, $balls, $conn, $frequency) {        
+        $array = $this -> insersectArrayOut ($days, $balls, $conn, $frequency);  
 
         return $array;
     }
-    protected function lastRange($balls, $up, $conn) {
-        $array = $this -> number_period_filter ($balls, $conn, 0.02);
+    protected function lastRange ($days, $balls, $conn, $frequency) {
+        $array = $this -> number_period_filter ($days, $balls, $conn, $frequency);
         $array = $this -> range_filter($array, 1, 10);
         $array = $this -> range_filter($array, 2, 20);
         $array = $this -> range_filter($array, 3, 30);
@@ -73,8 +73,8 @@ class LotoClass extends LotteryClass {
         return $array;
     }
 //Final
-    public function finalNumbers ($balls, $up, $conn) {
-        $array = $this -> lastRange($balls, $up, $conn);
+    public function finalNumbers ($days, $balls, $conn, $frequency) {
+        $array = $this -> lastRange($days, $balls, $conn, $frequency);
         sort($array);
         return $array;
     }

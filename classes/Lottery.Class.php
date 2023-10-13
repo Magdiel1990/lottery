@@ -3,11 +3,10 @@ require_once ("Random.Generators.Class.php");
 
 abstract class LotteryClass {
     protected $totalNumbers;
-    protected $amount;
     protected $arrayNumbers;
-    protected $array;
-    protected $down; 
-    protected $up;
+    protected $array; //Números a jugar
+    protected $down; //Posición inferior
+    protected $up; //Posición superior
     protected $data;
     protected $range;
     protected $time;
@@ -15,10 +14,11 @@ abstract class LotteryClass {
     protected $position;
     protected $frequency;
     protected $ball;
-    protected $balls;
+    protected $balls; //Cantidad máxima de bolos a sacar
     protected $count;
     protected $conn;
-
+    protected $days; //Días anteriores a la jugada a tomar en cuenta
+ 
 
     /************************************* Cálculo del ************************************/
     /*************************************   rango     ************************************/
@@ -121,19 +121,39 @@ abstract class LotteryClass {
 
     //Incluye números que más se  repiten de sorteos anteriores
     //Filter 2
-    private function normalNumbers($balls, $conn) {        
+    private function lastNumbersPlayed($days, $balls, $conn) { 
+        $lastNumbers = [];
+
+        for ($i = 1; $i <= $balls; $i++) {
+            for($j = 0; $j < $days; $j++) {
+                $lastNumbers [] = $this-> positionCalculation($i, $conn)[$j];
+            }
+        }
+
+        return $lastNumbers;
+    }
+
+    private function lastNumbersMoreOftenPlayed ($days, $balls, $conn) {  
+        $lastNumbers = $this-> lastNumbersPlayed($days, $balls, $conn);
+
+        $valuesArray = array_count_values ($lastNumbers);
+
+        arsort($valuesArray);
+
+        $keyArray = array_keys($valuesArray);
+        
+        return $keyArray;
+    }
+
+    protected function normalNumbers($days, $balls, $conn) {
         $arrayNumbers = $this-> arrayNumbers($balls, $conn); 
 
-        $result = $conn -> query ("SELECT number, count(*) as total FROM numbers GROUP BY number ORDER BY total desc LIMIT $balls;");
+        $keys = $this-> lastNumbersMoreOftenPlayed ($days, $balls, $conn);
+        $keys = array_chunk ($keys, $balls);
+        $keys = $keys[0];
 
-        $numbers = [];
-        
-        while($row = $result -> fetch_assoc()){
-            $numbers [] = intval($row["number"]);
-        }        
-   
         while(count($arrayNumbers) != $balls) {
-            array_push($arrayNumbers, $numbers[rand(0, $balls - 1)]);
+            array_push($arrayNumbers, $keys [rand(0, $balls - 1)]);
 
             $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
         }
@@ -142,7 +162,6 @@ abstract class LotteryClass {
 
         return $arrayNumbers;
     }
-
 
     /*************************************   Suma de números  *************************************/
     /**********************************************************************************************/
@@ -271,9 +290,9 @@ abstract class LotteryClass {
 
     //Desviación estandard del array
     //Filter 3
-    private function rangeStandardDeviation($balls, $conn) {
+    private function rangeStandardDeviation($days, $balls, $conn) {
         //Desviación standard de la jugada
-        $array = $this-> normalNumbers($balls, $conn);
+        $array = $this-> normalNumbers($days, $balls, $conn);
         $standardDeviationOfArray =  $this -> standardDeviation ($array);
 
         //Desviaciones estandares de jugadas anteriores
@@ -290,9 +309,9 @@ abstract class LotteryClass {
 
     //Verificar si esta jugada ya había salido
     //Filter 4
-    private function lastNumbersExceptions($balls, $conn) {
+    private function lastNumbersExceptions($days, $balls, $conn) {
         $totalNumbers = $this-> totalNumbers($balls, $conn);
-        $arrayNumbers = $this-> rangeStandardDeviation($balls, $conn);
+        $arrayNumbers = $this-> rangeStandardDeviation($days, $balls, $conn);
 
         sort($arrayNumbers);
          
@@ -308,9 +327,9 @@ abstract class LotteryClass {
 
     //Incluir rango de sumas
     //Filter 5
-    protected function sumRange($balls, $conn) {
+    protected function sumRange($days, $balls, $conn) {
         //Array     
-        $array = $this -> lastNumbersExceptions($balls, $conn);
+        $array = $this -> lastNumbersExceptions($days, $balls, $conn);
 
         //Suma de los elementos del array
         $sumArray = $this -> sumArray ($array);
@@ -323,7 +342,7 @@ abstract class LotteryClass {
     //10. RANGO DE LA RESTA DE UN NUMERO A OTRO
 
     //Incluir rango de restas
-    protected function diffRange($array, $down, $up, $balls, $conn) {
+    protected function diffRange($array, $down, $up, $conn) {
         if(count($array) != 0) {
             //Array del máximo y mínimo
             $rangeDiffArray = $this -> rangeDiffArray ($down, $up, $conn);
@@ -337,14 +356,14 @@ abstract class LotteryClass {
         }
     }
     //Patrón de restas
-    abstract protected function diffRangeLoop($array, $balls, $conn);
+    abstract protected function diffRangeLoop($array, $conn);
 
     //Patrón de restas
     //Filter 6
-    protected function subRange($balls, $conn) {            
-        $array = $this -> sumRange($balls, $conn);
+    protected function subRange($days, $balls, $conn) {            
+        $array = $this -> sumRange($days, $balls, $conn);
 
-        $array = $this -> diffRangeLoop ($array, $balls, $conn);
+        $array = $this -> diffRangeLoop ($array, $conn);
 
         return $array;
     }
@@ -371,8 +390,8 @@ abstract class LotteryClass {
 
     //Rango de los promedios
     //Filter 7
-    private function rangeAvgArray ($balls, $conn) {
-        $array = $this -> subRange($balls, $conn);       
+    private function rangeAvgArray ($days, $balls, $conn) {
+        $array = $this -> subRange($days, $balls, $conn);       
 
         if(count($array) != 0) {
             //Array del máximo y mínimo
@@ -421,8 +440,8 @@ abstract class LotteryClass {
     }
 
     //Filter 8
-    protected function rangeProArray ($balls, $conn) {
-        $array = $this -> rangeAvgArray ($balls, $conn);       
+    protected function rangeProArray ($days, $balls, $conn) {
+        $array = $this -> rangeAvgArray ($days, $balls, $conn);       
 
         if(count($array) != 0) {
             //Array del máximo y mínimo
@@ -438,8 +457,8 @@ abstract class LotteryClass {
 
     //13. QUITAR NUMEROS DOBLEMENTE CONSECUTIVOS
     //Filter 9
-    protected function consecutiveOutArray ($balls, $conn){
-        $array = $this -> rangeProArray ($balls, $conn);
+    protected function consecutiveOutArray ($days, $balls, $conn) {
+        $array = $this -> rangeProArray ($days, $balls, $conn);
 
         $count = 0;
 
@@ -480,13 +499,13 @@ abstract class LotteryClass {
     }
 
     //Patrón de restas
-    abstract protected function sumEachLoop($array, $balls, $conn);
+    abstract protected function sumEachLoop($array, $conn);
 
     //Filter 10
-    protected function sumEach($balls, $conn) {
-        $array = $this -> consecutiveOutArray($balls, $conn);
+    protected function sumEach($days, $balls, $conn) {
+        $array = $this -> consecutiveOutArray ($days, $balls, $conn);
         
-        $array = $this -> sumEachLoop($array, $balls, $conn);
+        $array = $this -> sumEachLoop($array, $conn);
    
         return $array;
     }
@@ -572,7 +591,7 @@ abstract class LotteryClass {
     }
 
     //Filter 12
-    abstract protected function insersectArrayOut ($balls, $conn, $frequency);
+    abstract protected function insersectArrayOut ($days, $balls, $conn, $frequency);
 
     /*********************************Descartar los numeros por la frecuencia en que salen ***************************/
     /*****************************************************************************************************************/
@@ -630,8 +649,8 @@ abstract class LotteryClass {
         }
     }
     //Filter 13
-    protected function number_period_filter ($balls, $conn, $frequency) {        
-        $array = $this -> insersectArrayOut ($balls, $conn, $frequency);
+    protected function number_period_filter ($days, $balls, $conn, $frequency) {        
+        $array = $this -> insersectArrayOut ($days, $balls, $conn, $frequency);
 
         $value = true;
 
@@ -664,10 +683,10 @@ abstract class LotteryClass {
     }    
 
     //Filter 14
-    abstract protected function lastRange ($balls, $up, $conn);
+    abstract protected function lastRange ($days, $balls, $conn, $frequency);
     
     //Final
     //Filter 15
-    abstract protected function finalNumbers ($balls, $up, $conn);
+    abstract protected function finalNumbers ($days, $balls, $conn, $frequency);
 }
 ?>
