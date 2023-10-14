@@ -1,7 +1,7 @@
 
 <?php
 include ("partials/head.php");
-include "partials/nav.php";
+include ("partials/nav.php");
 ?>
 
     <main class="container p-4">

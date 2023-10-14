@@ -50,29 +50,22 @@ class KTVClass extends LotteryClass {
         return $array;
     }  
 
-    protected function lastRange($days, $balls, $conn, $frequency) {
+    protected function combination_calculation ($days, $balls, $conn, $frequency) {
         $array = $this -> number_period_filter ($days, $balls, $conn, $frequency);
 
-        $array = $this -> range_filter($array, 1, 5);
-        $array = $this -> range_filter($array, 2, 10);
-        $array = $this -> range_filter($array, 3, 15);
-        $array = $this -> range_filter($array, 4, 20);
-        $array = $this -> range_filter($array, 5, 25);
-        $array = $this -> range_filter($array, 6, 30);
-        $array = $this -> range_filter($array, 7, 35);
-        $array = $this -> range_filter($array, 8, 40);
-        $array = $this -> range_filter($array, 9, 45);
-        $array = $this -> range_filter($array, 10, 50);
-        $array = $this -> range_filter($array, 11, 55);
-        $array = $this -> range_filter($array, 12, 60);
-        $array = $this -> range_filter($array, 13, 60);
-        $array = $this -> range_filter($array, 14, 60);
-        $array = $this -> range_filter($array, 15, 65);
-        $array = $this -> range_filter($array, 16, 70);
-        $array = $this -> range_filter($array, 17, 75);
-        $array = $this -> range_filter($array, 18, 75);
-        $array = $this -> range_filter($array, 19, 80);
-        $array = $this -> range_filter($array, 20, 80);
+        for($i = 0; $i < count($array) - 1; $i++) {
+            for($j = $i + 1; $j < $balls; $j++) {
+                if($this -> combination_percentage ($array[$i], $array[$j], 10, $conn) < 5) {
+                    return [];
+                }
+            }
+        }
+
+        return $array;
+    }
+    
+    protected function lastRange($days, $balls, $conn, $frequency) {
+        $array = $this -> combination_calculation ($days, $balls, $conn, $frequency);
         return $array;
     }
 

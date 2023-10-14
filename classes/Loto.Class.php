@@ -79,12 +79,6 @@ class LotoClass extends LotteryClass {
 
     protected function lastRange ($days, $balls, $conn, $frequency) {
         $array = $this -> combination_calculation ($days, $balls, $conn, $frequency);
-        $array = $this -> range_filter($array, 1, 10);
-        $array = $this -> range_filter($array, 2, 20);
-        $array = $this -> range_filter($array, 3, 30);
-        $array = $this -> range_filter($array, 4, 30);
-        $array = $this -> range_filter($array, 5, 36);
-
         return $array;
     }
 //Final

@@ -52,7 +52,7 @@ class LPClass extends LotteryClass {
 
         for($i = 0; $i < count($array) - 1; $i++) {
             for($j = $i + 1; $j < $balls; $j++) {
-                if($this -> combination_percentage ($array[$i], $array[$j], 20, $conn) < 10) {
+                if($this -> combination_percentage ($array[$i], $array[$j], 30, $conn) < 10) {
                     return [];
                 }
             }
@@ -63,10 +63,6 @@ class LPClass extends LotteryClass {
     
     protected function lastRange($days, $balls, $conn, $frequency) {
         $array = $this -> combination_calculation ($days, $balls, $conn, $frequency);
-        $array = $this -> range_filter($array, 1, 10);
-        $array = $this -> range_filter($array, 2, 20);
-        $array = $this -> range_filter($array, 3, 25);
-        $array = $this -> range_filter($array, 4, 30);
         return $array;
     }
 //Final
