@@ -62,8 +62,23 @@ class LotoClass extends LotteryClass {
 
         return $array;
     }
-    protected function lastRange ($days, $balls, $conn, $frequency) {
+
+    protected function combination_calculation ($days, $balls, $conn, $frequency) {
         $array = $this -> number_period_filter ($days, $balls, $conn, $frequency);
+
+        for($i = 0; $i < count($array) - 1; $i++) {
+            for($j = $i + 1; $j < $balls; $j++) {
+                if($this -> combination_percentage ($array[$i], $array[$j], 10, $conn) < 2) {
+                    return ["ok"];
+                }
+            }
+        }
+
+        return $array;
+    }
+
+    protected function lastRange ($days, $balls, $conn, $frequency) {
+        $array = $this -> combination_calculation ($days, $balls, $conn, $frequency);
         $array = $this -> range_filter($array, 1, 10);
         $array = $this -> range_filter($array, 2, 20);
         $array = $this -> range_filter($array, 3, 30);

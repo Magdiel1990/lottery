@@ -685,7 +685,43 @@ abstract class LotteryClass {
         } else {
             return [];
         }
-    }    
+    }   
+    /*****************************************Calcular las combinaciones que mas salen ************************/ 
+    private function datesNumbers ($down, $period, $conn) {
+        $result = $conn -> query ("SELECT date from numbers WHERE number = $down ORDER BY date DESC LIMIT $period;");
+        $dates = [];
+
+        while($row = $result -> fetch_assoc()){
+          $dates [] = $row ["date"];
+        } 
+        
+        return $dates;
+    }
+
+    private function combinations ($down, $up, $period, $conn) {
+        $dates = $this -> datesNumbers ($down, $period, $conn);
+
+        $count = 0;
+
+        if(count($dates) != 0) {
+            
+            for($i = 0; $i < count($dates); $i++) {
+                $result = $conn -> query ("SELECT count(id) as `count` FROM numbers WHERE number = '$up' AND date = '" . $dates[$i] . "';");
+                $row = $result -> fetch_assoc();
+                $count += $row["count"];
+            } 
+        }
+
+        return $count;
+    }
+
+    protected function combination_percentage ($down, $up, $period, $conn) {
+        $count = $this -> combinations ($down, $up, $period, $conn);
+
+        return ($count/$period)*100;
+    }
+
+    abstract protected function combination_calculation ($days, $balls, $conn, $frequency);
 
     //Filter 14
     abstract protected function lastRange ($days, $balls, $conn, $frequency);
