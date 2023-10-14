@@ -638,6 +638,11 @@ abstract class LotteryClass {
 
     private function numberPeriodValue ($ball, $conn) {
         $array = $this -> diffDatesArray ($ball, $conn);
+
+        if(count($array) == 0) {
+            return [];
+        }
+        
         $min = min($array);
 
         $difference = $this -> last_appearance ($ball, $conn);

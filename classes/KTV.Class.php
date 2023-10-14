@@ -2,6 +2,16 @@
 require_once ("Lottery.Class.php");
 
 class KTVClass extends LotteryClass {
+    //Patrón de restas
+    protected function diffRangeLoop($array, $conn) {
+        return $array;
+    }
+
+    //Patrón de restas
+    protected function sumEachLoop($array, $conn) {        
+        return $array;
+    }
+
     //Filter 6
     protected function subRange($days, $balls, $conn) {            
         $array = $this -> sumRange($days, $balls, $conn);
@@ -73,6 +83,9 @@ class KTVClass extends LotteryClass {
         //Lo divido en pedazos de 10
         $array = array_chunk ($array, 10);
         //Retorno el primer elemento de ese arreglo
+        if(count($array) == 0) {
+            return [];
+        }
         return $array[0];
     }
 

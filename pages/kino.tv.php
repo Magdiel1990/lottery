@@ -19,7 +19,7 @@ include "../partials/nav.php";
         <?php 
         if(isset($_POST["generate"])){
             $finalArray = new KTVClass();
-            $numbers = $finalArray->  $numbers = $finalArray-> finalNumbers(15, 20, $conn, 0.02);  
+            $numbers = $finalArray-> finalNumbers(15, 20, $conn, 0.02);  
 
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {
