@@ -32,21 +32,6 @@ class KTVClass extends LotteryClass {
 
     protected function insersectArrayOut ($days, $balls, $conn, $frequency) {
         $array = $this -> sumEach($days, $balls, $conn);
-        $totalPlays = $this -> totalPlays($conn);
-
-        sort($array);
-
-        $array = $this -> intersectCompare($array, 19, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 18, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 17, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 16, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 15, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 14, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 13, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 12, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 11, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 10, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        
         return $array;
     }  
 
