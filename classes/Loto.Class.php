@@ -69,7 +69,7 @@ class LotoClass extends LotteryClass {
         for($i = 0; $i < count($array) - 1; $i++) {
             for($j = $i + 1; $j < $balls; $j++) {
                 if($this -> combination_percentage ($array[$i], $array[$j], 10, $conn) < 2) {
-                    return ["ok"];
+                    return [];
                 }
             }
         }
