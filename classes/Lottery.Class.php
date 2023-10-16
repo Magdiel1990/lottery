@@ -135,7 +135,7 @@ abstract class LotteryClass {
 
         $valuesArray = array_count_values ($lastNumbers);
 
-        arsort($valuesArray);
+        asort($valuesArray);
 
         $keyArray = array_keys($valuesArray);
         
@@ -523,7 +523,10 @@ abstract class LotteryClass {
    
         return $array;
     }
-    
+
+    abstract protected function decenas_calculation ($array, $days, $balls, $conn);  
+
+    abstract protected function decenas($days, $balls, $conn);    
 
     //Final
     //Filter 15
