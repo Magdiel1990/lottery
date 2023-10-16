@@ -30,13 +30,13 @@ class KTVClass extends LotteryClass {
         return $array;
     }
 
-    protected function insersectArrayOut ($days, $balls, $conn, $frequency) {
+    protected function insersectArrayOut ($days, $balls, $conn) {
         $array = $this -> sumEach($days, $balls, $conn);
         return $array;
     }  
 
-    protected function combination_calculation ($days, $balls, $conn, $frequency) {
-        $array = $this -> number_period_filter ($days, $balls, $conn, $frequency);
+    protected function combination_calculation ($days, $balls, $conn) {
+        $array = $this -> number_period_filter ($days, $balls, $conn);
 
         for($i = 0; $i < count($array) - 1; $i++) {
             for($j = $i + 1; $j < $balls; $j++) {
@@ -49,13 +49,8 @@ class KTVClass extends LotteryClass {
         return $array;
     }
     
-    protected function lastRange($days, $balls, $conn, $frequency) {
-        $array = $this -> combination_calculation ($days, $balls, $conn, $frequency);
-        return $array;
-    }
-
-    private function tenNumbersCreator($days, $balls, $conn, $frequency) {
-        $array = $this -> lastRange($days, $balls, $conn, $frequency);
+    private function tenNumbersCreator($days, $balls, $conn) {
+        $array = $this -> sumEach($days, $balls, $conn);
         //Alearoriamente organizamos array
         shuffle($array);
         //Lo divido en pedazos de 10
@@ -68,8 +63,8 @@ class KTVClass extends LotteryClass {
     }
 
 //Final
-    public function finalNumbers ($days, $balls, $conn, $frequency) {
-        $array = $this -> tenNumbersCreator($days, $balls, $conn, $frequency);
+    public function finalNumbers ($days, $balls, $conn) {
+        $array = $this -> tenNumbersCreator($days, $balls, $conn);
         sort($array);
         return $array;
     }

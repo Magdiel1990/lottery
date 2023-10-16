@@ -44,46 +44,9 @@ class LotoClass extends LotteryClass {
         return $array;
     }
 
-    protected function insersectArrayOut ($days, $balls, $conn, $frequency) {
-        $array = $this -> sumEach($days, $balls, $conn);
-        $totalPlays = $this -> totalPlays($conn);
-
-        sort($array);
-
-        $array = $this -> intersectCompare($array, 5, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-        $array = $this -> intersectCompare($array, 4, $balls, ceil(($totalPlays - 1) * $frequency), $totalPlays - 1, $conn);
-               
-        return $array;
-    }  
-    
-    //Filter 13
-    protected function number_period_filter ($days, $balls, $conn, $frequency) {        
-        $array = $this -> insersectArrayOut ($days, $balls, $conn, $frequency);  
-
-        return $array;
-    }
-
-    protected function combination_calculation ($days, $balls, $conn, $frequency) {
-        $array = $this -> number_period_filter ($days, $balls, $conn, $frequency);
-
-        for($i = 0; $i < count($array) - 1; $i++) {
-            for($j = $i + 1; $j < $balls; $j++) {
-                if($this -> combination_percentage ($array[$i], $array[$j], 10, $conn) < 2) {
-                    return [];
-                }
-            }
-        }
-
-        return $array;
-    }
-
-    protected function lastRange ($days, $balls, $conn, $frequency) {
-        $array = $this -> combination_calculation ($days, $balls, $conn, $frequency);
-        return $array;
-    }
 //Final
-    public function finalNumbers ($days, $balls, $conn, $frequency) {
-        $array = $this -> lastRange($days, $balls, $conn, $frequency);
+    public function finalNumbers ($days, $balls, $conn) {
+        $array = $this -> sumEach($days, $balls, $conn);
         sort($array);
         return $array;
     }
