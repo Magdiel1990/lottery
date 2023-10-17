@@ -39,7 +39,9 @@ class KTVClass extends LotteryClass {
         if(count($array) == 0) {
             return [];
         }
-        return $array[0];
+        $rand = rand(0,1);
+
+        return $array[$rand];
     }
 
     protected function decenas_calculation ($array, $days, $balls, $conn) {
