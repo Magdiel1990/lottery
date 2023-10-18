@@ -23,21 +23,21 @@ abstract class LotteryClass {
     //1.SE ESTABLECE EL RANGO
 
     //Maximo numero en cualquier posicion
-    private function maxNumberRange($position, $conn) {       
+    protected function maxNumberRange($position, $conn) {       
         $result = $conn -> query("SELECT max(number) FROM numbers WHERE position = " . $position . ";");
         $number = $result -> fetch_array();
         return $number[0];
     }
 
     //Mínimo numero en cualquier posicion
-    private function minNumberRange($position, $conn) {       
+    protected function minNumberRange($position, $conn) {       
         $result = $conn -> query("SELECT min(number) FROM numbers WHERE position = " . $position . ";");
         $number = $result -> fetch_array();
         return $number[0];
     }
 
     //Rango en el que pueden estar los números
-    private function numberRange($position, $conn) {
+    protected function numberRange($position, $conn) {
         $maxNumber = $this-> maxNumberRange($position, $conn);
         $minNumber = $this-> minNumberRange($position, $conn);
 
