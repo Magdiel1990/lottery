@@ -67,7 +67,7 @@ class LotoClass extends LotteryClass {
 
  //Final
     public function finalNumbers ($days, $balls, $conn) {
-        $array = $this -> decenas ($days, $balls, $conn);
+        $array = $this -> pastDaysAccount ($days, $balls, $conn);
         sort($array);
         return $array;
     }

@@ -77,7 +77,7 @@ abstract class LotteryClass {
         return $positionArray;
     }
 
-    private function totalNumbers($balls, $conn){
+    protected function totalNumbers($balls, $conn){
         $positionArray = $this -> totalNumbersArrays($balls, $conn);
 
         $totalPosition = [];
@@ -560,6 +560,21 @@ abstract class LotteryClass {
             return $array;
         }
     }  
+
+    protected function pastDaysAccount ($days, $balls, $conn) {
+        $array = $this -> decenas ($days, $balls, $conn);
+        $totalNumbers = $this -> totalNumbers($balls, $conn);
+
+        $lastPlayArray = $totalNumbers [0];
+
+        for($i = 0; $i < count($array); $i++) {
+            if(in_array($array [$i], $lastPlayArray)) {
+                return $array;
+            } 
+        }  
+        
+        return [];
+    }
 
     //Final
     //Filter 15
