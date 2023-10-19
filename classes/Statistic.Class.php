@@ -17,8 +17,6 @@ class Statistic extends LotteryClass {
         return $ranges;
     }
 
-
-    
     /***************Abstract methods *****************/
     protected function diffRangeLoop($array, $conn) {
         return null;
