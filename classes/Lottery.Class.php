@@ -100,7 +100,7 @@ abstract class LotteryClass {
 
     //3. SE GENERA EL NUMERO
     //Filter 1
-    private function arrayNumbers($balls, $conn) {
+    protected function arrayNumbers($balls, $conn) {
         $arrayNumbers = [];
 
         for($i = 1; $i <= $balls; $i++) {
@@ -118,7 +118,7 @@ abstract class LotteryClass {
 
     //Incluye números que más se  repiten de sorteos anteriores
     //Filter 2
-    private function lastNumbersPlayed($days, $balls, $conn) { 
+    protected function lastNumbersPlayed($days, $balls, $conn) { 
         $lastNumbers = [];
 
         for ($i = 1; $i <= $balls; $i++) {
@@ -130,7 +130,7 @@ abstract class LotteryClass {
         return $lastNumbers;
     }
 
-    private function lastNumbersMoreOftenPlayed ($days, $balls, $conn) {  
+    protected function lastNumbersMoreOftenPlayed ($days, $balls, $conn) {  
         $lastNumbers = $this-> lastNumbersPlayed($days, $balls, $conn);
 
         $valuesArray = array_count_values ($lastNumbers);

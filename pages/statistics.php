@@ -44,6 +44,22 @@ $lotopool = new Statistic ();
                     }
                     ?>
                 </div>
+                <div class="col-auto">
+                <?php                    
+                    $days = 7;
+                    $lastNumbersPlayed = $lotopool -> normalNumbers ($days, 5, $conn);
+
+                    $html = "";
+                    $html .= "<b>Números más jugados en " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($lastNumbersPlayed); $i++) {
+                        $html .= "<span>" . $lastNumbersPlayed[$i] . ". </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>
             </div>   
             <?php
                 $conn -> close();
@@ -85,6 +101,22 @@ $lotopool = new Statistic ();
                         echo $html;
                     }
                     ?>
+                </div>
+                <div class="col-auto">
+                <?php                    
+                    $days = 7;
+                    $lastNumbersPlayed = $loto -> normalNumbers ($days, 6, $conn);
+
+                    $html = "";
+                    $html .= "<b>Números más jugados en " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($lastNumbersPlayed); $i++) {
+                        $html .= "<span>" . $lastNumbersPlayed[$i] . ". </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
                 </div>
             </div>                   
         </div>       

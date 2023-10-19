@@ -36,6 +36,14 @@ class Statistic extends LotteryClass {
         return $percentage; 
     }
 
+    public function normalNumbers($days, $balls, $conn) {
+        $keys = $this-> lastNumbersMoreOftenPlayed ($days, $balls, $conn);
+        $keys = array_chunk ($keys, $balls);
+        $keys = $keys[0];
+
+        return $keys;
+    }
+
     /***************Abstract methods *****************/
     protected function diffRangeLoop($array, $conn) {
         return null;
