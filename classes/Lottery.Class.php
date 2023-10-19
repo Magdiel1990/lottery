@@ -135,7 +135,7 @@ abstract class LotteryClass {
 
         $valuesArray = array_count_values ($lastNumbers);
 
-        asort($valuesArray);
+        arsort($valuesArray);
 
         $keyArray = array_keys($valuesArray);
         
