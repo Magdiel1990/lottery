@@ -389,7 +389,7 @@ abstract class LotteryClass {
         return $averageArray;       
     }
 
-    private function rangeAvg($balls, $conn) {
+    protected function rangeAvg($balls, $conn) {
         $array = $this -> averageArray($balls, $conn);
 
         return $this -> minMaxArray($array);

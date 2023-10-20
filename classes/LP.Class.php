@@ -20,6 +20,12 @@ class LPClass extends LotteryClass {
                 return rand(24,31);                
         }
     } 
+
+    
+    protected function rangeAvg($balls, $conn) {
+        return [12,21];
+    }
+
     //Patrón de restas
     protected function diffRangeLoop($array, $conn) {
         $array = $this -> diffRange($array, 1, 2, $conn);

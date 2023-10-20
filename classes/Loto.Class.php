@@ -23,6 +23,11 @@ class LotoClass extends LotteryClass {
                 return rand(28,38);                
         }
     } 
+
+    protected function rangeAvg($balls, $conn) {
+        return [16,25];
+    }
+
     //Patrón de restas
     protected function diffRangeLoop($array, $conn) {
         $array = $this -> diffRange($array, 1, 2, $conn);
