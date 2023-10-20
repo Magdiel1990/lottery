@@ -53,7 +53,23 @@ $lotopool = new Statistic ();
                     $html .= "<b>Números más jugados en " . $days . " días</b>";
                     $html .= "<div>";
                     for($i = 0; $i < count($lastNumbersPlayed); $i++) {
-                        $html .= "<span>" . $lastNumbersPlayed[$i] . ". </span>";
+                        $html .= "<span>" . $lastNumbersPlayed[$i] . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>
+                <div class="col-auto">
+                <?php                    
+                    $days = 30;
+                    $lastNumbersPlayed = $lotopool -> averageOftheLastPlays ($days, 5, $conn);
+
+                    $html = "";
+                    $html .= "<b>Promedios de los últimos " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($lastNumbersPlayed); $i++) {
+                        $html .= "<span>" . $lastNumbersPlayed[$i] . ", </span>";
                     }
                     $html .= "</div>";
 

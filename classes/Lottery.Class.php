@@ -377,7 +377,7 @@ abstract class LotteryClass {
 
     //11. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
 
-    private function averageArray($balls, $conn) {
+    protected function averageArray($balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
 
         $averageArray = [];

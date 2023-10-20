@@ -44,6 +44,17 @@ class Statistic extends LotteryClass {
         return $keys;
     }
 
+    public function averageOftheLastPlays ($days, $balls, $conn) {
+        $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
+
+        $averageArray = [];
+
+        for($i = 0; $i < $days; $i++) {
+            $averageArray [] = $this -> average($totalArrayNumbers[$i]);
+        }
+
+        return $averageArray;       
+    }
     /***************Abstract methods *****************/
     protected function diffRangeLoop($array, $conn) {
         return null;
