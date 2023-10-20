@@ -18,20 +18,6 @@ session_start();
     </script>
     <script src="https://kit.fontawesome.com/65a5e79025.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <style>
-        * {
-            font-family: "Times New Roman"; 
-            font-size: 1.2rem
-        }
-        td a {
-            text-decoration: none;
-        }
-        span {
-            font-size: 1.5rem;
-        }
-        b {
-            font-size: 1.5rem;
-        }
-    </style>
+    <link rel="stylesheet" href="/lottery/styles/styles.css">
 </head>
 <body class="px-2">
