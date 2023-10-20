@@ -47,13 +47,13 @@ $lotopool = new Statistic ();
                 <div class="col-auto">
                 <?php                    
                     $days = 7;
-                    $lastNumbersPlayed = $lotopool -> normalNumbers ($days, 5, $conn);
+                    $numbers = $lotopool -> normalNumbers ($days, 5, $conn);
 
                     $html = "";
                     $html .= "<b>Números más jugados en " . $days . " días</b>";
                     $html .= "<div>";
-                    for($i = 0; $i < count($lastNumbersPlayed); $i++) {
-                        $html .= "<span>" . $lastNumbersPlayed[$i] . ", </span>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
                     }
                     $html .= "</div>";
 
@@ -63,19 +63,36 @@ $lotopool = new Statistic ();
                 <div class="col-auto">
                 <?php                    
                     $days = 60;
-                    $lastNumbersPlayed = $lotopool -> averageOftheLastPlays ($days, 5, $conn);
+                    $numbers = $lotopool -> averageOftheLastPlays ($days, 5, $conn);
 
                     $html = "";
                     $html .= "<b>Promedios de los últimos " . $days . " días</b>";
                     $html .= "<div>";
-                    for($i = 0; $i < count($lastNumbersPlayed); $i++) {
-                        $html .= "<span>" . $lastNumbersPlayed[$i] . ", </span>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
                     }
                     $html .= "</div>";
 
                     echo $html;
                 ?>
                 </div>
+
+                <div class="col-auto">
+                <?php                    
+                    $days = 60;
+                    $numbers = $lotopool -> sumsNumbers ($days, $conn);
+
+                    $html = "";
+                    $html .= "<b>Sumas de los últimos " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>                
             </div>   
             <?php
                 $conn -> close();
@@ -121,13 +138,13 @@ $lotopool = new Statistic ();
                 <div class="col-auto">
                 <?php                    
                     $days = 7;
-                    $lastNumbersPlayed = $loto -> normalNumbers ($days, 6, $conn);
+                    $numbers = $loto -> normalNumbers ($days, 6, $conn);
 
                     $html = "";
                     $html .= "<b>Números más jugados en " . $days . " días</b>";
                     $html .= "<div>";
-                    for($i = 0; $i < count($lastNumbersPlayed); $i++) {
-                        $html .= "<span>" . $lastNumbersPlayed[$i] . ". </span>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ". </span>";
                     }
                     $html .= "</div>";
 
@@ -137,19 +154,35 @@ $lotopool = new Statistic ();
                 <div class="col-auto">
                 <?php                    
                     $days = 60;
-                    $lastNumbersPlayed = $loto -> averageOftheLastPlays ($days, 6, $conn);
+                    $numbers = $loto -> averageOftheLastPlays ($days, 6, $conn);
 
                     $html = "";
                     $html .= "<b>Promedios de los últimos " . $days . " días</b>";
                     $html .= "<div>";
-                    for($i = 0; $i < count($lastNumbersPlayed); $i++) {
-                        $html .= "<span>" . round($lastNumbersPlayed[$i], 1) . ", </span>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . round($numbers[$i], 1) . ", </span>";
                     }
                     $html .= "</div>";
 
                     echo $html;
                 ?>
                 </div>
+                <div class="col-auto">
+                <?php                    
+                    $days = 60;
+                    $numbers = $loto -> sumsNumbers ($days, $conn);
+
+                    $html = "";
+                    $html .= "<b>Sumas de los últimos " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>    
             </div>                   
         </div>       
     </main>

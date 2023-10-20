@@ -166,7 +166,7 @@ abstract class LotteryClass {
     //5. CALCULAR EL RANGO DE LAS SUMAS DE LAS JUGADAS
 
     //Array de la suma
-    private function sumsArrayNumbers($conn) {
+    protected function sumsArrayNumbers($conn) {
         $result = $conn -> query ("SELECT sum(number) AS suma FROM numbers GROUP BY date ORDER BY suma;");
 
         $sums = [];
@@ -178,7 +178,7 @@ abstract class LotteryClass {
         return $sums;
     }
     //Suma de los elementos de un array
-    private function sumArray ($array) {
+    protected function sumArray ($array) {
         $count = count($array);
 
         if($count == 0) {
@@ -211,7 +211,7 @@ abstract class LotteryClass {
         return [$min, $max];
     }
     //Condition range
-    private function rangeCondition($data, $range, $array) {
+    protected function rangeCondition($data, $range, $array) {
         if($data >= $range [0] && $data <= $range [1]) {
             return $array;
         } else {
@@ -310,7 +310,7 @@ abstract class LotteryClass {
 
     //Verificar si esta jugada ya había salido
     //Filter 4
-    private function lastNumbersExceptions($days, $balls, $conn) {
+    protected function lastNumbersExceptions($days, $balls, $conn) {
         $totalNumbers = $this-> totalNumbers($balls, $conn);
         $arrayNumbers = $this-> rangeStandardDeviation($days, $balls, $conn);
 

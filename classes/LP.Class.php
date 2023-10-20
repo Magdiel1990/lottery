@@ -20,10 +20,25 @@ class LPClass extends LotteryClass {
                 return rand(24,31);                
         }
     } 
-
     
     protected function rangeAvg($balls, $conn) {
         return [12,21];
+    }
+
+    protected function sumRange($days, $balls, $conn) {
+        //Array     
+        $array = $this -> lastNumbersExceptions($days, $balls, $conn);
+
+        if(count($array) == 0) {
+            return [];
+        }
+
+        //Suma de los elementos del array
+        $sumArray = $this -> sumArray ($array);
+        //Array del máximo y mínimo
+        $rangeSumArray = [64, 101];
+
+        return $this -> rangeCondition ($sumArray, $rangeSumArray, $array);
     }
 
     //Patrón de restas
@@ -42,6 +57,7 @@ class LPClass extends LotteryClass {
         return $array;
     }
 
+   
     //Patrón de restas
     protected function sumEachLoop($array, $conn) {        
         $array = $this -> rangeSumEach($array, 1, 2, $conn);

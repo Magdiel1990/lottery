@@ -44,6 +44,26 @@ class Statistic extends LotteryClass {
         return $keys;
     }
 
+    protected function sumsArrayNumbers($conn) {
+        $result = $conn -> query ("SELECT sum(number) AS suma, date FROM numbers GROUP BY date ORDER BY date desc;");
+
+        $sums = [];
+
+        while($row = $result -> fetch_assoc()) {
+             $sums []  = intval($row ["suma"]);
+        }
+
+        return $sums;
+    }
+
+    public function sumsNumbers ($days, $conn) {
+        $sums = $this -> sumsArrayNumbers($conn);
+        
+        $sums = array_chunk($sums, $days) ;
+
+        return $sums [0];       
+    }
+
     public function averageOftheLastPlays ($days, $balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
 

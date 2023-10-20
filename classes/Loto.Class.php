@@ -26,6 +26,22 @@ class LotoClass extends LotteryClass {
 
     protected function rangeAvg($balls, $conn) {
         return [16,25];
+    }    
+
+    protected function sumRange($days, $balls, $conn) {
+        //Array     
+        $array = $this -> lastNumbersExceptions($days, $balls, $conn);
+
+        if(count($array) == 0) {
+            return [];
+        }
+
+        //Suma de los elementos del array
+        $sumArray = $this -> sumArray ($array);
+        //Array del máximo y mínimo
+        $rangeSumArray = [86, 149];
+
+        return $this -> rangeCondition ($sumArray, $rangeSumArray, $array);
     }
 
     //Patrón de restas
