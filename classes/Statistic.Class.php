@@ -90,7 +90,7 @@ class Statistic extends LotteryClass {
         return $productArray;          
     }
 
-    public function number_diff ($days, $down, $up, $conn) {
+    public function numberDiff ($days, $down, $up, $conn) {
         $positionArrayDown = $this-> positionCalculation($down, $conn);
         $positionArrayUp = $this-> positionCalculation($up, $conn);
 
@@ -104,6 +104,25 @@ class Statistic extends LotteryClass {
 
         return $positionDiferences [0]; 
     }   
+
+    public function OddEven ($days, $balls, $conn) {
+        $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
+
+        $even = [];
+
+        for($i = 0; $i < $days; $i++) {       
+            $count = 0;     
+            for($j = 0; $j < count($totalArrayNumbers[$i]); $j++) { 
+                if($totalArrayNumbers[$i][$j] % 2 == 0) {
+                    $count += 1;
+                }
+            }   
+
+            $even [] = $count;
+        }   
+        
+        return $even;
+    }
 
     public function averageOftheLastPlays ($days, $balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);

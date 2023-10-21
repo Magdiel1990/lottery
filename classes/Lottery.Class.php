@@ -240,7 +240,7 @@ abstract class LotteryClass {
 
     //6. CALCULAR EL RANGO DE LAS RESTAS DE UN NUMERO Y OTRO
 
-    protected function number_diff ($days, $down, $up, $conn) {
+    protected function number_diff ($down, $up, $conn) {
         $positionArrayDown = $this-> positionCalculation($down, $conn);
         $positionArrayUp = $this-> positionCalculation($up, $conn);
 
@@ -526,24 +526,23 @@ abstract class LotteryClass {
 
     protected function decenas_calculation ($array, $days, $balls, $conn) {
 
-        if(count($array) != 0) {
-      
-            $decena = [];
-
-            for($i = 0; $i < count($array); $i++) {
-                if($array[$i] > 0 && $array[$i] < 10) {
-                    $decena [] = "first";
-                } else if ($array[$i] >= 10 && $array[$i] < 20) {
-                    $decena [] = "second";
-                } else if($array[$i] >= 20 && $array[$i] < 30) {
-                    $decena [] = "third";
-                } else {
-                    $decena [] = "fourth";
-                }
-            }       
-        } else {
-            $decena = [];
+        if(count($array) == 0) {
+            return [];
         }
+
+        $decena = [];
+
+        for($i = 0; $i < count($array); $i++) {
+            if($array[$i] > 0 && $array[$i] < 10) {
+                $decena [] = "first";
+            } else if ($array[$i] >= 10 && $array[$i] < 20) {
+                $decena [] = "second";
+            } else if($array[$i] >= 20 && $array[$i] < 30) {
+                $decena [] = "third";
+            } else {
+                $decena [] = "fourth";
+            }
+        }       
 
         return $decena;
     }
@@ -574,6 +573,23 @@ abstract class LotteryClass {
         }  
         
         return [];
+    }
+
+    protected function oddEvenCal($days, $array, $balls, $conn) {
+
+        if(count($array) == 0) {
+            return false;
+        }
+
+        $even = 0;
+
+        for($i = 0; $i < count($array); $i++) {
+            if ($array [$i] % 2 == 0) {
+                $even += 1;
+            }
+        }  
+        
+        return $even;
     }
 
     //Final
