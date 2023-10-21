@@ -55,6 +55,21 @@ class LotoClass extends LotteryClass {
         return $this -> rangeCondition ($standardDeviationOfArray, $rangeDev, $array);
     }
 
+    protected function rangeProArray ($days, $balls, $conn) {
+        $array = $this -> rangeAvgArray ($days, $balls, $conn);    
+        
+        if(count($array) == 0) {
+            return $array;
+        }
+
+        //Array del máximo y mínimo
+        $rangePro = [1000000, 200000000];
+        //Array average
+        $product = $this -> product($array);
+
+        return $this -> rangeCondition ($product, $rangePro, $array);
+    }
+
     //Patrón de restas
     protected function diffRangeLoop($array, $conn) {
         $array = $this -> diffRange($array, 1, 2, $conn);

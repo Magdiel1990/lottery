@@ -108,12 +108,29 @@ $lotopool = new Statistic ();
 
                     echo $html;
                 ?>
-                </div>            
+                </div>    
+                <div class="col-auto">
+                <?php                    
+                    $days = 60;
+                    $numbers = $lotopool -> productArray ($days, 5, $conn);
+
+                    $html = "";
+                    $html .= "<b>Multiplicaciones de los últimos " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>     
+            </div>          
             </div>   
             <?php
                 $conn -> close();
             ?>
-            <div id="loto" class="row justify-content-center mt-2">
+            <div id="loto" class="row justify-content-center mt-2 text-center">
                 <h2 class="mb-4">Loto</h2>
                 <div class="col-auto">
                     <?php
@@ -202,13 +219,13 @@ $lotopool = new Statistic ();
                 <div class="col-auto">
                 <?php                    
                     $days = 60;
-                    $numbers = $loto -> rangeStandardDeviation ($days, 5, $conn);
+                    $numbers = $loto -> productArray ($days, 6, $conn);
 
                     $html = "";
-                    $html .= "<b>Desviaciones de los últimos " . $days . " días</b>";
+                    $html .= "<b>Multiplicaciones de los últimos " . $days . " días</b>";
                     $html .= "<div>";
                     for($i = 0; $i < count($numbers); $i++) {
-                        $html .= "<span>" . round($numbers[$i], 1) . ", </span>";
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
                     }
                     $html .= "</div>";
 

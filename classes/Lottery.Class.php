@@ -413,7 +413,7 @@ abstract class LotteryClass {
 
     //12. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
 
-    protected function productArray ($balls, $conn) {
+    protected function productArray ($days, $balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
 
         $productArray = [];
