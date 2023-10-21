@@ -44,6 +44,17 @@ class LotoClass extends LotteryClass {
         return $this -> rangeCondition ($sumArray, $rangeSumArray, $array);
     }
 
+    protected function rangeStandardDeviation($days, $balls, $conn) {
+        //Desviación standard de la jugada
+        $array = $this-> normalNumbers($days, $balls, $conn);
+        $standardDeviationOfArray =  $this -> standardDeviation ($array);
+
+        //Máximo y mínimo de las deviaciónes estándares
+        $rangeDev = [5, 13];
+
+        return $this -> rangeCondition ($standardDeviationOfArray, $rangeDev, $array);
+    }
+
     //Patrón de restas
     protected function diffRangeLoop($array, $conn) {
         $array = $this -> diffRange($array, 1, 2, $conn);

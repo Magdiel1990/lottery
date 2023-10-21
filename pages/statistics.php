@@ -92,7 +92,23 @@ $lotopool = new Statistic ();
 
                     echo $html;
                 ?>
-                </div>                
+                </div>    
+                <div class="col-auto">
+                <?php                    
+                    $days = 60;
+                    $numbers = $lotopool -> rangeStandardDeviation ($days, 5, $conn);
+
+                    $html = "";
+                    $html .= "<b>Desviaciones de los últimos " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . round($numbers[$i], 1) . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>            
             </div>   
             <?php
                 $conn -> close();
@@ -183,6 +199,22 @@ $lotopool = new Statistic ();
                     echo $html;
                 ?>
                 </div>    
+                <div class="col-auto">
+                <?php                    
+                    $days = 60;
+                    $numbers = $loto -> rangeStandardDeviation ($days, 5, $conn);
+
+                    $html = "";
+                    $html .= "<b>Desviaciones de los últimos " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . round($numbers[$i], 1) . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>     
             </div>                   
         </div>       
     </main>

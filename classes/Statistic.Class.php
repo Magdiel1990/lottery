@@ -64,6 +64,24 @@ class Statistic extends LotteryClass {
         return $sums [0];       
     }
 
+
+
+
+
+    public function rangeStandardDeviation($days, $balls, $conn) {
+        //Desviaciones estandares de jugadas anteriores
+        $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
+        $arrayOfStandardDeviation =  $this -> standardDeviationArray($totalArrayNumbers);
+
+        $arrayOfStandardDeviation = array_chunk($arrayOfStandardDeviation, $days) ;
+
+        return $arrayOfStandardDeviation [0];     
+    }
+
+
+
+
+
     public function averageOftheLastPlays ($days, $balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
 
