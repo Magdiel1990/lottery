@@ -70,6 +70,41 @@ class LotoClass extends LotteryClass {
         return $this -> rangeCondition ($product, $rangePro, $array);
     }
 
+   /* protected function rangeDiffArray ($down, $up, $conn) {
+        if($down == 1 && $up == 2) {
+            return [1, 17];
+        } else if ($down == 1 && $up == 3) {
+            return [4, 23];
+        } else if ($down == 1 && $up == 4) {
+            return [7, 27];
+        } else if ($down == 1 && $up == 5) {
+            return [12, 23];
+        } else if ($down == 1 && $up == 6) {
+            return [16, 33];
+        } else if ($down == 2 && $up == 3) {
+            return [1, 11];
+        } else if ($down == 2 && $up == 4) { 
+            return [2, 25];
+        } else if ($down == 2 && $up == 5) { 
+            return [7, 32];
+        } else if ($down == 2 && $up == 6) { 
+            return [7, 33];
+        } else if ($down == 3 && $up == 4) { 
+            return [1, 20];
+        } else if ($down == 3 && $up == 5) {
+            return [4, 22];
+        } else if ($down == 3 && $up == 6) {
+            return [4, 23];
+        } else if ($down == 4 && $up == 5) {
+            return [1, 10];
+        } else if ($down == 4 && $up == 6) {
+            return [3, 18];
+        } else if ($down == 5 && $up == 6) {
+            return [1, 16];
+        }
+    }
+    */
+
     //Patrón de restas
     protected function diffRangeLoop($array, $conn) {
         $array = $this -> diffRange($array, 1, 2, $conn);
