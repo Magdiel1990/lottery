@@ -125,24 +125,29 @@ $lotopool = new Statistic ();
                     echo $html;
                 ?>
                 </div>    
-                <div class="col-auto">
-                <?php                    
-                    $days = 60;
-                    $down = 1;
-                    $up = 5;
-                    $numbers = $lotopool -> numberDiff ($days, 1, 5, $conn);
+                <?php
+                for($i = 1; $i <= 5; $i++) {
+                    for($j = $i + 1; $j <= 5; $j++) {
+                        echo '<div class="col-auto">';                   
+                        $days = 60;
+                        $down = $i;
+                        $up = $j;
+                        $numbers = $lotopool -> numberDiff ($days, $i, $j, $conn);
 
-                    $html = "";
-                    $html .= "<b>Diferencia entre ". $down . " y " . $up ." de los últimos " . $days . " días</b>";
-                    $html .= "<div>";
-                    for($i = 0; $i < count($numbers); $i++) {
-                        $html .= "<span>" . $numbers[$i] . ", </span>";
+                        $html = "";
+                        $html .= "<b>Diferencia entre ". $down . " y " . $up ." de los últimos " . $days . " días</b>";
+                        $html .= "<div>";
+                        for($k = 0; $k < count($numbers); $k++) {
+                            $html .= "<span>" . $numbers[$k] . ", </span>";
+                        }
+                        $html .= "</div>";
+
+                        echo $html;
+
+                        echo "</div> ";
                     }
-                    $html .= "</div>";
-
-                    echo $html;
-                ?>
-                </div>   
+                }
+                ?>  
                 <div class="col-auto">
                 <?php                    
                     $days = 60;
@@ -298,24 +303,29 @@ $lotopool = new Statistic ();
                     echo $html;
                 ?>
                 </div>    
-                <div class="col-auto">
-                <?php                    
-                    $days = 60;
-                    $down = 1;
-                    $up = 6;
-                    $numbers = $lotopool -> numberDiff ($days, 1, 6, $conn);
+                <?php
+                for($i = 1; $i <= 6; $i++) {
+                    for($j = $i + 1; $j <= 6; $j++) {
+                        echo '<div class="col-auto">';                   
+                        $days = 60;
+                        $down = $i;
+                        $up = $j;
+                        $numbers = $lotopool -> numberDiff ($days, $i, $j, $conn);
 
-                    $html = "";
-                    $html .= "<b>Diferencia entre ". $down . " y " . $up ." de los últimos " . $days . " días</b>";
-                    $html .= "<div>";
-                    for($i = 0; $i < count($numbers); $i++) {
-                        $html .= "<span>" . $numbers[$i] . ", </span>";
+                        $html = "";
+                        $html .= "<b>Diferencia entre ". $down . " y " . $up ." de los últimos " . $days . " días</b>";
+                        $html .= "<div>";
+                        for($k = 0; $k < count($numbers); $k++) {
+                            $html .= "<span>" . $numbers[$k] . ", </span>";
+                        }
+                        $html .= "</div>";
+
+                        echo $html;
+
+                        echo "</div> ";
                     }
-                    $html .= "</div>";
-
-                    echo $html;
-                ?>
-                </div>  
+                }
+                ?>  
                 <div class="col-auto">
                 <?php                    
                     $days = 80;
