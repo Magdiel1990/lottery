@@ -60,7 +60,7 @@ class LPClass extends LotteryClass {
         }
 
         //Array del máximo y mínimo
-        $rangePro = [100000, 2000000];
+        $rangePro = [30000, 2000000];
         //Array average
         $product = $this -> product($array);
 

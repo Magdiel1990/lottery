@@ -90,6 +90,21 @@ class Statistic extends LotteryClass {
         return $productArray;          
     }
 
+    public function number_diff ($days, $down, $up, $conn) {
+        $positionArrayDown = $this-> positionCalculation($down, $conn);
+        $positionArrayUp = $this-> positionCalculation($up, $conn);
+
+        $positionDiferences = [];
+
+        for($i = 0; $i < count($positionArrayDown); $i++) {
+            $positionDiferences [] = abs($positionArrayUp[$i] - $positionArrayDown[$i]);
+        }
+
+        $positionDiferences= array_chunk($positionDiferences, $days);
+
+        return $positionDiferences [0]; 
+    }   
+
     public function averageOftheLastPlays ($days, $balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
 

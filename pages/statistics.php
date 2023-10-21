@@ -124,7 +124,25 @@ $lotopool = new Statistic ();
 
                     echo $html;
                 ?>
-                </div>     
+                </div>    
+                <div class="col-auto">
+                <?php                    
+                    $days = 60;
+                    $down = 1;
+                    $up = 5;
+                    $numbers = $lotopool -> number_diff ($days, 1, 5, $conn);
+
+                    $html = "";
+                    $html .= "<b>Diferencia entre ". $down . " y " . $up ." de los últimos " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>   
             </div>          
             </div>   
             <?php
@@ -231,7 +249,41 @@ $lotopool = new Statistic ();
 
                     echo $html;
                 ?>
-                </div>     
+                </div>    
+                <div class="col-auto">
+                <?php                    
+                    $days = 60;
+                    $numbers = $lotopool -> productArray ($days, 5, $conn);
+
+                    $html = "";
+                    $html .= "<b>Multiplicaciones de los últimos " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>    
+                <div class="col-auto">
+                <?php                    
+                    $days = 60;
+                    $down = 1;
+                    $up = 6;
+                    $numbers = $lotopool -> number_diff ($days, 1, 6, $conn);
+
+                    $html = "";
+                    $html .= "<b>Diferencia entre ". $down . " y " . $up ." de los últimos " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>  
             </div>                   
         </div>       
     </main>
