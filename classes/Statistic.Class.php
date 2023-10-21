@@ -124,6 +124,26 @@ class Statistic extends LotteryClass {
         return $even;
     }
 
+    public function totalDiff ($days, $balls, $conn) {
+        $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
+
+        $diffArray = [];
+
+        for($i = 0; $i < $days; $i++) {
+            for($j = count($totalArrayNumbers[$i]) - 1; $j > count($totalArrayNumbers[$i]) - 2; $j--) { 
+                $count = $totalArrayNumbers[$i][$j];
+            }  
+
+            for($j = count($totalArrayNumbers[$i]) - 2; $j >= 0; $j--) { 
+                $count -= $totalArrayNumbers[$i][$j];
+            }
+
+            $diffArray [] = $count;
+        }   
+
+        return $diffArray;
+    }
+
     public function averageOftheLastPlays ($days, $balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
 

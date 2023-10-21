@@ -127,10 +127,30 @@ class LotoClass extends LotteryClass {
             return [];
         }
     }
+//Diferencia total
+    protected function totalDiff($days, $balls, $conn) {
+        $array = $this -> oddEvenArray ($days, $balls, $conn);
+        $diff = $this -> totalDiffCal ($days, $array, $balls, $conn);
+
+        if($diff == false) {
+            return [];
+        }
+
+        switch ($diff) {
+            case $diff < -77:
+                return [];
+                break;
+            case $diff > -26:
+                return [];
+                break;
+            default:
+                return $array;
+        }
+    }
 
  //Final
     public function finalNumbers ($days, $balls, $conn) {
-        $array = $this -> oddEvenArray ($days, $balls, $conn);
+        $array = $this -> totalDiff($days, $balls, $conn);
         sort($array);
         return $array;
     }

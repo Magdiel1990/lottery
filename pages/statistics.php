@@ -159,6 +159,22 @@ $lotopool = new Statistic ();
                     echo $html;
                 ?>
                 </div>  
+                <div class="col-auto">
+                <?php                    
+                    $days = 60;
+                    $numbers = $lotopool -> totalDiff ($days, 5, $conn);
+
+                    $html = "";
+                    $html .= "<b>Diferencias totales de los " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>                  
             </div>          
             </div>   
             <?php
@@ -316,6 +332,22 @@ $lotopool = new Statistic ();
                     echo $html;
                 ?>
                 </div>  
+                <div class="col-auto">
+                <?php                    
+                    $days = 60;
+                    $numbers = $loto -> totalDiff ($days, 6, $conn);
+
+                    $html = "";
+                    $html .= "<b>Diferencias totales de los " . $days . " días</b>";
+                    $html .= "<div>";
+                    for($i = 0; $i < count($numbers); $i++) {
+                        $html .= "<span>" . $numbers[$i] . ", </span>";
+                    }
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>    
             </div>                   
         </div>       
     </main>

@@ -592,6 +592,23 @@ abstract class LotteryClass {
         return $even;
     }
 
+    // Calculo de diferencia total
+    
+    protected function totalDiffCal ($days, $array, $balls, $conn) {
+        if(count($array) == 0) {
+            return false;
+        }
+
+        $diffArray = [];
+
+        $count = $array [$balls - 1];
+
+        for($i = $balls - 2; $i >= 0; $i--) { 
+            $count -= $array[$i];
+        }
+
+        return $count;
+    }
     //Final
     //Filter 15
     abstract protected function finalNumbers ($days, $balls, $conn);
