@@ -32,8 +32,8 @@ include "../partials/nav.php";
         ?>
         </div>
     </main>
-</body>
-</html>
 <?php
     $conn -> close();
+    require ("../partials/footer.php")
 ?>
+

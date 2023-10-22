@@ -149,8 +149,7 @@ $conn -> close();
             }
         }
     </script>
-</body>
-</html>
 <?php
     $conn -> close();
+    require ("../partials/footer.php")
 ?>

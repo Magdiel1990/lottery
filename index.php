@@ -26,5 +26,6 @@ include ("partials/nav.php");
             </div>
         </div>
     </main>
-</body>
-</html>
+<?php
+    require ("partials/footer.php")
+?>

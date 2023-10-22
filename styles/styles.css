@@ -6,10 +6,10 @@ td a {
     text-decoration: none;
 }
 span {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 b {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 #lotopool > div {
     background-color: rgb(253, 253, 225);
@@ -22,3 +22,18 @@ b {
     margin: 3px;
 }
 
+footer {
+    background: #444;
+}
+
+main {
+    min-height: calc(100vh - 10rem);
+}
+
+footer {
+    height: 7rem;
+}
+
+footer h5 {
+    font-size: 1rem;
+}

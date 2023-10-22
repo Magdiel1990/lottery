@@ -361,8 +361,7 @@ $lotopool = new Statistic ();
             </div>                   
         </div>       
     </main>
-</body>
-</html>
 <?php
     $conn -> close();
+    require ("../partials/footer.php")
 ?>

@@ -65,8 +65,8 @@ include "../partials/head.php";
         </div>
     </div>
   </main>
-</body>
-</html>
 <?php
     unset($_SESSION ["lastnumbers"]);
+    $conn -> close();
+    require ("../partials/footer.php")
 ?>
