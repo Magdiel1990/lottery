@@ -23,7 +23,7 @@ b {
 }
 
 footer {
-    background: #444;
+    background: #555;
 }
 
 main {
@@ -32,6 +32,7 @@ main {
 
 footer {
     height: 7rem;
+    margin-top: 1rem;
 }
 
 footer h5 {
