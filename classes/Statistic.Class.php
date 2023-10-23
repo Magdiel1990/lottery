@@ -156,10 +156,10 @@ class Statistic extends LotteryClass {
         return $averageArray;       
     }
 
-    public function dateProbability ($conn, $scale) {
+    public function dateProbability ($conn, $scale, $span) {
         $totalPlays = $this -> totalPlays($conn);
 
-        $result = $conn -> query("SELECT count(*) as `date` FROM numbers WHERE number = " . $scale . ";");
+        $result = $conn -> query("SELECT count(*) as `date` FROM numbers WHERE number = " . $scale . "+" . $span . ";");
         $row = $result -> fetch_assoc();
         $days = $row["date"];
 

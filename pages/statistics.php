@@ -180,33 +180,36 @@ $lotopool = new Statistic ();
                     echo $html;
                 ?>
                 </div>   
-                <div class="col-auto">
-                <?php                    
-                    $numbers = $lotopool -> dateProbability ($conn, "DAY(date)");
+                <?php     
+                  for($i = 0; $i <= 10; $i++) {    
+                    $span = $i;    
+                    echo '<div class="col-auto">';            
+                    $numbers = $lotopool -> dateProbability ($conn, "DAY(date)", $span);
 
                     $html = "";
-                    $html .= "<b>Número coincide con día</b>";
+                    $html .= "<b>Número coincide con día más ".$span."</b>";
                     $html .= "<div>";
                     $html .= "<span>" . $numbers . "%</span>";
                     $html .= "</div>";
 
                     echo $html;
-                ?>
-                </div>   
-                <div class="col-auto">
-                <?php                    
-                    $numbers = $lotopool -> dateProbability ($conn, "MONTH(date)");
+                    echo '</div>';
+                }
+                for($i = 0; $i <= 10; $i++) {    
+                    $span = $i;
+                    echo '<div class="col-auto">';      
+                    $numbers = $lotopool -> dateProbability ($conn, "MONTH(date)", $span);
 
                     $html = "";
-                    $html .= "<b>Número coincide con mes</b>";
+                    $html .= "<b>Número coincide con mes más ".$span."</b>";
                     $html .= "<div>";
                     $html .= "<span>" . $numbers . "%</span>";
                     $html .= "</div>";
 
                     echo $html;
-                ?> 
-                </div>                   
-                <?php 
+                    echo '</div>';
+                }
+
                 for($k = 2; $k <= 10; $k++) {
                     echo '<div class="col-auto">';
                     $times = $k;
@@ -333,7 +336,7 @@ $lotopool = new Statistic ();
                 <div class="col-auto">
                 <?php                    
                     $days = 60;
-                    $numbers = $lotopool -> productArray ($days, 5, $conn);
+                    $numbers = $loto -> productArray ($days, 6, $conn);
 
                     $html = "";
                     $html .= "<b>Multiplicaciones de los últimos " . $days . " días</b>";
@@ -353,7 +356,7 @@ $lotopool = new Statistic ();
                         $days = 60;
                         $down = $i;
                         $up = $j;
-                        $numbers = $lotopool -> numberDiff ($days, $i, $j, $conn);
+                        $numbers = $loto -> numberDiff ($days, $i, $j, $conn);
 
                         $html = "";
                         $html .= "<b>Diferencia entre ". $down . " y " . $up ." de los últimos " . $days . " días</b>";
@@ -385,10 +388,10 @@ $lotopool = new Statistic ();
                     echo $html;
                 ?>
                 </div>  
-                <div class="col-auto">
                 <?php                    
                     $days = 60;
                     $numbers = $loto -> totalDiff ($days, 6, $conn);
+                    echo '<div class="col-auto">';   
 
                     $html = "";
                     $html .= "<b>Diferencias totales de los " . $days . " días</b>";
@@ -399,35 +402,36 @@ $lotopool = new Statistic ();
                     $html .= "</div>";
 
                     echo $html;
-                ?>
-                </div>  
-                <div class="col-auto">
-                <?php                    
-                    $numbers = $lotopool -> dateProbability ($conn, "DAY(date)");
+                    echo '</div>';  
 
+                for($i = 0; $i <= 10; $i++) {    
+                    $span = $i;    
+                    $numbers = $loto -> dateProbability ($conn, "DAY(date)", $span);
+                    echo '<div class="col-auto">';                     
                     $html = "";
-                    $html .= "<b>Número coincide con día</b>";
+                    $html .= "<b>Número coincide con día más ".$span."</b>";
                     $html .= "<div>";
                     $html .= "<span>" . $numbers . "%</span>";
                     $html .= "</div>";
 
                     echo $html;
-                ?>   
-            </div>     
-            <div class="col-auto">
-                <?php                    
-                    $numbers = $lotopool -> dateProbability ($conn, "MONTH(date)");
+                    echo '</div>';  
+                }
+                for($i = 0; $i <= 10; $i++) {    
+                    $span = $i;
+                    echo '<div class="col-auto">';      
+                    $numbers = $loto -> dateProbability ($conn, "MONTH(date)", $span);
 
                     $html = "";
-                    $html .= "<b>Número coincide con mes</b>";
+                    $html .= "<b>Número coincide con mes más ".$span."</b>";
                     $html .= "<div>";
                     $html .= "<span>" . $numbers . "%</span>";
                     $html .= "</div>";
 
                     echo $html;
-                ?> 
-            </div>    
-            <?php 
+                    echo '</div>';
+                }                       
+
                 for($k = 2; $k <= 10; $k++) {
                     echo '<div class="col-auto">';
                     $times = $k;
