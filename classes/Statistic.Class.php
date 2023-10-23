@@ -155,6 +155,17 @@ class Statistic extends LotteryClass {
 
         return $averageArray;       
     }
+
+    public function dateProbability ($conn, $scale) {
+        $totalPlays = $this -> totalPlays($conn);
+
+        $result = $conn -> query("SELECT count(*) as `date` FROM numbers WHERE number = " . $scale . ";");
+        $row = $result -> fetch_assoc();
+        $days = $row["date"];
+
+        return round(($days/$totalPlays) * 100);
+    }
+
     /***************Abstract methods *****************/
     protected function diffRangeLoop($array, $conn) {
         return null;

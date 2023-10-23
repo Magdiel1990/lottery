@@ -179,13 +179,40 @@ $lotopool = new Statistic ();
 
                     echo $html;
                 ?>
-                </div>                  
-            </div>          
+                </div>   
+                <div class="col-auto">
+                <?php                    
+                    $numbers = $lotopool -> dateProbability ($conn, "DAY(date)");
+
+                    $html = "";
+                    $html .= "<b>Número coincide con día</b>";
+                    $html .= "<div>";
+                    $html .= "<span>" . $numbers . "%</span>";
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>
+                </div>   
+                <div class="col-auto">
+                <?php                    
+                    $numbers = $lotopool -> dateProbability ($conn, "MONTH(date)");
+
+                    $html = "";
+                    $html .= "<b>Número coincide con mes</b>";
+                    $html .= "<div>";
+                    $html .= "<span>" . $numbers . "%</span>";
+                    $html .= "</div>";
+
+                    echo $html;
+                ?> 
+                </div>              
             </div>   
             <?php
                 $conn -> close();
             ?>
-            <div id="loto" class="row justify-content-center mt-2 text-center">
+
+            <!-- LOTO -->
+            <div id="loto" class="row justify-content-center mt-2">
                 <h2 class="mb-4">Loto</h2>
                 <div class="col-auto">
                     <?php
@@ -357,8 +384,33 @@ $lotopool = new Statistic ();
 
                     echo $html;
                 ?>
-                </div>    
-            </div>                   
+                </div>  
+                <div class="col-auto">
+                <?php                    
+                    $numbers = $lotopool -> dateProbability ($conn, "DAY(date)");
+
+                    $html = "";
+                    $html .= "<b>Número coincide con día</b>";
+                    $html .= "<div>";
+                    $html .= "<span>" . $numbers . "%</span>";
+                    $html .= "</div>";
+
+                    echo $html;
+                ?>   
+            </div>     
+            <div class="col-auto">
+                <?php                    
+                    $numbers = $lotopool -> dateProbability ($conn, "MONTH(date)");
+
+                    $html = "";
+                    $html .= "<b>Número coincide con mes</b>";
+                    $html .= "<div>";
+                    $html .= "<span>" . $numbers . "%</span>";
+                    $html .= "</div>";
+
+                    echo $html;
+                ?> 
+            </div>             
         </div>       
     </main>
 <?php

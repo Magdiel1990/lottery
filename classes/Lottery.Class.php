@@ -58,7 +58,7 @@ abstract class LotteryClass {
 
         return $positionArray;
     }
-
+    //Total de jugadas
     protected function totalPlays($conn) {
         $result = $conn -> query ("SELECT count(*) as total FROM numbers WHERE position = 1 ORDER BY date desc;");
 
