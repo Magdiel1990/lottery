@@ -166,6 +166,23 @@ class Statistic extends LotteryClass {
         return round(($days/$totalPlays) * 100);
     }
 
+    public function timesOut ($times, $balls, $conn) {
+        $totalNumbers = $this -> totalNumbers($balls, $conn);
+        $totalPlays = $this -> totalPlays($conn);
+
+        $count = 0;
+
+        for ($i = 0; $i < count($totalNumbers); $i++) {
+            for ($j = 0; $j < count($totalNumbers[$i]); $j++) {
+                if(in_array($times * $totalNumbers[$i][$j], $totalNumbers[$i])) {
+                    $count += 1;
+                    break;
+                }
+            }
+        }
+        return round(($count/$totalPlays) * 100);
+    }
+
     /***************Abstract methods *****************/
     protected function diffRangeLoop($array, $conn) {
         return null;

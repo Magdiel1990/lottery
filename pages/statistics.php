@@ -205,7 +205,23 @@ $lotopool = new Statistic ();
 
                     echo $html;
                 ?> 
-                </div>              
+                </div>                   
+                <?php 
+                for($k = 2; $k <= 10; $k++) {
+                    echo '<div class="col-auto">';
+                    $times = $k;
+                    $numbers = $lotopool -> timesOut ($times, 5, $conn);
+
+                    $html = "";
+                    $html .= "<b>".$times." veces el número</b>";
+                    $html .= "<div>";
+                    $html .= "<span>" . $numbers . "%</span>";
+                    $html .= "</div>";
+
+                    echo $html;
+                    echo '</div>';
+                }
+                ?>                                
             </div>   
             <?php
                 $conn -> close();
@@ -410,7 +426,23 @@ $lotopool = new Statistic ();
 
                     echo $html;
                 ?> 
-            </div>             
+            </div>    
+            <?php 
+                for($k = 2; $k <= 10; $k++) {
+                    echo '<div class="col-auto">';
+                    $times = $k;
+                    $numbers = $loto -> timesOut ($times, 6, $conn);
+
+                    $html = "";
+                    $html .= "<b>".$times." veces el número</b>";
+                    $html .= "<div>";
+                    $html .= "<span>" . $numbers . "%</span>";
+                    $html .= "</div>";
+
+                    echo $html;
+                    echo '</div>';
+                }
+            ?>           
         </div>       
     </main>
 <?php
