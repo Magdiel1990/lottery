@@ -183,6 +183,24 @@ class Statistic extends LotteryClass {
         return round(($count/$totalPlays) * 100);
     }
 
+    public function commonCombinations ($amount, $balls, $conn) {
+        $totalNumbers = $this -> totalNumbers($balls, $conn);
+        $totalPlays = $this -> totalPlays($conn);
+
+        $count = 0;
+
+        for ($i = 0; $i < count($totalNumbers) - 1; $i++) {
+            for($j = $i + 1; $j < count($totalNumbers); $j++) {
+                if(count(array_intersect($totalNumbers [$i], $totalNumbers [$j])) == $amount) {
+                    $count += 1;
+                    break;
+                }
+            }
+        }
+
+        return round(($count/$totalPlays) * 100);
+
+    }
     /***************Abstract methods *****************/
     protected function diffRangeLoop($array, $conn) {
         return null;

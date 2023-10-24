@@ -224,6 +224,21 @@ $lotopool = new Statistic ();
                     echo $html;
                     echo '</div>';
                 }
+
+                for($k = 1; $k <= 5; $k++) {
+                    echo '<div class="col-auto">';
+                    $amount = $k;
+                    $numbers = $lotopool -> commonCombinations ($amount, 5, $conn);
+
+                    $html = "";
+                    $html .= "<b>".$amount." números comúnes</b>";
+                    $html .= "<div>";
+                    $html .= "<span>" . $numbers . "%</span>";
+                    $html .= "</div>";
+
+                    echo $html;
+                    echo '</div>';
+                }                
                 ?>                                
             </div>   
             <?php
@@ -446,6 +461,22 @@ $lotopool = new Statistic ();
                     echo $html;
                     echo '</div>';
                 }
+
+                for($k = 1; $k <= 5; $k++) {
+                    echo '<div class="col-auto">';
+                    $amount = $k;
+                    $numbers = $loto -> commonCombinations ($amount, 6, $conn);
+
+                    $html = "";
+                    $html .= "<b>".$amount." números comúnes</b>";
+                    $html .= "<div>";
+                    $html .= "<span>" . $numbers . "%</span>";
+                    $html .= "</div>";
+
+                    echo $html;
+                    echo '</div>';
+                }                
+                ?>  
             ?>           
         </div>       
     </main>
