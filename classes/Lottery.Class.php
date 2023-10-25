@@ -202,6 +202,17 @@ abstract class LotteryClass {
         return $media = $sum / $count;
 
     }
+
+    //Cantidad de veces que se repite un número en un arreglo
+    protected function element_rep ($element, $array) {
+        $count = 0;
+        for ($i = 0; $i < count($array); $i++) {
+            if($array[$i] == $element) {
+                $count += 1;
+            }
+        }
+        return $count;
+    }
     
     //Rango máximo y mínimo
     protected function minMaxArray($array) {  

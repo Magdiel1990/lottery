@@ -238,7 +238,25 @@ $lotopool = new Statistic ();
 
                     echo $html;
                     echo '</div>';
-                }                
+                }   
+                
+                for($k = 2; $k <= 10; $k++) {                    
+                    $number = $k;
+                    for ($i = 0; $i <= 4; $i++) {
+                        $times = $i;
+                        $numbers = $lotopool -> multipleCalculation ($times, $number, 5, $conn);
+
+                        echo '<div class="col-auto">';
+                        $html = "";
+                        $html .= "<b>Hay ". $times ." múltiplos de ". $number . "</b>";
+                        $html .= "<div>";
+                        $html .= "<span>" . $numbers . "%</span>";
+                        $html .= "</div>";
+
+                        echo $html;
+                        echo '</div>';
+                    }
+                }  
                 ?>                                
             </div>   
             <?php
@@ -475,9 +493,26 @@ $lotopool = new Statistic ();
 
                     echo $html;
                     echo '</div>';
-                }                
-                ?>  
-            ?>           
+                } 
+
+                for($k = 2; $k <= 10; $k++) {                    
+                    $number = $k;
+                    for ($i = 0; $i <= 4; $i++) {
+                        $times = $i;
+                        $numbers = $loto -> multipleCalculation ($times, $number, 6, $conn);
+
+                        echo '<div class="col-auto">';
+                        $html = "";
+                        $html .= "<b>Hay ". $times ." múltiplos de ". $number . "</b>";
+                        $html .= "<div>";
+                        $html .= "<span>" . $numbers . "%</span>";
+                        $html .= "</div>";
+
+                        echo $html;
+                        echo '</div>';
+                    } 
+                }              
+                ?>    
         </div>       
     </main>
 <?php

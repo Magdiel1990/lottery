@@ -157,6 +157,7 @@ class Statistic extends LotteryClass {
     }
 
     public function dateProbability ($conn, $scale, $span) {
+        //Total de jugadas
         $totalPlays = $this -> totalPlays($conn);
 
         $result = $conn -> query("SELECT count(*) as `date` FROM numbers WHERE number = " . $scale . "+" . $span . ";");
@@ -168,6 +169,7 @@ class Statistic extends LotteryClass {
 
     public function timesOut ($times, $balls, $conn) {
         $totalNumbers = $this -> totalNumbers($balls, $conn);
+        //Total de jugadas
         $totalPlays = $this -> totalPlays($conn);
 
         $count = 0;
@@ -185,6 +187,7 @@ class Statistic extends LotteryClass {
 
     public function commonCombinations ($amount, $balls, $conn) {
         $totalNumbers = $this -> totalNumbers($balls, $conn);
+        //Total de jugadas
         $totalPlays = $this -> totalPlays($conn);
 
         $count = 0;
@@ -199,6 +202,29 @@ class Statistic extends LotteryClass {
         }
 
         return round(($count/$totalPlays) * 100);
+
+    }
+
+    public function multipleCalculation ($times, $number, $balls, $conn) {
+        $totalNumbers = $this -> totalNumbers($balls, $conn);
+        //Total de jugadas
+        $totalPlays = $this -> totalPlays($conn);
+
+        $count = [];
+
+        for ($i = 0; $i < count($totalNumbers); $i++) {
+            $repeat = 0;
+            for($j = 0; $j < count($totalNumbers[$i]); $j++) {
+                if($totalNumbers[$i][$j] % $number == 0) {
+                    $repeat += 1;
+                }
+            }
+            $count [] = $repeat;
+        }
+
+        $rep = $this -> element_rep ($times, $count);
+
+        return round ($rep * 100/$totalPlays);
 
     }
     /***************Abstract methods *****************/
