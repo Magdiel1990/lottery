@@ -424,7 +424,7 @@ abstract class LotteryClass {
 
     //12. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
 
-    protected function productArray ($balls, $conn) {
+    protected function productArray ($days, $balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
 
         $productArray = [];
@@ -440,8 +440,8 @@ abstract class LotteryClass {
         return $productArray;          
     }
 
-    protected function rangePro($balls, $conn) {
-       $array = $this -> productArray ($balls, $conn);
+    protected function rangePro($balls, $conn) {        
+       $array = $this -> productArray ($days = true, $balls, $conn);
 
        return $this -> minMaxArray($array);
     }

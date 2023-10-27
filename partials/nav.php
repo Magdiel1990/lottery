@@ -10,6 +10,9 @@
       <li class="nav-item">
         <a class="nav-link" href="/lottery/pages/statistics.php">Estadísticas</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/lottery/pages/test.php">Probar</a>
+      </li>
     </ul>
   </div>
 </nav>
