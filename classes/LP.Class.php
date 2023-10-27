@@ -21,66 +21,6 @@ class LPClass extends LotteryClass {
         }
     } 
     
-    protected function rangeAvg($balls, $conn) {
-        return [12,21];
-    }
-
-    protected function sumRange($days, $balls, $conn) {
-        //Array     
-        $array = $this -> lastNumbersExceptions($days, $balls, $conn);
-
-        if(count($array) == 0) {
-            return [];
-        }
-
-        //Suma de los elementos del array
-        $sumArray = $this -> sumArray ($array);
-        //Array del máximo y mínimo
-        $rangeSumArray = [64, 101];
-
-        return $this -> rangeCondition ($sumArray, $rangeSumArray, $array);
-    }
-
-    protected function rangeStandardDeviation($days, $balls, $conn) {
-        //Desviación standard de la jugada
-        $array = $this-> normalNumbers($days, $balls, $conn);
-        $standardDeviationOfArray =  $this -> standardDeviation ($array);
-
-        //Máximo y mínimo de las deviaciónes estándares
-        $rangeDev = [7, 11];
-
-        return $this -> rangeCondition ($standardDeviationOfArray, $rangeDev, $array);
-    }
-
-    protected function rangeProArray ($days, $balls, $conn) {
-        $array = $this -> rangeAvgArray ($days, $balls, $conn);    
-        
-        if(count($array) == 0) {
-            return $array;
-        }
-
-        //Array del máximo y mínimo
-        $rangePro = [30000, 2000000];
-        //Array average
-        $product = $this -> product($array);
-
-        return $this -> rangeCondition ($product, $rangePro, $array);
-    }
-
-   /* protected function rangeDiffArray ($down, $up, $conn) {
-        if($down == 1 && $up == 2) {
-            return [1, 12];
-        } else if ($down == 1 && $up == 3) {
-            return [4, 20];
-        } else if (($down == 1 && $up == 4) || ($down == 1 && $up == 5)) {
-            return [6, 20];
-        } else if (($down == 2 && $up == 3) || ($down == 2 && $up == 4) || ($down == 2 && $up == 5) || ($down == 3 && $up == 4)) {
-            return [1, 15];
-        } else if (($down == 3 && $up == 5) || ($down == 4 && $up == 5)) {
-            return [4, 18];
-        }
-    }
-    */
     //Patrón de restas
     protected function diffRangeLoop($array, $conn) {
         $array = $this -> diffRange($array, 1, 2, $conn);
@@ -129,30 +69,10 @@ class LPClass extends LotteryClass {
             return [];
         }
     }
-//Diferencia total
-    protected function totalDiff($days, $balls, $conn) {
-        $array = $this -> oddEvenArray ($days, $balls, $conn);
-        $diff = $this -> totalDiffCal ($days, $array, $balls, $conn);
-
-        if($diff == false) {
-            return [];
-        }
-
-        switch ($diff) {
-            case $diff < -42:
-                return [];
-                break;
-            case $diff > -10:
-                return [];
-                break;
-            default:
-                return $array;
-        }
-    }
 
 //Final
     public function finalNumbers ($days, $balls, $conn) {
-        $array = $this -> totalDiff($days, $balls, $conn);
+        $array = $this -> oddEvenArray ($days, $balls, $conn);;
         sort($array);
         return $array;
     }

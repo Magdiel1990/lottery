@@ -24,87 +24,6 @@ class LotoClass extends LotteryClass {
         }
     } 
 
-    protected function rangeAvg($balls, $conn) {
-        return [16,25];
-    }    
-
-    protected function sumRange($days, $balls, $conn) {
-        //Array     
-        $array = $this -> lastNumbersExceptions($days, $balls, $conn);
-
-        if(count($array) == 0) {
-            return [];
-        }
-
-        //Suma de los elementos del array
-        $sumArray = $this -> sumArray ($array);
-        //Array del máximo y mínimo
-        $rangeSumArray = [86, 149];
-
-        return $this -> rangeCondition ($sumArray, $rangeSumArray, $array);
-    }
-
-    protected function rangeStandardDeviation($days, $balls, $conn) {
-        //Desviación standard de la jugada
-        $array = $this-> normalNumbers($days, $balls, $conn);
-        $standardDeviationOfArray =  $this -> standardDeviation ($array);
-
-        //Máximo y mínimo de las deviaciónes estándares
-        $rangeDev = [5, 13];
-
-        return $this -> rangeCondition ($standardDeviationOfArray, $rangeDev, $array);
-    }
-
-    protected function rangeProArray ($days, $balls, $conn) {
-        $array = $this -> rangeAvgArray ($days, $balls, $conn);    
-        
-        if(count($array) == 0) {
-            return $array;
-        }
-
-        //Array del máximo y mínimo
-        $rangePro = [1000000, 200000000];
-        //Array average
-        $product = $this -> product($array);
-
-        return $this -> rangeCondition ($product, $rangePro, $array);
-    }
-
-   /* protected function rangeDiffArray ($down, $up, $conn) {
-        if($down == 1 && $up == 2) {
-            return [1, 17];
-        } else if ($down == 1 && $up == 3) {
-            return [4, 23];
-        } else if ($down == 1 && $up == 4) {
-            return [7, 27];
-        } else if ($down == 1 && $up == 5) {
-            return [12, 23];
-        } else if ($down == 1 && $up == 6) {
-            return [16, 33];
-        } else if ($down == 2 && $up == 3) {
-            return [1, 11];
-        } else if ($down == 2 && $up == 4) { 
-            return [2, 25];
-        } else if ($down == 2 && $up == 5) { 
-            return [7, 32];
-        } else if ($down == 2 && $up == 6) { 
-            return [7, 33];
-        } else if ($down == 3 && $up == 4) { 
-            return [1, 20];
-        } else if ($down == 3 && $up == 5) {
-            return [4, 22];
-        } else if ($down == 3 && $up == 6) {
-            return [4, 23];
-        } else if ($down == 4 && $up == 5) {
-            return [1, 10];
-        } else if ($down == 4 && $up == 6) {
-            return [3, 18];
-        } else if ($down == 5 && $up == 6) {
-            return [1, 16];
-        }
-    }
-    */
-
     //Patrón de restas
     protected function diffRangeLoop($array, $conn) {
         $array = $this -> diffRange($array, 1, 2, $conn);
@@ -126,27 +45,6 @@ class LotoClass extends LotteryClass {
         return $array;
     }
 
-    //Patrón de restas
-    protected function sumEachLoop($array, $conn) {        
-        $array = $this -> rangeSumEach($array, 1, 2, $conn);
-        $array = $this -> rangeSumEach($array, 1, 3, $conn);
-        $array = $this -> rangeSumEach($array, 1, 4, $conn);
-        $array = $this -> rangeSumEach($array, 1, 5, $conn);
-        $array = $this -> rangeSumEach($array, 1, 6, $conn);
-        $array = $this -> rangeSumEach($array, 2, 3, $conn);
-        $array = $this -> rangeSumEach($array, 2, 4, $conn);
-        $array = $this -> rangeSumEach($array, 2, 5, $conn);
-        $array = $this -> rangeSumEach($array, 2, 6, $conn);
-        $array = $this -> rangeSumEach($array, 3, 4, $conn);
-        $array = $this -> rangeSumEach($array, 3, 5, $conn);
-        $array = $this -> rangeSumEach($array, 3, 6, $conn);
-        $array = $this -> rangeSumEach($array, 4, 5, $conn);
-        $array = $this -> rangeSumEach($array, 4, 6, $conn);
-        $array = $this -> rangeSumEach($array, 5, 6, $conn);
-
-        return $array;
-    }
-
 // Calculo de pares e impares   
     protected function oddEvenArray ($days, $balls, $conn) {
         $array = $this -> pastDaysAccount ($days, $balls, $conn);
@@ -162,30 +60,76 @@ class LotoClass extends LotteryClass {
             return [];
         }
     }
-//Diferencia total
-    protected function totalDiff($days, $balls, $conn) {
-        $array = $this -> oddEvenArray ($days, $balls, $conn);
-        $diff = $this -> totalDiffCal ($days, $array, $balls, $conn);
 
-        if($diff == false) {
-            return [];
-        }
+    protected function multiple_test ($array, $days, $times, $number, $balls, $conn){
+        $percentage = $this -> multipleCalculation ($times, $number, $balls, $conn);           
+        $repeat = $this -> multipleCounter($number, $array);
 
-        switch ($diff) {
-            case $diff < -77:
-                return [];
-                break;
-            case $diff > -26:
-                return [];
-                break;
-            default:
+        if ($repeat == $times) {
+            if($percentage > 10) {
                 return $array;
-        }
+            } else {
+                return [];
+            }  
+        } else {
+            return $array;
+        }         
+    }
+
+    protected function multiple($days, $balls, $conn) {   
+        $array = $this -> oddEvenArray ($days, $balls, $conn); 
+        $array = $this -> multiple_test ($array, $days, 0, 2, $balls, $conn);   
+        $array = $this -> multiple_test ($array, $days, 1, 2, $balls, $conn); 
+        $array = $this -> multiple_test ($array, $days, 2, 2, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 3, 2, $balls, $conn);   
+        $array = $this -> multiple_test ($array, $days, 4, 2, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 0, 3, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 1, 3, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 2, 3, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 3, 3, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 4, 3, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 0, 4, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 1, 4, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 2, 4, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 3, 4, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 4, 4, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 0, 5, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 1, 5, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 2, 5, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 3, 5, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 4, 5, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 0, 6, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 1, 6, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 2, 6, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 3, 6, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 4, 6, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 0, 7, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 1, 7, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 2, 7, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 3, 7, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 4, 7, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 0, 8, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 1, 8, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 2, 8, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 3, 8, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 4, 8, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 0, 9, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 1, 9, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 2, 9, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 3, 9, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 4, 9, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 0, 10, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 1, 10, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 2, 10, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 3, 10, $balls, $conn);  
+        $array = $this -> multiple_test ($array, $days, 4, 10, $balls, $conn);  
+
+        return $array;
     }
 
  //Final
     public function finalNumbers ($days, $balls, $conn) {
-        $array = $this -> totalDiff($days, $balls, $conn);
+        $array = $this -> multiple ($days, $balls, $conn);
         sort($array);
         return $array;
     }
