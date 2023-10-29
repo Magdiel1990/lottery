@@ -2,7 +2,7 @@
 require_once ("Lottery.Class.php");
 
 class LotoClass extends LotteryClass {
-    protected function numberRange($position, $conn) {
+   /* protected function numberRange($position, $conn) {
         switch ($position) {
             case 1:
                 return rand(1,5);
@@ -23,6 +23,32 @@ class LotoClass extends LotteryClass {
                 return rand(28,38);                
         }
     } 
+    */
+
+     //4. SE INCLUYE EL O LOS NUMEROS QUE MAS SALEN
+
+    //Incluye números que más se  repiten de sorteos anteriores
+
+    protected function normalNumbers($days, $balls, $conn) {
+
+        $keys = [];
+
+        for ($i = 1; $i <= $balls; $i++) {            
+            $keys [] = $this-> positionCalculation($i, $conn)[1];
+        }
+
+        $arrayNumbers = $this-> arrayNumbers($balls, $conn); 
+
+        while(count($arrayNumbers) != $balls) {
+            array_push($arrayNumbers, $keys [rand(0, $balls - 1)]);
+
+            $arrayNumbers = array_unique($arrayNumbers, SORT_NUMERIC);
+        }
+        
+        sort($arrayNumbers);
+
+        return $arrayNumbers;
+    }
 
     //Patrón de restas
     protected function diffRangeLoop($array, $conn) {

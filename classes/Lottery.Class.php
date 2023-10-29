@@ -37,13 +37,13 @@ abstract class LotteryClass {
     }
 
     //Rango en el que pueden estar los números
-    /*protected function numberRange($position, $conn) {
+    protected function numberRange($position, $conn) {
         $maxNumber = $this-> maxNumberRange($position, $conn);
         $minNumber = $this-> minNumberRange($position, $conn);
 
         return rand($minNumber, $maxNumber);
-    }*/
-    abstract protected function numberRange($position, $conn);
+    }
+    
     //2. CALCULAR LAS POSICIONES DE LAS JUGADAS
 
     //Arreglos de todas las jugadas pasadas
