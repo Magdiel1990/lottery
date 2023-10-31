@@ -2,12 +2,12 @@
 require_once ("../classes/Lottery.Class.php");
 
 class Statistic extends LotteryClass {
-    protected function numberRange($position, $conn) {
+  /*  protected function numberRange($position, $conn) {
         $maxNumber = $this-> maxNumberRange($position, $conn);
         $minNumber = $this-> minNumberRange($position, $conn);
 
         return [$minNumber, $maxNumber];
-    }
+    }*/
     
     //Rango real de las jugadas
     public function statNumbersRanges ($balls, $conn) {

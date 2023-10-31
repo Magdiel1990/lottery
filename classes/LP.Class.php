@@ -2,7 +2,7 @@
 require_once ("Lottery.Class.php");
 
 class LPClass extends LotteryClass { 
-    protected function numberRange($position, $conn) {
+   /* protected function numberRange($position, $conn) {
         switch ($position) {
             case 1:
                 return rand(1,9);
@@ -19,7 +19,7 @@ class LPClass extends LotteryClass {
             default:
                 return rand(24,31);                
         }
-    } 
+    } */
     
     //Patrón de restas
     protected function diffRangeLoop($array, $conn) {
