@@ -21,5 +21,6 @@
 7. Rango de los productos de las combinaciones (rangeProArray)
 8. Un solo consecutivo (consecutiveOutArray)
 9. Decena a la que pertenece el número (decenas)
+10. Que salga al menos un elemento del día anterior (pastDaysAccount)
 11. Cantidad de combinaciones pares e impares que más se repiten (oddEvenArray)
 12. Exclusión de los múltiplos que no coinciden (multiple)
