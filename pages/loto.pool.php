@@ -19,7 +19,7 @@ include "../partials/nav.php";
         <?php 
         if(isset($_POST["generate"])){
             $finalArray = new LPClass();
-            $numbers = $finalArray-> finalNumbers(15, 5, $conn, 0.02); 
+            $numbers = $finalArray-> finalNumbers(15 /*Días anteriores para calcular las jugadas que más salen*/, 5, $conn, 0.02 /*Porcentaje máximo aceptado*/); 
             
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {

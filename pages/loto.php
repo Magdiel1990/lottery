@@ -19,7 +19,7 @@ include "../partials/nav.php";
         <?php 
         if(isset($_POST["generate"])){
             $finalArray = new LotoClass();
-            $numbers = $finalArray-> finalNumbers(15, 6, $conn); 
+            $numbers = $finalArray-> finalNumbers(10, 6, $conn); 
             
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {

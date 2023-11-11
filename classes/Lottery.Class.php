@@ -355,37 +355,6 @@ abstract class LotteryClass {
         return $this -> rangeCondition ($sumArray, $rangeSumArray, $array);
     }
 
-    //10. RANGO DE LA RESTA DE UN NUMERO A OTRO
-
-    //Incluir rango de restas
-    protected function diffRange($array, $down, $up, $conn) {
-        if(count($array) == 0) {
-            return $array;
-        }
-        //Array del máximo y mínimo
-        $rangeDiffArray = $this -> rangeDiffArray ($down, $up, $conn);
-        //Array difference
-        $diff = abs($array[$up - 1] - $array[$down - 1]);
-        
-        return $this -> rangeCondition ($diff, $rangeDiffArray, $array);
-    }
-    //Patrón de restas
-    abstract protected function diffRangeLoop($array, $conn);
-
-    //Patrón de restas
-    //Filter 6
-    protected function subRange($days, $balls, $conn) {            
-        $array = $this -> sumRange($days, $balls, $conn);
-
-        if(count($array) == 0) {
-            return $array;
-        }
-
-        $array = $this -> diffRangeLoop ($array, $conn);
-
-        return $array;
-    }
-
     //11. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
 
     protected function averageArray($balls, $conn) {
@@ -409,7 +378,7 @@ abstract class LotteryClass {
     //Rango de los promedios
     //Filter 7
     protected function rangeAvgArray ($days, $balls, $conn) {
-        $array = $this -> subRange($days, $balls, $conn);       
+        $array = $this -> sumRange($days, $balls, $conn);
 
         if(count($array) == 0) {
             return $array;
@@ -494,29 +463,6 @@ abstract class LotteryClass {
         } else {
             return [];
         }        
-    }
-
-    //14. RANGO PARA LA SUMA DE ELEMENTOS CONSECUTIVOS
-    protected function elementArraySum ($array, $down, $up) {        
-        $sum = $array[$down - 1] + $array[$up - 1];
-        return $sum;        
-    }
-
-    protected function rangeSumEach($array, $down, $up, $conn) {
-
-        if(count($array) == 0) {
-            return $array;
-        }
-        //Arreglo de la suma de elementos consecutivos de los números jugados anteriormente
-        $arrayOfTheSumArray = $this -> number_sum ($down, $up, $conn);
-        //Arreglo del máximo y el mínimo
-        $maxMinArray = $this -> minMaxArray($arrayOfTheSumArray);
-        //Suma de elemento con elemento de los números candidatos
-        $data = $this -> elementArraySum ($array, $down, $up);
-        //Comparación de esa suma con el rango
-        $array = $this -> rangeCondition($data, $maxMinArray, $array);
-        
-        return $array;
     }
 
     protected function decenas_calculation ($array, $days, $balls, $conn) {
