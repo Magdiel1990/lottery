@@ -573,6 +573,6 @@ abstract class LotteryClass {
 
     //Final
     //Filter 15
-    abstract protected function finalNumbers ($days, $balls, $conn);
+    abstract protected function finalNumbers ($days, $balls, $conn, $pastGames);
 }
 ?>
