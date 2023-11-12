@@ -15,6 +15,7 @@ abstract class LotteryClass {
     protected $count;
     protected $conn;
     protected $days; //Días anteriores a la jugada a tomar en cuenta
+    protected $pastGames; //Cantidad de días anteriores que deben tener al menos una de las jugadas de hoy
  
 
     /************************************* Cálculo del ************************************/
@@ -501,11 +502,11 @@ abstract class LotteryClass {
         }
     }  
 
-    protected function pastDaysAccount ($days, $balls, $conn) {
+    protected function pastDaysAccount ($days, $balls, $conn, $pastGames) {
         $array = $this -> decenas ($days, $balls, $conn);
         $totalNumbers = $this -> totalNumbers($balls, $conn);
 
-        $lastPlayArray = $totalNumbers [0];
+        $lastPlayArray = $totalNumbers [$pastGames - 1];
 
         for($i = 0; $i < count($array); $i++) {
             if(in_array($array [$i], $lastPlayArray)) {

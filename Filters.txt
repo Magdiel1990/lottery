@@ -8,12 +8,12 @@
 7. Rango de los productos de las combinaciones (rangeProArray)
 8. Un solo consecutivo (consecutiveOutArray)
 9. Decena a la que pertenece el número (decenas)
-10. Que salga al menos un elemento del día anterior (pastDaysAccount)
+10. Que salga al menos un elemento de 3 sorteos atrás (pastDaysAccount)
 11. Cantidad de combinaciones pares e impares que más se repiten (oddEvenArray)
 
 /***** Loto *****/
 1. Rango máximo y mínimo en cada posición que ha salido durante el último año (arrayNumbers).
-2. Completar combinaciones incompletas agregando números de los que más se repiten en los últimos 15 sorteos (normalNumbers)
+2. Completar combinaciones incompletas agregando números de los que más se repiten en los últimos 10 sorteos (normalNumbers)
 3. Rango de desviación estándar de las combinaciones(rangeStandardDeviation)
 4. Descartar las jugadas anteriores (lastNumbersExceptions)
 5. Rango de las sumas de las combinaciones (sumRange)
@@ -21,6 +21,6 @@
 7. Rango de los productos de las combinaciones (rangeProArray)
 8. Un solo consecutivo (consecutiveOutArray)
 9. Decena a la que pertenece el número (decenas)
-10. Que salga al menos un elemento del día anterior (pastDaysAccount)
+10. Que salga al menos un elemento de 4 sorteos atrás (pastDaysAccount)
 11. Cantidad de combinaciones pares e impares que más se repiten (oddEvenArray)
 12. Exclusión de los múltiplos que no coinciden (multiple)

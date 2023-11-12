@@ -3,8 +3,8 @@ require_once ("Lottery.Class.php");
 
 class LPClass extends LotteryClass { 
 // Calculo de pares e impares   
-    protected function oddEvenArray ($days, $balls, $conn) {
-        $array = $this -> pastDaysAccount ($days, $balls, $conn);
+    protected function oddEvenArray ($days, $balls, $conn, $pastGames) {
+        $array = $this -> pastDaysAccount ($days, $balls, $conn, $pastGames);
         $even = $this -> oddEvenCal($days, $array, $balls, $conn);
 
         if($even == false) {
@@ -19,8 +19,8 @@ class LPClass extends LotteryClass {
     }
 
 //Final
-    public function finalNumbers ($days, $balls, $conn) {
-        $array = $this -> oddEvenArray ($days, $balls, $conn);;
+    public function finalNumbers ($days, $balls, $conn, $pastGames) {
+        $array = $this -> oddEvenArray ($days, $balls, $conn, $pastGames);
         sort($array);
         return $array;
     }
