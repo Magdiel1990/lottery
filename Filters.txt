@@ -24,3 +24,6 @@
 10. Que salga al menos un elemento de 4 sorteos atrás (pastDaysAccount)
 11. Cantidad de combinaciones pares e impares que más se repiten (oddEvenArray)
 12. Exclusión de los múltiplos que no coinciden (multiple)
+
+
+Falta calcular cuanto de cada decenas en la loto

@@ -213,7 +213,7 @@ class Statistic extends LotteryClass {
     protected function sumEachLoop($array, $conn) {
         return null;
     }
-    protected function finalNumbers ($days, $balls, $conn) {
+    protected function finalNumbers ($days, $balls, $conn, $pastGames) {
         return null;
     }
 }
