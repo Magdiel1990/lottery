@@ -57,7 +57,6 @@ $conn -> close();
         <div class="row justify-content-center mt-4 text-center"> 
             <div class="mb-3">
                 <a href="/lottery/pages/loto.pool.php" class="btn btn-outline-info">Generar</a>
-                <a href="/lottery/pages/random_test.LP.php" class="btn btn-outline-info">Test</a>
                 <a href="/lottery/index.php" class="btn btn-outline-info">Inicio</a>
             </div>
             <div class="col-auto">

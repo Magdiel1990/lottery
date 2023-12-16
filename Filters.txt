@@ -19,3 +19,15 @@
 7. Rango de los productos de las combinaciones (rangeProArray)
 8. Un solo consecutivo (consecutiveOutArray)
 10. Que salga al menos un elemento de 4 sorteos atrás (pastDaysAccount)
+
+links
+
+http://localhost/lottery/index.php lottery/
+http://localhost/lottery/pages/statistics.php lottery/estadistica
+http://localhost/lottery/pages/test.php lottery/probar
+
+http://localhost/lottery/pages/add.LP.php lottery/LP/agregar
+http://localhost/lottery/pages/loto.pool.php lottery/LP/generar
+http://localhost/lottery/pages/add.Loto.php lottery/Loto/agregar
+http://localhost/lottery/pages/loto.php lottery/Loto/generar
+
