@@ -466,6 +466,7 @@ abstract class LotteryClass {
         }        
     }
 
+    /*
     protected function decenas_calculation ($array, $days, $balls, $conn) {
 
         if(count($array) == 0) {
@@ -501,9 +502,9 @@ abstract class LotteryClass {
             return $array;
         }
     }  
-
+    */
     protected function pastDaysAccount ($days, $balls, $conn, $pastGames) {
-        $array = $this -> decenas ($days, $balls, $conn);
+        $array = $this -> consecutiveOutArray ($days, $balls, $conn);
         $totalNumbers = $this -> totalNumbers($balls, $conn);
 
         $lastPlayArray = $totalNumbers [$pastGames - 1];
@@ -516,7 +517,7 @@ abstract class LotteryClass {
         
         return [];
     }
-
+    /*
     protected function oddEvenCal($days, $array, $balls, $conn) {
 
         if(count($array) == 0) {
@@ -533,7 +534,7 @@ abstract class LotteryClass {
         
         return $even;
     }
-
+    */
     public function multipleCalculation ($times, $number, $balls, $conn) {
         $totalNumbers = $this -> totalNumbers($balls, $conn);
         //Total de jugadas

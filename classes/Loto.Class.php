@@ -29,7 +29,7 @@ class LotoClass extends LotteryClass {
 
 
 // Calculo de pares e impares   
-    protected function oddEvenArray ($days, $balls, $conn, $pastGames) {
+ /*   protected function oddEvenArray ($days, $balls, $conn, $pastGames) {
         $array = $this -> pastDaysAccount ($days, $balls, $conn, $pastGames);
         $even = $this -> oddEvenCal($days, $array, $balls, $conn);
 
@@ -58,9 +58,9 @@ class LotoClass extends LotteryClass {
             return $array;
         }         
     }
-
+   
     protected function multiple($days, $balls, $conn, $pastGames) {   
-        $array = $this -> oddEvenArray ($days, $balls, $conn, $pastGames); 
+        $array = $this -> pastDaysAccount ($days, $balls, $conn, $pastGames); 
         $array = $this -> multiple_test ($array, $days, 0, 2, $balls, $conn);   
         $array = $this -> multiple_test ($array, $days, 1, 2, $balls, $conn); 
         $array = $this -> multiple_test ($array, $days, 2, 2, $balls, $conn);  
@@ -109,10 +109,10 @@ class LotoClass extends LotteryClass {
 
         return $array;
     }
-
+*/
  //Final
     public function finalNumbers ($days, $balls, $conn, $pastGames) {
-        $array = $this -> multiple ($days, $balls, $conn, $pastGames);
+        $array = $this -> pastDaysAccount ($days, $balls, $conn, $pastGames); 
         sort($array);
         return $array;
     }
