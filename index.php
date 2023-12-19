@@ -1,31 +1,13 @@
-
 <?php
-include ("partials/head.php");
-include ("partials/nav.php");
-?>
+//Path requested
+$uri = parse_url($_SERVER["REQUEST_URI"])['path']; 
 
-    <main class="container p-4">
-        <div class="text-center mt-4 d-flex justify-content-around align-items-center"> 
-            <div class="card" style="width: 14rem;">
-                <div class="card-body">
-                    <h5 class="card-title text-success">Loto Pool</h5>
-                    <a href="/lottery/pages/add.LP.php" class="btn btn-primary my-3">Acceder</a>
-                </div>
-            </div>
-            <div class="card" style="width: 14rem;">
-                <div class="card-body">
-                    <h5 class="card-title text-success">Loto</h5>
-                    <a href="/lottery/pages/add.Loto.php" class="btn btn-primary my-3">Acceder</a>
-                </div>
-            </div>
-            <div class="card" style="width: 14rem;">
-                <div class="card-body">
-                    <h5 class="card-title text-success">Kino TV</h5>
-                    <a href="/lottery/pages/add.Kino.php" class="btn btn-primary my-3">Acceder</a>
-                </div>
-            </div>
-        </div>
-    </main>
-<?php
-    require ("partials/footer.php")
+$routes = [
+    "/lottery/" => "controllers/index.controller.php",    
+];
+
+//If the uri exists the controllers is called
+if(array_key_exists($uri, $routes)) {
+    require $routes[$uri];
+}
 ?>
