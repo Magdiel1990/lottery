@@ -5,13 +5,13 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="/lottery/index.php">Home</a>
+        <a class="nav-link" href="<?php echo root;?>">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/lottery/pages/statistics.php">Estadísticas</a>
+        <a class="nav-link" href="<?php echo root . 'estadistica';?>">Estadísticas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/lottery/pages/test.php">Probar</a>
+        <a class="nav-link" href="<?php echo root . 'probar';?>">Probar</a>
       </li>
     </ul>
   </div>

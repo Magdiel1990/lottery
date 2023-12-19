@@ -1,9 +1,15 @@
 <?php
+//Directory root
+define("root", "/lottery/");
+
 //Path requested
 $uri = parse_url($_SERVER["REQUEST_URI"])['path']; 
 
 $routes = [
-    "/lottery/" => "controllers/index.controller.php",    
+    root => "controllers/index.controller.php", 
+    root . "estadistica" => "controllers/statistic.controller.php" 
+    
+    /lottery/pages/test.php
 ];
 
 //If the uri exists the controllers is called

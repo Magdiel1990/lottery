@@ -1,8 +1,8 @@
 <?php
-include "../partials/head.php";
-include "../partials/nav.php";
-require_once ("../classes/Database.Class.php");
-require_once ("../classes/Statistic.Class.php");
+include "partials/head.php";
+include "partials/nav.php";
+require_once ("classes/Database.Class.php");
+require_once ("classes/Statistic.Class.php");
 $conn = DatabaseClass::dbConnection();
 $lotopool = new Statistic ();
 ?>
@@ -517,5 +517,5 @@ $lotopool = new Statistic ();
     </main>
 <?php
     $conn -> close();
-    require ("../partials/footer.php")
+    require ("partials/footer.php")
 ?>
