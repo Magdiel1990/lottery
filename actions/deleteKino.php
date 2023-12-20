@@ -1,5 +1,8 @@
 <?php
-require("../classes/Database.Class.php");
+//Directory root
+define("root", "/lottery/");
+
+require("classes/Database.Class.php");
 $conn = DatabaseClassKino::dbConnection();
 
 if(isset($_GET["date"])) {
@@ -17,20 +20,20 @@ if(isset($_GET["date"])) {
             $_SESSION ["message"] = "Números eliminados correctamente";
             $_SESSION ["message-alert"] = "success";
             
-            header('Location: /lottery/pages/add.Kino.php');
+            header('Location: ' . root .'Kino/agregar');
             exit;
         } else {
             $_SESSION ["message"] = "Error al eliminar números";
             $_SESSION ["message-alert"] = "danger";
             
-            header('Location: /lottery/pages/add.Kino.php');
+            header('Location: ' . root .'Kino/agregar');
             exit;
         }  
     } else {
         $_SESSION ["message"] = "Estos números ya fueron eliminados";
         $_SESSION ["message-alert"] = "success";
 
-        header('Location: /lottery/pages/add.Kino.php');
+        header('Location: ' . root .'Kino/agregar');
         exit;
     }
 }

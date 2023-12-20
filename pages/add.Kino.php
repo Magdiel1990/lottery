@@ -56,9 +56,8 @@ $conn -> close();
     ?>  
         <div class="row justify-content-center mt-4 text-center"> 
             <div class="mb-3">
-                <a href="/lottery/pages/kino.tv.php" class="btn btn-outline-info">Generar</a>
-                <a href="/lottery/pages/random_test.kino.php" class="btn btn-outline-info">Test</a>
-                <a href="/lottery/index.php" class="btn btn-outline-info">Inicio</a>
+                <a href="<?php echo root . "Kino/generar";?>" class="btn btn-outline-info">Generar</a>
+                <a href="<?php echo root;?>"  class="btn btn-outline-info">Inicio</a>
             </div>
             <div class="col-auto">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">

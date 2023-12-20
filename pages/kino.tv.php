@@ -1,11 +1,11 @@
 
 <?php
-require ("../classes/Database.Class.php");
+require ("classes/Database.Class.php");
 $conn = DatabaseClassKino::dbConnection();
-require_once ("../classes/Random.Generators.Class.php");
-require_once ("../classes/KTV.Class.php");
-include ("../partials/head.php");
-include "../partials/nav.php";
+
+require ("classes/KTV.Class.php");
+require  ("partials/head.php");
+require  ("partials/nav.php");
 ?>
     <main class="container">
         <div class="text-center mt-4"> 
@@ -18,7 +18,7 @@ include "../partials/nav.php";
 
         <?php 
         if(isset($_POST["generate"])){
-            $finalArray = new KTVClass();
+            $finalArray = new KTVClass ();
             $numbers = $finalArray-> finalNumbers(15, 20, $conn, 0.02);  
 
             if(count($numbers) > 0) {
@@ -34,5 +34,5 @@ include "../partials/nav.php";
     </main>
 <?php
     $conn -> close();
-    require ("../partials/footer.php")
+    require ("partials/footer.php")
 ?>
