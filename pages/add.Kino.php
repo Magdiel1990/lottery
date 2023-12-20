@@ -1,9 +1,9 @@
 <?php
-require "../classes/Database.Class.php";
+require "classes/Database.Class.php";
 $conn = DatabaseClassKino::dbConnection();
 
-include "../partials/head.php";
-include "../partials/nav.php";
+include "partials/head.php";
+include "partials/nav.php";
 
 if(isset($_POST["numbers"])){
     $numbers = $_POST["numbers"];
@@ -188,5 +188,5 @@ $conn -> close();
     </script>
 <?php
     $conn -> close();
-    require ("../partials/footer.php")
+    require ("partials/footer.php")
 ?>

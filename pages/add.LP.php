@@ -1,9 +1,9 @@
 <?php
-require "../classes/Database.Class.php";
+require "classes/Database.Class.php";
 $conn = DatabaseClass::dbConnection();
 
-include "../partials/head.php";
-include "../partials/nav.php";
+include "partials/head.php";
+include "partials/nav.php";
 
 if(isset($_POST["numbers"])){
     $numbers = $_POST["numbers"];
@@ -56,11 +56,11 @@ $conn -> close();
     ?>  
         <div class="row justify-content-center mt-4 text-center"> 
             <div class="mb-3">
-                <a href="/lottery/pages/loto.pool.php" class="btn btn-outline-info">Generar</a>
-                <a href="/lottery/index.php" class="btn btn-outline-info">Inicio</a>
+                <a href="<?php echo root . 'LP/generar';?>" class="btn btn-outline-info">Generar</a>
+                <a href="<?php echo root; ?>" class="btn btn-outline-info">Inicio</a>
             </div>
             <div class="col-auto">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="" method="POST">
                     <label for="numbers" class="form-label">Agregar números</label>
                     <div class="d-flex">
                         <?php
@@ -149,5 +149,5 @@ $conn -> close();
     </script>
 <?php
     $conn -> close();
-    require ("../partials/footer.php")
+    require ("partials/footer.php")
 ?>

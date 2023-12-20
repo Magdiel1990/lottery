@@ -1,10 +1,10 @@
 <?php
-require "../classes/Database.Class.php";
+require "classes/Database.Class.php";
 $conn = DatabaseClassLoto::dbConnection();
 
-require "../classes/Loto.Class.php";
-include "../partials/head.php";
-include "../partials/nav.php";
+require "classes/Loto.Class.php";
+include "partials/head.php";
+include "partials/nav.php";
 ?>
 
     <main class="container">
@@ -34,6 +34,6 @@ include "../partials/nav.php";
     </main>
 <?php
     $conn -> close();
-    require ("../partials/footer.php")
+    require ("partials/footer.php")
 ?>
 

@@ -1,11 +1,11 @@
 
 <?php
-require ("../classes/Database.Class.php");
+require ("classes/Database.Class.php");
 $conn = DatabaseClass::dbConnection();
-require_once ("../classes/Random.Generators.Class.php");
-require_once ("../classes/LP.Class.php");
-include ("../partials/head.php");
-include "../partials/nav.php";
+require_once ("classes/Random.Generators.Class.php");
+require_once ("classes/LP.Class.php");
+include ("partials/head.php");
+include "partials/nav.php";
 ?>
     <main class="container">
         <div class="text-center mt-4"> 
@@ -34,5 +34,5 @@ include "../partials/nav.php";
     </main>
 <?php
     $conn -> close();
-    require ("../partials/footer.php")
+    require ("partials/footer.php")
 ?>

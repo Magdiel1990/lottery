@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 class DatabaseClass {
     static $hostname = "localhost:3306";
     static $username = "root";

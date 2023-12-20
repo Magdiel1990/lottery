@@ -1,8 +1,5 @@
 <?php
-session_start();
-
 require("../classes/Database.Class.php");
-
 $conn = DatabaseClassKino::dbConnection();
 
 if(isset($_GET["date"])) {
@@ -19,7 +16,7 @@ if(isset($_GET["date"])) {
         if($resultDelete) {
             $_SESSION ["message"] = "Números eliminados correctamente";
             $_SESSION ["message-alert"] = "success";
-
+            
             header('Location: /lottery/pages/add.Kino.php');
             exit;
         } else {
