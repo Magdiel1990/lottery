@@ -61,19 +61,15 @@ b {
     text-decoration: underline;
 }
 
+main {
+    min-height: calc(100vh - 8rem);
+}
+
 footer {
     background: #555;
-}
-
-main {
-    min-height: calc(100vh - 10rem);
-}
-
-footer {
-    height: 7rem;
+    height: 8rem;
 }
 
 footer h5 {
     font-size: 1rem;
 }
-
