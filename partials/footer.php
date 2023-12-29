@@ -1,4 +1,4 @@
-<footer class="text-center p-3">
+<footer class="text-center p-4">
 <!-- Copyright -->
     <div class="text-white">
         <h5 class="text-white d-inline">
