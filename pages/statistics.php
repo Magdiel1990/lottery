@@ -8,8 +8,8 @@ $lotopool = new Statistic ();
 ?>
 
     <main class="container">
-        <div class="text-center mt-4"> 
-            <div id="lotopool" class="row justify-content-center">
+        <div class="text-center m-4"> 
+            <div id="lotopool" class="row justify-content-center overflow">
                 <h2 class="mb-4">Loto Pool</h2>
                 <div class="col-auto">
                     <?php
@@ -264,7 +264,7 @@ $lotopool = new Statistic ();
             ?>
 
             <!-- LOTO -->
-            <div id="loto" class="row justify-content-center mt-2">
+            <div id="loto" class="row justify-content-center mt-2 overflow">
                 <h2 class="mb-4">Loto</h2>
                 <div class="col-auto">
                     <?php

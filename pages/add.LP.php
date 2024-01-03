@@ -2,6 +2,13 @@
 require "classes/Database.Class.php";
 $conn = DatabaseClass::dbConnection();
 
+//Special Variables
+$balls = 31;
+$numbers = 5;
+/*****************/
+
+require "methods/view_methods.php";
+
 include "partials/head.php";
 include "partials/nav.php";
 
@@ -62,13 +69,11 @@ $conn -> close();
             <div class="col-auto">
                 <form action="" method="POST">
                     <label for="numbers" class="form-label">Agregar números</label>
-                    <div class="d-flex">
-                        <?php
-                            for($i = 0; $i < 5; $i++) {
-                                echo '<input name="numbers[]" class="form-control m-2" type="number" id="numbers" required min="1" max="31">';
-                            }
-                        ?>
-                    </div>
+                 
+                    <?php
+                        echo add_numbers_input($numbers, $balls);
+                    ?>         
+
                     <div class="row justify-content-center">
                         <div class="col-auto">
                             <input class="form-control m-2" type="date" name="date" required>
@@ -86,41 +91,16 @@ $conn -> close();
         ?>
         <div class="row justify-content-center my-4">
             <div class="col-auto table-responsive">
-                <table class="table">
+                <table class="table overflow">
                     <thead>
-                        <tr>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">1º</th>
-                            <th scope="col">2º</th>
-                            <th scope="col">3º</th>
-                            <th scope="col">4º</th>
-                            <th scope="col">5º</th>
-                            <th class="text-center" scope="col">Acción</th>
-
-                        </tr>
+                        <?php
+                            echo table_titles($numbers);
+                        ?>
                     </thead>
                     <tbody>
-                        <?php                            
-                            $resultDate = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date desc;");
-
-                            $dates = [];
-
-                            while($rowDate = $resultDate -> fetch_assoc()) {
-                                $dates[] = $rowDate ["date"];
-                            }
-
-                            for($i=0; $i < count($dates); $i++) {        
-                                echo '<tr>';
-                                echo '<th scope="row">' . date("d-M-Y", strtotime($dates[$i])) . '</th>';
-                                
-                                $resultNumbers = $conn -> query("SELECT number FROM numbers WHERE date = '". $dates[$i] ."';");
-                                while($rowNumbers =  $resultNumbers -> fetch_assoc()) {                        
-                                    echo "<td>" . $rowNumbers ["number"] . "</td>";                      
-                                }
-                                echo '<td><a class="text-danger" href="/lottery/actions/delete.php?date= ' . $dates[$i] . '">Eliminar</a></td>';      
-                                echo '</tr>';   
-                            }
-                        ?>                            
+                    <?php                            
+                        echo numbers_played ($conn, "delete");
+                    ?>                           
                     </tbody>
                 </table>                
             </div>
