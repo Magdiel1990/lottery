@@ -19,7 +19,7 @@ include "partials/nav.php";
         <?php 
         if(isset($_POST["generate"])){
             $finalArray = new LotoClass();
-            $numbers = $finalArray-> finalNumbers(15 /*Números que más se repiten en esta cantidad de días*/, 6, $conn, 4 /*Jugadas anteriores con las que debe coincidir al menos un número de hoy*/); 
+            $numbers = $finalArray-> finalNumbers(15 /*Números que más se repiten en esta cantidad de días*/, 6, $conn); 
             
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {

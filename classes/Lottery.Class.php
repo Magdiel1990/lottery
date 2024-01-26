@@ -503,7 +503,7 @@ abstract class LotteryClass {
         }
     }  
     */
-    protected function pastDaysAccount ($days, $balls, $conn, $pastGames) {
+   /* protected function pastDaysAccount ($days, $balls, $conn, $pastGames) {
         $array = $this -> consecutiveOutArray ($days, $balls, $conn);
         $totalNumbers = $this -> totalNumbers($balls, $conn);
 
@@ -516,7 +516,7 @@ abstract class LotteryClass {
         }  
         
         return [];
-    }
+    } */
     /*
     protected function oddEvenCal($days, $array, $balls, $conn) {
 

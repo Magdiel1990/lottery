@@ -19,7 +19,7 @@ include "partials/nav.php";
         <?php 
         if(isset($_POST["generate"])){
             $finalArray = new LPClass();
-            $numbers = $finalArray-> finalNumbers(15 /*Números que más se repiten en esta cantidad de días*/, 5, $conn, 3 /*Jugadas anteriores con las que debe coincidir al menos un número de hoy*/); 
+            $numbers = $finalArray-> finalNumbers(15 /*Números que más se repiten en esta cantidad de días*/, 5, $conn); 
             
             if(count($numbers) > 0) {
                 for($i = 0; $i < count($numbers); $i++) {
