@@ -18,4 +18,3 @@
 6. Rango de los promedios de las combinaciones (rangeAvgArray)
 7. Rango de los productos de las combinaciones (rangeProArray)
 8. Un solo consecutivo (consecutiveOutArray)
-10. Que salga al menos un elemento de 4 sorteos atrás (pastDaysAccount)

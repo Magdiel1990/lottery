@@ -145,6 +145,10 @@ abstract class LotteryClass {
 
     protected function normalNumbers($days, $balls, $conn) {
         $arrayNumbers = $this-> arrayNumbers($balls, $conn); 
+        //Si ya está completo retornarlo
+        if(count($arrayNumbers) == $balls) {
+            return $arrayNumbers;
+        }
 
         $keys = $this-> lastNumbersMoreOftenPlayed ($days, $balls, $conn);
         $keys = array_chunk ($keys, $balls);
