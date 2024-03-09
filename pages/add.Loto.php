@@ -3,7 +3,7 @@ require "classes/Database.Class.php";
 $conn = DatabaseClassLoto::dbConnection();
 
 //Special Variables
-$balls = 38;
+$balls = 40;
 $numbers = 6;
 /*****************/
 

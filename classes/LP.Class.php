@@ -19,8 +19,8 @@ class LPClass extends LotteryClass {
     }
 */
 //Final
-    public function finalNumbers ($days, $balls, $conn, $pastGames) {
-        $array = $this -> pastDaysAccount ($days, $balls, $conn, $pastGames);
+    public function finalNumbers ($days, $balls, $conn) {
+        $array = $this -> consecutiveOutArray ($days, $balls, $conn);
         sort($array);
         return $array;
     }
