@@ -64,8 +64,11 @@
         }
     ?>  
     <div class="row justify-content-center text-center mt-4"> 
+        <div class="mb-3">
+            <a href="<?php echo root . 'loto/agregar';?>" class="btn btn-outline-info">Agregar</a>
+        </div>
         <div class="col-auto">
-            <form action="" method="POST">
+            <form action="" method="POST">          
                 <label for="numbers" class="form-label">Ingresa la jugada</label>                
                 <?php
                     echo add_numbers_input($numbers, $balls);

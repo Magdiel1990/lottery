@@ -63,7 +63,7 @@ $conn -> close();
     ?>  
         <div class="row justify-content-center text-center mt-4"> 
             <div class="mb-3">
-                <a href="<?php echo root . 'Loto/generar';?>" class="btn btn-outline-info">Generar</a>
+                <a href="<?php echo root . 'loto/test';?>" class="btn btn-outline-info">Probar</a>
             </div>
             <div class="col-auto">
                 <form action="" method="POST">
