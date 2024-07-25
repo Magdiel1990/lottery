@@ -3,7 +3,7 @@
 require_once ("partials/head.php");
 require_once ("partials/nav.php");
 
-$titles = ["Loto" => root. 'Loto/agregar'];
+$titles = ["Loto" => root. 'loto/test'];
 ?>
     <main class="container p-4 my-4">
         <div class="text-center d-flex flex-column flex-md-row align-items-center justify-content-md-around"> 
