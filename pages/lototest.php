@@ -7,9 +7,12 @@
     //Clase para probar el rango
     require "classes/RangeTest.Class.php";
 
+    //Clase para excluir las jugadas anteriores
+    require "classes/PreviousPlaysOut.Class.php";
+
     //Special Variables
-    $balls = 40; #Number of numbers to play
-    $numbers = 6; #Number of balls
+    $top = 40; #Number of numbers to play
+    $balls = 6; #Number of balls
     /*****************/
 
     require "methods/view_methods.php";
@@ -22,11 +25,14 @@
         $numbers = sort($_POST["numbers"]);
 
         //Se prueba el rango
-        $test = new RangeClass($numbers, $conn);
-        $test = $test -> testRange();
+        $case = new RangeClass($numbers, $conn);
+        $test = $case -> testRange();
 
+        //Se excluyen las jugadas anteriores
+        $case = new PreviousPlaysOut ($test, $conn, $balls, $numbers);
+        $test = $case -> lastNumbersExceptions();
 
-    
+           
     }    
     $conn -> close();
 ?>
@@ -51,7 +57,7 @@
             <form action="" method="POST">          
                 <label for="numbers" class="form-label">Ingresa la jugada</label>                
                 <?php
-                    echo add_numbers_input($numbers, $balls);
+                    echo add_numbers_input($balls, $top);
                 ?>
                 <input class="btn btn-primary m-2" type="submit" value="Probar">
             </form>

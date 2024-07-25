@@ -101,7 +101,7 @@ abstract class LotteryClass {
 
     //3. SE GENERA EL NUMERO
     //Filter 1
-    protected function arrayNumbers($balls, $conn) {
+    /*protected function arrayNumbers($balls, $conn) {
         $arrayNumbers = [];
 
         for($i = 1; $i <= $balls; $i++) {
@@ -163,7 +163,7 @@ abstract class LotteryClass {
         sort($arrayNumbers);
 
         return $arrayNumbers;
-    }
+    }*/
 
     /*************************************   Suma de números  *************************************/
     /**********************************************************************************************/
@@ -326,7 +326,7 @@ abstract class LotteryClass {
 
     //Verificar si esta jugada ya había salido
     //Filter 4
-    protected function lastNumbersExceptions($days, $balls, $conn) {
+ /*   protected function lastNumbersExceptions($days, $balls, $conn) {
         $totalNumbers = $this-> totalNumbers($balls, $conn);
         $arrayNumbers = $this-> rangeStandardDeviation($days, $balls, $conn);
 
@@ -339,7 +339,7 @@ abstract class LotteryClass {
         }      
         return $arrayNumbers;
     }
-    
+    */
     //9. RANGO DE SUMAS ACEPTADO
 
     //Incluir rango de sumas
