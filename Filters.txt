@@ -1,0 +1,20 @@
+/***** Loto Pool *****/
+1. Rango máximo y mínimo en cada posición que ha salido durante el último año (arrayNumbers).
+2. Completar combinaciones incompletas agregando números de los que más se repiten en los últimos 15 sorteos (normalNumbers)
+3. Rango de desviación estándar de las combinaciones(rangeStandardDeviation)
+4. Descartar las jugadas anteriores (lastNumbersExceptions)
+5. Rango de las sumas de las combinaciones (sumRange)
+6. Rango de los promedios de las combinaciones (rangeAvgArray)
+7. Rango de los productos de las combinaciones (rangeProArray)
+8. Un solo consecutivo (consecutiveOutArray)
+10. Que salga al menos un elemento de 3 sorteos atrás (pastDaysAccount)
+
+/***** Loto *****/
+1. Rango máximo y mínimo en cada posición que ha salido durante el último año (arrayNumbers).
+2. Completar combinaciones incompletas agregando números de los que más se repiten en los últimos 10 sorteos (normalNumbers)
+3. Rango de desviación estándar de las combinaciones(rangeStandardDeviation)
+4. Descartar las jugadas anteriores (lastNumbersExceptions)
+5. Rango de las sumas de las combinaciones (sumRange)
+6. Rango de los promedios de las combinaciones (rangeAvgArray)
+7. Rango de los productos de las combinaciones (rangeProArray)
+8. Un solo consecutivo (consecutiveOutArray)
