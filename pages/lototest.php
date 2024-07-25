@@ -4,14 +4,51 @@
     $conn = DatabaseClassLoto::dbConnection();
 
     //Special Variables
-    $balls = 40;
-    $numbers = 6;
+    $balls = 40; #Number of numbers to play
+    $numbers = 6; #Number of balls
     /*****************/
 
     require "methods/view_methods.php";
 
     require "partials/head.php";
     require "partials/nav.php";
+
+    if(isset($_POST["numbers"])){
+        $numbers = $_POST["numbers"];
+
+        $result = $conn -> query("SELECT id FROM numbers WHERE date = '$date';");   
+    
+        if($result -> num_rows == 0) {
+            $numbersSorted = array_unique($numbers, SORT_NUMERIC);
+            
+            if(count($numbersSorted) === count($numbers)) {    
+    
+                sort($numbers);
+    
+                $sql = "";
+    
+                for($i = 0; $i < count($numbers); $i++) {
+                    $sql .= "INSERT INTO numbers (number, position, date) VALUES ('" . $numbers[$i] . "', " . $i+1 . ", '$date');";
+                }
+    
+                if($conn -> multi_query($sql)) {
+                    $_SESSION ["message"] = "Números agregados con éxito";
+                    $_SESSION ["message-alert"] = "success";
+                } else {
+                    $_SESSION ["message"] = "Error al agregar números";
+                    $_SESSION ["message-alert"] = "danger";
+                }
+            } else {
+                $_SESSION ["message"] = "No puede haber números repetidos";
+                $_SESSION ["message-alert"] = "danger";
+            }
+        } else {
+            $_SESSION ["message"] = "Este número ya existe";
+            $_SESSION ["message-alert"] = "danger";
+        }
+    }
+    
+    $conn -> close();
 ?>
 
 <main class="container p-4">
@@ -39,6 +76,5 @@
     </div>
 </main>
 <?php
-    $conn -> close();
     require ("partials/footer.php")
 ?>
