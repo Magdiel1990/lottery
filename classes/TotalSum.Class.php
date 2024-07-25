@@ -23,7 +23,7 @@ Class TotalSum {
         return [min($sums), max($sums)];        
     }
     //Suma de los elementos de una jugada
-    private function sumArray() {
+    public function sumArray() {
         $count = count($this -> numbers);
 
         if($count == 0) {

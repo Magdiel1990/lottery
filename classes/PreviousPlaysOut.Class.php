@@ -37,7 +37,7 @@ class PreviousPlaysOut {
     }
 
     //Arreglo de todas las jugadas pasadas
-    private function totalNumbers(){
+    public function totalNumbers(){
         $positionArray = $this -> totalNumbersArrays();
 
         $totalPosition = [];

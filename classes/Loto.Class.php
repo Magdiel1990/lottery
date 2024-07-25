@@ -199,6 +199,7 @@ abstract class LotteryClass {
     }
   */
     //Promedio del array
+    /*
     protected function average($array) {
         $count = count($array);
         
@@ -207,7 +208,7 @@ abstract class LotteryClass {
         return $media = $sum / $count;
 
     }
-
+    */
     //Cantidad de veces que se repite un número en un arreglo
     protected function element_rep ($element, $array) {
         $count = 0;

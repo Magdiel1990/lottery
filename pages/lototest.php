@@ -12,6 +12,9 @@
 
     //Clase para la suma total
     require "classes/TotalSum.Class.php";
+    
+    //Clase para el promedio
+    require "classes/Average.Class.php";
 
     //Special Variables
     $top = 40; #Number of numbers to play
@@ -37,9 +40,13 @@
 
         //Se prueba la suma total
         $case = new TotalSum($test, $conn, $numbers);
-        $sums = $case -> testTotalSum();
-
+        $test = $case -> testTotalSum();
         
+        //Se prueba el promedio
+        $case = new Average($test, $conn, $numbers);
+        $test = $case -> average();
+
+
 
            
     }    
