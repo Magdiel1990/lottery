@@ -6,7 +6,7 @@ class PreviousPlaysOut {
     public $conn;
     public $balls;
 
-    public function__construct($test, $conn, $balls, $numbers) {
+    public function __construct($test, $conn, $balls, $numbers) {
         $this -> test = $test;
         $this -> conn = $conn;
         $this -> balls = $balls;

@@ -2,12 +2,6 @@
 /************************************* Cálculo del ************************************/
 /*************************************   rango     ************************************/
 
-//Se requiere la conexión a la base de datos
-require "Database.Class.php";
-
-//Se establece la conexión
-global $conn = DatabaseClassLoto::dbConnection();
-
 class RangeClass {
 //1.SE ESTABLECE EL RANGO
     public $data;
@@ -35,7 +29,7 @@ class RangeClass {
     //Compara los rangos de la jugada hecha
     public function testRange() {
         //Se recorren los números
-        for (i = 0; i < count($this -> data); i++) {
+        for ($i = 0; $i < count($this -> data); $i++) {
             $maxNumber = $this -> maxNumberRange($i + 1);
             $minNumber = $this -> minNumberRange($i + 1);
 
