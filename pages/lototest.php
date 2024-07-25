@@ -10,6 +10,9 @@
     //Clase para excluir las jugadas anteriores
     require "classes/PreviousPlaysOut.Class.php";
 
+    //Clase para la suma total
+    require "classes/TotalSum.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
@@ -31,6 +34,12 @@
         //Se excluyen las jugadas anteriores
         $case = new PreviousPlaysOut ($test, $conn, $balls, $numbers);
         $test = $case -> lastNumbersExceptions();
+
+        //Se prueba la suma total
+        $case = new TotalSum($test, $conn, $numbers);
+        $sums = $case -> testTotalSum();
+
+        
 
            
     }    

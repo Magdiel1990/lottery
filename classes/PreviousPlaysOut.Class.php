@@ -14,7 +14,7 @@ class PreviousPlaysOut {
     }
 
     //Total de jugadas
-    protected function positionCalculation($position) {
+    private function positionCalculation($position) {
         $result = $this -> conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date desc;");
 
         $positionArray = [];
@@ -27,7 +27,7 @@ class PreviousPlaysOut {
     }
     
     //Arreglo de los arreglos de todas las jugadas pasadas
-    protected function totalNumbersArrays(){
+    private function totalNumbersArrays(){
         $positionArray = [];
 
         for ($i = 1; $i <= $this -> balls; $i++) {
@@ -37,7 +37,7 @@ class PreviousPlaysOut {
     }
 
     //Arreglo de todas las jugadas pasadas
-    protected function totalNumbers(){
+    private function totalNumbers(){
         $positionArray = $this -> totalNumbersArrays();
 
         $totalPosition = [];
@@ -65,7 +65,6 @@ class PreviousPlaysOut {
             for($i = 0; $i < count($totalNumbers); $i++) {
                 if($totalNumbers[$i] == $arrayNumbers) {
                     return false;
-                    break;
                 } else {
                     return true;
                 }

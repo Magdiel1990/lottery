@@ -24,7 +24,7 @@ abstract class LotteryClass {
     //1.SE ESTABLECE EL RANGO
 
     //Maximo numero en cualquier posicion
-    protected function maxNumberRange($position, $conn) {       
+ /*   protected function maxNumberRange($position, $conn) {       
         $result = $conn -> query("SELECT max(number) FROM numbers WHERE position = " . $position . ";");
         $number = $result -> fetch_array();
         return $number[0];
@@ -59,6 +59,7 @@ abstract class LotteryClass {
 
         return $positionArray;
     }
+        */
     //Total de jugadas
     protected function totalPlays($conn) {
         $result = $conn -> query ("SELECT count(*) as total FROM numbers WHERE position = 1 ORDER BY date desc;");
@@ -67,7 +68,7 @@ abstract class LotteryClass {
 
         return $row["total"];
     }
-    
+    /*
     //Arreglo de los arreglos de todas las jugadas pasadas
     protected function totalNumbersArrays($balls, $conn){
         $positionArray = [];
@@ -95,7 +96,6 @@ abstract class LotteryClass {
 
         return $totalPosition;
     }
-
     /*************************************   Generando  ************************************/
     /*************************************    números   ************************************/
 
@@ -169,7 +169,7 @@ abstract class LotteryClass {
     /**********************************************************************************************/
 
     //5. CALCULAR EL RANGO DE LAS SUMAS DE LAS JUGADAS
-
+/*
     //Array de la suma
     protected function sumsArrayNumbers($conn) {
         $result = $conn -> query ("SELECT sum(number) AS suma FROM numbers GROUP BY date ORDER BY suma;");
@@ -197,7 +197,7 @@ abstract class LotteryClass {
 
         return $sum;
     }
-  
+  */
     //Promedio del array
     protected function average($array) {
         $count = count($array);
