@@ -1,5 +1,5 @@
 <?php
-require_once ("classes/Lottery.Class.php");
+require_once ("classes/Loto.Class.php");
 
 class Statistic extends LotteryClass {
     protected function numberRange($position, $conn) {

@@ -15,12 +15,8 @@ if($param == "") {
         root => "controllers/index.controller.php", 
         root . "estadistica" => "controllers/statistic.controller.php",
         root . "probar" => "controllers/test.controller.php",
-        root . "LP/agregar" => "controllers/LP.agregar.controller.php",
         root . "Loto/agregar" => "controllers/Loto.agregar.controller.php",
-        root . "Kino/agregar" => "controllers/Kino.agregar.controller.php",
-        root . "LP/generar" => "controllers/LP.generar.controller.php",
         root . "Loto/generar" => "controllers/Loto.generar.controller.php",
-        root . "Kino/generar" => "controllers/Kino.generar.controller.php"
     ];
 } 
 
