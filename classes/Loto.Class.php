@@ -362,7 +362,7 @@ abstract class LotteryClass {
     }
 
     //11. RANGO DEL PROMEDIO DE TODOS LOS NUMEROS
-
+/*
     protected function averageArray($balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
 
@@ -396,7 +396,7 @@ abstract class LotteryClass {
 
         return $this -> rangeCondition ($average, $rangeAvg, $array);
     }
-
+*/
     //12. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
 
     protected function productArray ($days, $balls, $conn) {

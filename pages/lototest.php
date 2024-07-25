@@ -41,10 +41,12 @@
         //Se prueba la suma total
         $case = new TotalSum($test, $conn, $numbers);
         $test = $case -> testTotalSum();
-        
+
         //Se prueba el promedio
-        $case = new Average($test, $conn, $numbers);
-        $test = $case -> average();
+        $case = new Average($test, $conn, $numbers, $balls);
+        $test = $case -> averagePastGames();
+
+        
 
 
 
