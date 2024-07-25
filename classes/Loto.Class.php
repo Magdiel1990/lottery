@@ -219,7 +219,7 @@ abstract class LotteryClass {
         }
         return $count;
     }
-    
+    /*
     //Rango máximo y mínimo
     protected function minMaxArray($array) {  
         $min =  min($array);
@@ -235,7 +235,7 @@ abstract class LotteryClass {
             return [];
         }
     }
-
+*/
     //Suma de cada elemento
     protected function number_sum ($down, $up, $conn) {
         //Posiciones a sumar
@@ -275,7 +275,7 @@ abstract class LotteryClass {
 
         return $this -> minMaxArray($array);
     }
-
+/*
 
     //7. RANGO DE DESVIACION ESTANDAR
     
@@ -322,7 +322,7 @@ abstract class LotteryClass {
 
         return $this -> rangeCondition ($standardDeviationOfArray, $rangeDev, $array);
     }
-    
+    */
     //8. EXCLUIR LAS JUGADAS ANTERIORES
 
     //Verificar si esta jugada ya había salido

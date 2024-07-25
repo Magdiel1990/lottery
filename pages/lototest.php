@@ -16,6 +16,9 @@
     //Clase para el promedio
     require "classes/Average.Class.php";
 
+    //Clase para la desviación estándar
+    require "classes/StandardDev.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
@@ -46,11 +49,9 @@
         $case = new Average($test, $conn, $numbers, $balls);
         $test = $case -> averagePastGames();
 
-        
-
-
-
-           
+        //Se prueba de desviación estándar
+        $case = new StandardDeviation($test, $numbers, $balls, $conn);
+        $test = $case -> StdDev();           
     }    
     $conn -> close();
 ?>
