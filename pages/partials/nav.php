@@ -10,9 +10,6 @@
       <li class="nav-item">
         <a class="nav-link" href="<?php echo root . 'estadistica';?>">Estadísticas</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="<?php echo root . 'probar';?>">Probar</a>
-      </li>
     </ul>
   </div>
 </nav>
