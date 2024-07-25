@@ -1,7 +1,11 @@
 
 <?php
+    //Conexión a la base de datos
     require "classes/Database.Class.php";
     $conn = DatabaseClassLoto::dbConnection();
+
+    //Clase para probar el rango
+    require "classes/RangeTest.Class.php";
 
     //Special Variables
     $balls = 40; #Number of numbers to play
@@ -14,40 +18,16 @@
     require "partials/nav.php";
 
     if(isset($_POST["numbers"])){
-        $numbers = $_POST["numbers"];
+        //Se ordenan los números
+        $numbers = sort($_POST["numbers"]);
 
-        $result = $conn -> query("SELECT id FROM numbers WHERE date = '$date';");   
+        //Se prueba el rango
+        $test = new RangeClass($numbers, $conn);
+        $test = $test -> testRange();
+
+
     
-        if($result -> num_rows == 0) {
-            $numbersSorted = array_unique($numbers, SORT_NUMERIC);
-            
-            if(count($numbersSorted) === count($numbers)) {    
-    
-                sort($numbers);
-    
-                $sql = "";
-    
-                for($i = 0; $i < count($numbers); $i++) {
-                    $sql .= "INSERT INTO numbers (number, position, date) VALUES ('" . $numbers[$i] . "', " . $i+1 . ", '$date');";
-                }
-    
-                if($conn -> multi_query($sql)) {
-                    $_SESSION ["message"] = "Números agregados con éxito";
-                    $_SESSION ["message-alert"] = "success";
-                } else {
-                    $_SESSION ["message"] = "Error al agregar números";
-                    $_SESSION ["message-alert"] = "danger";
-                }
-            } else {
-                $_SESSION ["message"] = "No puede haber números repetidos";
-                $_SESSION ["message-alert"] = "danger";
-            }
-        } else {
-            $_SESSION ["message"] = "Este número ya existe";
-            $_SESSION ["message-alert"] = "danger";
-        }
-    }
-    
+    }    
     $conn -> close();
 ?>
 
