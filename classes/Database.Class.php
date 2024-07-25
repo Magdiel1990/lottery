@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 class DatabaseClassLoto {
     static $hostname = "localhost:3306";
     static $username = "root";

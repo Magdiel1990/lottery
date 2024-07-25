@@ -1,6 +1,7 @@
 <?php
 //Directory root
 define("root", "/lottery/");
+//Memory limit
 ini_set('memory_limit', '2048M');
 
 //Path requested
