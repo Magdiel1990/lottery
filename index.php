@@ -18,7 +18,11 @@ if($param == "") {
         root . "loto/agregar" => "controllers/Loto.agregar.controller.php",
         root . "loto/test" => "controllers/lototest.controller.php"
     ];
-} 
+} else {
+    $routes = [
+        root . "delete" => "controllers/delete.controller.php"
+    ];
+}
 
 //If the uri exists the controllers is called
 if(array_key_exists($uri, $routes)) {

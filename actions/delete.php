@@ -1,10 +1,9 @@
 <?php
-//Directory root
-define("root", "/lottery/");
-
-require("../classes/Database.Class.php");
+//Conection to database
+require("classes/Database.Class.php");
 $conn = DatabaseClassLoto::dbConnection();
 
+//Receive date
 if(isset($_GET["date"])) {
     $date = $_GET["date"];
 
@@ -20,20 +19,20 @@ if(isset($_GET["date"])) {
             $_SESSION ["message"] = "Números eliminados correctamente";
             $_SESSION ["message-alert"] = "success";
 
-            header('Location: ' . root . 'Loto/agregar');
+            header('Location: ' . root . 'loto/agregar');
             exit;
         } else {
             $_SESSION ["message"] = "Error al eliminar números";
             $_SESSION ["message-alert"] = "danger";
             
-            header('Location: ' . root . 'Loto/agregar');
+            header('Location: ' . root . 'loto/agregar');
             exit;
         }  
     } else {
         $_SESSION ["message"] = "Estos números ya fueron eliminados";
         $_SESSION ["message-alert"] = "success";
 
-        header('Location: ' . root . 'Loto/agregar');
+        header('Location: ' . root . 'loto/agregar');
         exit;
     }
 }

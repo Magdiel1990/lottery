@@ -135,7 +135,7 @@ $conn -> close();
                         while($rowNumbers =  $resultNumbers -> fetch_assoc()) {                        
                             $html .= "<td>" . $rowNumbers ["number"] . "</td>";                      
                         }
-                        $html .= '<td><a class="text-danger" href="/lottery/actions/deleteLoto.php?date= ' . $dates[$i] . '">Eliminar</a></td>';      
+                        $html .= '<td><a class="text-danger" href="' . root .'delete?date= ' . $dates[$i] . '">Eliminar</a></td>';      
                         $html .= '</tr>';            
                     }
                     echo $html;                           
