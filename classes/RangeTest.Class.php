@@ -13,15 +13,15 @@ class RangeClass {
     }
 
     //Maximo numero en cualquier posicion
-    private function maxNumberRange($position, $conn) {       
-        $result = $conn -> query("SELECT max(number) FROM numbers WHERE position = " . $position . ";");
+    private function maxNumberRange($position) {       
+        $result = $this -> conn -> query("SELECT max(number) FROM numbers WHERE position = " . $position . ";");
         $number = $result -> fetch_array();
         return $number[0];
     }
 
     //Mínimo numero en cualquier posicion
-    private function minNumberRange($position, $conn) {       
-        $result = $conn -> query("SELECT min(number) FROM numbers WHERE position = " . $position . ";");
+    private function minNumberRange($position) {       
+        $result = $this -> conn -> query("SELECT min(number) FROM numbers WHERE position = " . $position . ";");
         $number = $result -> fetch_array();
         return $number[0];
     }
