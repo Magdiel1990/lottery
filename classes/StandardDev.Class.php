@@ -43,7 +43,7 @@ class StandardDeviation {
             $standardDevArray [] = $this -> standardDeviation ($totalNumbers[$i]);
         }
 
-        return $totalStdDevArray;
+        return $standardDevArray;
     }
     
     public function StdDev() {
