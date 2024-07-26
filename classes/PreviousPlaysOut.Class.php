@@ -64,18 +64,19 @@ class PreviousPlaysOut {
         //Si falla el filtro de rango
         if($this -> test == false) {
             return false;
-        } else {   
-            foreach ($totalNumbers as $subArray) {
-                //Si la jugada actual es igual a alguna de las jugadas anteriores
-                if($subArray == $arrayNumbers) {
-                    $return = false;   
-                    break;     
-                } else {
-                    $return = true;       
-                }
-            } 
-            return $return;
-        }      
+        } 
+
+        foreach ($totalNumbers as $subArray) {
+            //Si la jugada actual es igual a alguna de las jugadas anteriores
+            if($subArray == $arrayNumbers) {
+                $return = false;   
+                break;     
+            } else {
+                $return = true;       
+            }
+        } 
+
+        return $return;           
     }
 }
 ?>

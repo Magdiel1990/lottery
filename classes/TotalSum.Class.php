@@ -11,7 +11,8 @@ Class TotalSum {
     }
 
     //Array de la suma de todas las jugadas hechas
-    private function sumsArrayNumbers() {
+
+    public function sumsArrayNumbers() {
         $result = $this -> conn -> query ("SELECT sum(number) AS suma FROM numbers GROUP BY date ORDER BY suma;");
 
         $sums = [];
@@ -45,9 +46,9 @@ Class TotalSum {
         $sum = $this -> sumArray();
 
         
-        if($this -> test == false) {
-            return false;
-        } 
+     //   if($this -> test == false) {
+     //       return false;
+      //  } 
 
         if($sum < $sumsRange [0] || $sum > $sumsRange [1]) {
             return false;

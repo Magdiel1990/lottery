@@ -91,29 +91,33 @@
 
                 //Se excluyen las jugadas anteriores
                 $case = new PreviousPlaysOut ($test, $conn, $balls, $numbers);
-                $test = $case -> lastNumbersExceptions();
-
-                
-                var_dump($test);
-                
-                echo "<pre>";
-                var_dump($numbers);
-                echo "</pre>";
-                
-                $total = $case -> totalNumbers();
-
-                echo "<pre>";
-                var_dump($total);
-                echo "</pre>";
-
+                $test = $case -> lastNumbersExceptions();           
 
                 //Se prueba la suma total
                 $case = new TotalSum($test, $conn, $numbers);
-                $test = $case -> testTotalSum();
+                $test = $case -> testTotalSum();               
 
                 //Se prueba el promedio
                 $case = new Average($test, $conn, $numbers, $balls);
                 $test = $case -> averagePastGames();
+
+                var_dump($test);
+                
+                echo "<pre>";
+                print_r($numbers);
+                echo "</pre>";
+                
+                $Arrays = $case -> totalAverage();
+                $Array = $case -> average($numbers);
+
+
+                echo "<pre>";
+                print_r($Arrays);
+                echo "</pre>";
+                echo "<pre>";
+                print_r($Array);
+                echo "</pre>";
+                
 
                 //Se prueba de desviación estándar
                 $case = new StandardDeviation($test, $numbers, $balls, $conn);
