@@ -1,21 +1,23 @@
 <?php
+//Se requiere el archivo config.php para acceder a las variables globales
 require "classes/Database.Class.php";
 $conn = DatabaseClassLoto::dbConnection();
 
 //Special Variables
-$balls = 40;
-$numbers = 6;
+$top = 40;
+$balls = 6;
 /*****************/
 
-require "methods/view_methods.php";
-
+//Se requiere el archivo head.php para mostrar los estilos de bootstrap
 require "partials/head.php";
+
+//Se requiere el archivo nav.php para mostrar la barra de navegación
 require "partials/nav.php";
 
 if(isset($_POST["numbers"])){
     $numbers = $_POST["numbers"];
     $date = $_POST["date"];
-    $result = $conn -> query("SELECT id FROM numbers WHERE date = '$date';");   
+    $result = $conn -> query("SELECT id FROM numbers WHERE date = '$date';"); 
 
     if($result -> num_rows == 0) {
         $numbersSorted = array_unique($numbers, SORT_NUMERIC);
@@ -70,9 +72,17 @@ $conn -> close();
                     <label for="numbers" class="form-label">Agregar números</label>
                    
                     <?php
-                        echo add_numbers_input($numbers, $balls);
+                    $html = '<div class="d-flex flex-row justify-content-center flex-wrap">';
+                    //Se crean los inputs para los números
+                    for($i = 0; $i < $balls; $i++) {                        
+                        $html .= '<input name="numbers[]" class="form-control m-2 px-2" style="max-width:3rem;" type="number" id="numbers" required min="1" max="'. $top .'">';
+                    }          
+
+                    $html .= '</div>';
+
+                    echo $html;
                     ?>
-              
+                                
                     <div class="row justify-content-center">
                         <div class="col-auto">
                             <input class="form-control m-2" type="date" name="date" required>
@@ -92,13 +102,43 @@ $conn -> close();
             <div class="col-auto table-responsive">
                 <table class="table overflow">
                     <thead>
-                    <?php                     
-                        echo table_titles($numbers);
+                    <?php    
+                    //Títulos de las tablas que muestran los numeros jugados
+                    $html = '<tr>';
+                    $html .= '<th scope="col">Fecha</th>';
+                    for($i=1; $i<=$balls; $i++) {
+                        $html .= '<th scope="col">'. $i .'º</th>';
+                    }
+                    $html .= '<th class="text-center" scope="col">Acción</th>';
+                    $html .= '</tr>';
+            
+                    echo $html;
                     ?>                            
                     </thead>
                     <tbody>
-                    <?php                            
-                        echo numbers_played ($conn, "deleteLoto");
+                    <?php 
+                    $resultDate = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date desc;");
+
+                    $dates = [];
+            
+                    while($rowDate = $resultDate -> fetch_assoc()) {
+                        $dates[] = $rowDate ["date"];
+                    }
+            
+                    $html = '';
+            
+                    for($i=0; $i < count($dates); $i++) {                  
+                        $html .= '<tr>';
+                        $html .= '<th scope="row" style="width: 150px; display: block;">' . date("d-M-Y", strtotime($dates[$i])) . '</th>';
+                        
+                        $resultNumbers = $conn -> query("SELECT number FROM numbers WHERE date = '". $dates[$i] ."';");
+                        while($rowNumbers =  $resultNumbers -> fetch_assoc()) {                        
+                            $html .= "<td>" . $rowNumbers ["number"] . "</td>";                      
+                        }
+                        $html .= '<td><a class="text-danger" href="/lottery/actions/deleteLoto.php?date= ' . $dates[$i] . '">Eliminar</a></td>';      
+                        $html .= '</tr>';            
+                    }
+                    echo $html;                           
                     ?>                       
                     </tbody>
                 </table>                
