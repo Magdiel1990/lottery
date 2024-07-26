@@ -45,7 +45,7 @@ class TotalProduct {
         $product = 1;
 
         for($i = 0; $i < count($this -> numbers); $i++) {
-            $product *= $array[$i];
+            $product *= $this -> numbers[$i];
         }
 
         return $product;
