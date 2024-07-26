@@ -42,32 +42,20 @@
             <form action="" method="POST">          
                 <label for="numbers" class="form-label">Ingresa la jugada</label>                
                 <?php
-                //Si no se han ingresado los números
-                if (!isset($_SESSION ["numbers"])) {
-                    $html = '<div class="d-flex flex-row justify-content-center flex-wrap">';
+                $html = '<div class="d-flex flex-row justify-content-center flex-wrap">';
+                //Se crean los inputs para los números
+                for($i = 0; $i < $balls; $i++) {
+                    //Se verifica si ya se han enviado los números
+                    $value = isset($_SESSION["numbers"][$i]) ? $_SESSION["numbers"][$i] : '';
+                    $html .= '<input name="numbers[]" value="' . $value . '" class="form-control m-2 px-2" style="max-width:3rem;" type="number" id="numbers" required min="1" max="'. $top .'">';
+                }          
                 
-                    for($i = 0; $i < $balls; $i++) {
-                        $html .= '<input name="numbers[]" class="form-control m-2 px-2" style="max-width:3rem;" type="number" id="numbers" required min="1" max="'. $top .'">';
-                    }
-                    
-                    $html .= '</div>';
-            
-                   echo $html;
-                //Se muestran los números ingresados
-                } else {
-                    $html = '<div class="d-flex flex-row justify-content-center flex-wrap">';
-                
-                    for($i = 0; $i < $balls; $i++) {
-                        $html .= '<input name="numbers[]" value="' . $_SESSION ["numbers"][$i] . '" class="form-control m-2 px-2" style="max-width:3rem;" type="number" id="numbers" required min="1" max="'. $top .'">';                    
-                    }
+                $html .= '</div>';
+        
+                echo $html;
 
-                    //Se eliminan los números de la sesión
-                    unset($_SESSION ["numbers"]);
-                    
-                    $html .= '</div>';
-            
-                    echo $html;
-                } 
+                 //Se eliminan los números de la sesión
+                 unset($_SESSION["numbers"]);
                 ?>
                 <input class="btn btn-primary m-2" type="submit" value="Probar">
             </form>
