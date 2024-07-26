@@ -44,11 +44,10 @@ Class TotalSum {
         $sumsRange = $this -> sumsArrayNumbers();
         //Suma de la jugada actual
         $sum = $this -> sumArray();
-
         
-     //   if($this -> test == false) {
-     //       return false;
-      //  } 
+        if($this -> test == false) {
+            return false;
+        } 
 
         if($sum < $sumsRange [0] || $sum > $sumsRange [1]) {
             return false;

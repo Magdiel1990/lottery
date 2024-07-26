@@ -15,7 +15,7 @@ class TotalProduct {
     }
     
     //Array de los productos
-    private function productArray () {
+    public function productArray () {
         //Array de todas las jugadas pasadas
         $totalArrayNumbers = new PreviousPlaysOut($this -> test, $this -> conn, $this -> balls, $this -> numbers);
         $totalArrayNumbers = $totalArrayNumbers -> totalNumbers();
@@ -32,6 +32,7 @@ class TotalProduct {
        //Se retorna el array de los productos
         return $productArray;          
     }
+
     //Rango de los productos
     private function rangeProducts() {   
         $minProduct = min($this -> productArray());
@@ -41,27 +42,27 @@ class TotalProduct {
     }
 
     //Producto de la jugada actual
-    private function product() {
+    public function product($array) {
         $product = 1;
 
-        for($i = 0; $i < count($this -> numbers); $i++) {
-            $product *= $this -> numbers[$i];
+        for($i = 0; $i < count($array); $i++) {
+            $product *= $array [$i];
         }
 
         return $product;
     }
 
-
     public function testTotalProduct () {
         //producto actual
-        $product = $this -> product();
+        $product = $this -> product($this -> numbers);
 
         //rango de los productos
         $range = $this -> rangeProducts();
+
         //Si la prueba anterior falla
- //       if($this -> test == false) {
-//            return false;
- //       }
+        if($this -> test == false) {
+           return false;
+       }
 
         //Si el producto no está en el rango
         if($product < $range[0] || $product > $range[1]) {

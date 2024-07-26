@@ -103,25 +103,7 @@
 
                 //Se prueba de desviación estándar
                 $case = new StandardDeviation($test, $numbers, $balls, $conn);
-                $test = $case -> StdDev();     
-
-                var_dump($test);
-                
-                echo "<pre>";
-                print_r($numbers);
-                echo "</pre>";
-                
-                $Arrays = $case -> totalStdDev();
-                $Array = $case -> standardDeviation($numbers);
-
-
-                echo "<pre>";
-                print_r($Arrays);
-                echo "</pre>";
-                echo "<pre>";
-                print_r($Array);
-                echo "</pre>";
-                
+                $test = $case -> StdDev();               
                 
                 //Se prueba el producto total
                 $case = new TotalProduct($test, $numbers, $balls, $conn);

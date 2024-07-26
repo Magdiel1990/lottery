@@ -56,9 +56,9 @@ class StandardDeviation {
         $minStdDev = min($totalStdDevArray);
         $maxStdDev = max($totalStdDevArray);
 
-   //     if($this -> test == false) {
- //           return false;
-  //      } 
+        if($this -> test == false) {
+            return false;
+        } 
         
         //Si la desviación estándar de la jugada actual está fuera del rango de las desviaciones estándares de las jugadas pasadas
         if($stdDev < $minStdDev || $stdDev > $maxStdDev) {

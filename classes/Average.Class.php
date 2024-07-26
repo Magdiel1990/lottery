@@ -44,9 +44,9 @@ class Average {
         $maxAvg = max($averageTotalArray);
 
         //Si no se ha pasado la prueba anterior
-     //   if($this -> test == false) {
-    //        return false;
-    //    } 
+        if($this -> test == false) {
+            return false;
+        } 
 
         //Si el promedio es menor al mínimo o mayor al máximo
         if($average < $minAvg || $average > $maxAvg) {
