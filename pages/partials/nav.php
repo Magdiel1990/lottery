@@ -3,7 +3,7 @@
 $navitems = [
   'Home' => root,
   'Estadísticas'  => root . 'estadistica',
-  'Reset' => root . 'reset'
+  'Reset' => root . 'reset?reset=true'
 ];
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
