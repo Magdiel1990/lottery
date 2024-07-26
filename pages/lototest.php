@@ -84,7 +84,10 @@
                 $html .= '<h4 class = "text-center text-danger">No se pueden repetir los números</h4>';
                 $html .= '</div>';
                 echo $html;                    
-            } else {                   
+            } else {  
+                //Se ordenan los números          
+                $numbers = sort($numbers);     
+
                 //Se prueba el rango
                 $case = new RangeClass($numbers, $conn);
                 $test = $case -> testRange();
