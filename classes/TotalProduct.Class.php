@@ -59,9 +59,9 @@ class TotalProduct {
         //rango de los productos
         $range = $this -> rangeProducts();
         //Si la prueba anterior falla
-        if($this -> test == false) {
-            return false;
-        }
+ //       if($this -> test == false) {
+//            return false;
+ //       }
 
         //Si el producto no está en el rango
         if($product < $range[0] || $product > $range[1]) {

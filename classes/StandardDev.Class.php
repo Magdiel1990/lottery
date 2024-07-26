@@ -14,17 +14,17 @@ class StandardDeviation {
     }
 
     //Desviación estándar
-    private function standardDeviation() {
-        $count = count($this ->numbers);
+    public function standardDeviation($array) {
+        $count = count($array);
         
         //Promedio
-        $media = new Average($this -> test, $this -> conn, $this ->numbers, $this ->balls);        
-        $media = $media -> average($this ->numbers);
+        $media = new Average($this -> test, $this -> conn, $array, $this ->balls);        
+        $media = $media -> average($array);
 
         //Desviación estándar
         $varianza = 0;
         for($i = 0; $i < $count; $i++) {
-            $varianza += pow(($media - $this ->numbers[$i]), 2);
+            $varianza += pow(($media - $array[$i]), 2);
         }
 
         $standardDesviation = sqrt($varianza / $count);
@@ -32,7 +32,7 @@ class StandardDeviation {
         return $standardDesviation;
     }
 
-    private function standardDeviationArray() {
+    public function totalStdDev() {
         //Total de jugadas
         $totalNumbers = new PreviousPlaysOut($this -> test, $this -> conn, $this -> balls, $this -> numbers);        
         $totalNumbers = $totalNumbers -> totalNumbers(); 
@@ -48,17 +48,17 @@ class StandardDeviation {
     
     public function StdDev() {
         //Arreglo de las desviaciones estándares
-        $totalStdDevArray = $this -> standardDeviationArray();
+        $totalStdDevArray = $this -> totalStdDev();
         //Desviación estándar
-        $stdDev = $this -> standardDeviation();
+        $stdDev = $this -> standardDeviation($this -> numbers);
 
         //Mínimo y máximo de las desviaciones estándares
         $minStdDev = min($totalStdDevArray);
         $maxStdDev = max($totalStdDevArray);
 
-        if($this -> test == false) {
-            return false;
-        } 
+   //     if($this -> test == false) {
+ //           return false;
+  //      } 
         
         //Si la desviación estándar de la jugada actual está fuera del rango de las desviaciones estándares de las jugadas pasadas
         if($stdDev < $minStdDev || $stdDev > $maxStdDev) {

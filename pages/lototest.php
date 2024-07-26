@@ -99,7 +99,11 @@
 
                 //Se prueba el promedio
                 $case = new Average($test, $conn, $numbers, $balls);
-                $test = $case -> averagePastGames();
+                $test = $case -> averagePastGames();             
+
+                //Se prueba de desviación estándar
+                $case = new StandardDeviation($test, $numbers, $balls, $conn);
+                $test = $case -> StdDev();     
 
                 var_dump($test);
                 
@@ -107,8 +111,8 @@
                 print_r($numbers);
                 echo "</pre>";
                 
-                $Arrays = $case -> totalAverage();
-                $Array = $case -> average($numbers);
+                $Arrays = $case -> totalStdDev();
+                $Array = $case -> standardDeviation($numbers);
 
 
                 echo "<pre>";
@@ -118,10 +122,6 @@
                 print_r($Array);
                 echo "</pre>";
                 
-
-                //Se prueba de desviación estándar
-                $case = new StandardDeviation($test, $numbers, $balls, $conn);
-                $test = $case -> StdDev();     
                 
                 //Se prueba el producto total
                 $case = new TotalProduct($test, $numbers, $balls, $conn);
