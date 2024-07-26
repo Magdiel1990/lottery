@@ -56,19 +56,25 @@ class PreviousPlaysOut {
     }
 
     public function lastNumbersExceptions() {
+        //Jugada actual
         $arrayNumbers = $this-> numbers;
+        //Todas las jugadas
         $totalNumbers = $this-> totalNumbers(); 
         
+        //Si falla el filtro de rango
         if($this -> test == false) {
             return false;
-        } else {       
-            for($i = 0; $i < count($totalNumbers); $i++) {
-                if($totalNumbers[$i] == $arrayNumbers) {
-                    return false;
+        } else {   
+            foreach ($totalNumbers as $subArray) {
+                //Si la jugada actual es igual a alguna de las jugadas anteriores
+                if($subArray == $arrayNumbers) {
+                    $return = false;   
+                    break;     
                 } else {
-                    return true;
+                    $return = true;       
                 }
-            }   
+            } 
+            return $return;
         }      
     }
 }

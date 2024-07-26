@@ -85,9 +85,6 @@
                 $html .= '</div>';
                 echo $html;                    
             } else {  
-                //Se ordenan los números          
-                $numbers = sort($numbers);     
-
                 //Se prueba el rango
                 $case = new RangeClass($numbers, $conn);
                 $test = $case -> testRange();
@@ -95,6 +92,20 @@
                 //Se excluyen las jugadas anteriores
                 $case = new PreviousPlaysOut ($test, $conn, $balls, $numbers);
                 $test = $case -> lastNumbersExceptions();
+
+                
+                var_dump($test);
+                
+                echo "<pre>";
+                var_dump($numbers);
+                echo "</pre>";
+                
+                $total = $case -> totalNumbers();
+
+                echo "<pre>";
+                var_dump($total);
+                echo "</pre>";
+
 
                 //Se prueba la suma total
                 $case = new TotalSum($test, $conn, $numbers);
