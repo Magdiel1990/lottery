@@ -12,18 +12,18 @@ class Average {
         $this -> balls = $balls;
     }
 
-    private function average() {
+    public function average() {
         $count = count($this -> numbers);
 
         $sum = new TotalSum($this -> test, $this -> conn, $this -> numbers);        
-        $sum = $this -> sumArray ();
+        $sum = $sum -> sumArray ();
     
         return $media = $sum / $count;    
     }
 
     private function totalAverage() {
         $totalArrayNumbers = new PreviousPlaysOut($this -> test, $this -> conn, $this -> balls, $this -> numbers);
-        $totalArrayNumbers = $totalNumbers -> totalNumbers();
+        $totalArrayNumbers = $totalArrayNumbers -> totalNumbers();
 
         $averageTotalArray = [];
 
@@ -36,7 +36,7 @@ class Average {
 
     public function averagePastGames() {
         //Se ordenan los promedios
-        $averageTotalArray = sort($this -> totalAverage());
+        $averageTotalArray = $this -> totalAverage();
         $average = $this -> average();
 
         //Se obtienen los valores mínimo y máximo
