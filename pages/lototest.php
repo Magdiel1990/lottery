@@ -69,7 +69,11 @@
             //Se convierten los números a enteros
             for($i = 0; $i < count($numbers); $i++) {
                 $numbers[$i] = (int) $numbers[$i];
-            }             
+            }         
+            
+            //Se eliminan los números de la sesión
+            unset($_SESSION["numbers"]);
+            
 
             //Se guardan los números en la sesión
             $_SESSION ["numbers"] = $numbers;
