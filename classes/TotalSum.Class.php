@@ -39,9 +39,12 @@ Class TotalSum {
     }
 
     public function testTotalSum() {
+        //Rango de las sumas
         $sumsRange = $this -> sumsArrayNumbers();
+        //Suma de la jugada actual
         $sum = $this -> sumArray();
 
+        
         if($this -> test == false) {
             return false;
         } 

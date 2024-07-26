@@ -398,7 +398,7 @@ abstract class LotteryClass {
     }
 */
     //12. RANGO DEL PRODUCTO DE TODOS LOS NUMEROS
-
+/*
     protected function productArray ($days, $balls, $conn) {
         $totalArrayNumbers = $this-> totalNumbers($balls, $conn);
 
@@ -445,7 +445,7 @@ abstract class LotteryClass {
         $product = $this -> product($array);
 
         return $this -> rangeCondition ($product, $rangePro, $array);
-    }
+    }*/
 
     //13. QUITAR NUMEROS DOBLEMENTE CONSECUTIVOS
     //Filter 9

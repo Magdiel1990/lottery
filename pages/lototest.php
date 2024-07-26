@@ -19,6 +19,9 @@
     //Clase para la desviación estándar
     require "classes/StandardDev.Class.php";
 
+    //Clase para el producto de todos los números
+    require "classes/TotalProduct.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
@@ -51,7 +54,10 @@
 
         //Se prueba de desviación estándar
         $case = new StandardDeviation($test, $numbers, $balls, $conn);
-        $test = $case -> StdDev();           
+        $test = $case -> StdDev();     
+        
+        $case = new TotalProduct($test, $numbers, $balls, $conn);
+        $test = $case -> testTotalProduct ();
     }    
     $conn -> close();
 ?>
