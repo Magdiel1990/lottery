@@ -53,15 +53,28 @@
             <form action="" method="POST">          
                 <label for="numbers" class="form-label">Ingresa la jugada</label>                
                 <?php
-                    echo add_numbers_input($balls, $top);
+                    $html = '<div class="d-flex flex-row justify-content-center flex-wrap">';
+                
+                    for($i = 0; $i < $balls; $i++) {
+                        $html .= '<input name="numbers[]" class="form-control m-2 px-2" style="max-width:3rem;" type="number" id="numbers" required min="1" max="'. $top .'">';
+                    }
+                    
+                    $html .= '</div>';
+            
+                   echo $html;
                 ?>
                 <input class="btn btn-primary m-2" type="submit" value="Probar">
             </form>
         </div>
         <?php
+        //Si se han enviado los números
             if(isset($_POST["numbers"])){
-                //Se ordenan los números
-                $numbers = sort($_POST["numbers"]);
+                //Se convierten los números a enteros
+                $numbers = $_POST["numbers"];
+
+                for($i = 0; $i < count($numbers); $i++) {
+                    $numbers[$i] = (int) $numbers[$i];
+                }
 
                 //Se prueba el rango
                 $case = new RangeClass($numbers, $conn);
@@ -90,16 +103,20 @@
                     $html = '<div class="mt-3">';
                     $html .= '<h4 class = "text-center text-success">La jugada es probable</h4>';
                     $html .= '</div>';
+                    echo $html;
                 } else {
                     $html = '<div class="mt-3">';
                     $html .= '<h4 class = "text-center text-danger">La jugada no es probable</h4>';
                     $html .= '</div>';
+                    echo $html;
                 }
             }    
         ?>
     </div>
 </main>
 <?php
+//Se cierra la conexión
     $conn -> close();
+    //Footer
     require ("partials/footer.php")
 ?>
