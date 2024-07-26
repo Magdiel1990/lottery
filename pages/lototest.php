@@ -34,17 +34,6 @@
     require "partials/nav.php";  
 ?>
 <main class="container p-4">
-    <?php
-        if(isset($_SESSION ["message"])){
-            $html = '<div class="mt-3">';
-            $html .= '<h4 class = "text-center text-'. $_SESSION ["message-alert"] .'">' . $_SESSION ["message"] . '</h4>';
-            $html .= '</div>';
-
-            echo $html;
-            
-            unset($_SESSION ["message"], $_SESSION ["message-alert"]);
-        }
-    ?>  
     <div class="row justify-content-center text-center mt-4"> 
         <div class="mb-3">
             <a href="<?php echo root . 'loto/agregar';?>" class="btn btn-outline-info">Agregar</a>
@@ -53,6 +42,8 @@
             <form action="" method="POST">          
                 <label for="numbers" class="form-label">Ingresa la jugada</label>                
                 <?php
+                //Si no se han ingresado los números
+                if (!isset($_SESSION ["numbers"])) {
                     $html = '<div class="d-flex flex-row justify-content-center flex-wrap">';
                 
                     for($i = 0; $i < $balls; $i++) {
@@ -62,65 +53,83 @@
                     $html .= '</div>';
             
                    echo $html;
+                //Se muestran los números ingresados
+                } else {
+                    $html = '<div class="d-flex flex-row justify-content-center flex-wrap">';
+                
+                    for($i = 0; $i < $balls; $i++) {
+                        $html .= '<input name="numbers[]" value="' . $_SESSION ["numbers"][$i] . '" class="form-control m-2 px-2" style="max-width:3rem;" type="number" id="numbers" required min="1" max="'. $top .'">';                    
+                    }
+
+                    //Se eliminan los números de la sesión
+                    unset($_SESSION ["numbers"]);
+                    
+                    $html .= '</div>';
+            
+                    echo $html;
+                } 
                 ?>
                 <input class="btn btn-primary m-2" type="submit" value="Probar">
             </form>
         </div>
         <?php
         //Si se han enviado los números
-            if(isset($_POST["numbers"])){
-                //Se recibe la jugada
-                $numbers = $_POST["numbers"];
+        if(isset($_POST["numbers"])){
+            //Se recibe la jugada
+            $numbers = $_POST["numbers"];   
+            
+            //Se convierten los números a enteros
+            for($i = 0; $i < count($numbers); $i++) {
+                $numbers[$i] = (int) $numbers[$i];
+            }             
+
+            //Se guardan los números en la sesión
+            $_SESSION ["numbers"] = $numbers;
+
+            //Se verifica que no se repitan los números
+            if(count(array_unique($numbers, SORT_NUMERIC)) < $balls) {
+                $html = '<div class="mt-3">';
+                $html .= '<h4 class = "text-center text-danger">No se pueden repetir los números</h4>';
+                $html .= '</div>';
+                echo $html;                    
+            } else {                   
+                //Se prueba el rango
+                $case = new RangeClass($numbers, $conn);
+                $test = $case -> testRange();
+
+                //Se excluyen las jugadas anteriores
+                $case = new PreviousPlaysOut ($test, $conn, $balls, $numbers);
+                $test = $case -> lastNumbersExceptions();
+
+                //Se prueba la suma total
+                $case = new TotalSum($test, $conn, $numbers);
+                $test = $case -> testTotalSum();
+
+                //Se prueba el promedio
+                $case = new Average($test, $conn, $numbers, $balls);
+                $test = $case -> averagePastGames();
+
+                //Se prueba de desviación estándar
+                $case = new StandardDeviation($test, $numbers, $balls, $conn);
+                $test = $case -> StdDev();     
                 
-                //Se verifica que no se repitan los números
-                if(count(array_unique($numbers, SORT_STRING)) < $balls) {
+                //Se prueba el producto total
+                $case = new TotalProduct($test, $numbers, $balls, $conn);
+                $test = $case -> testTotalProduct ();
+
+                if($test){
                     $html = '<div class="mt-3">';
-                    $html .= '<h4 class = "text-center text-danger">No se pueden repetir los números</h4>';
+                    $html .= '<h4 class = "text-center text-success">La jugada es probable</h4>';
                     $html .= '</div>';
-                    echo $html;                    
+                    echo $html;
                 } else {
-                    //Se convierten los números a enteros
-                    for($i = 0; $i < count($numbers); $i++) {
-                        $numbers[$i] = (int) $numbers[$i];
-                    }             
-
-                    //Se prueba el rango
-                    $case = new RangeClass($numbers, $conn);
-                    $test = $case -> testRange();
-
-                    //Se excluyen las jugadas anteriores
-                    $case = new PreviousPlaysOut ($test, $conn, $balls, $numbers);
-                    $test = $case -> lastNumbersExceptions();
-
-                    //Se prueba la suma total
-                    $case = new TotalSum($test, $conn, $numbers);
-                    $test = $case -> testTotalSum();
-
-                    //Se prueba el promedio
-                    $case = new Average($test, $conn, $numbers, $balls);
-                    $test = $case -> averagePastGames();
-
-                    //Se prueba de desviación estándar
-                    $case = new StandardDeviation($test, $numbers, $balls, $conn);
-                    $test = $case -> StdDev();     
-                    
-                    //Se prueba el producto total
-                    $case = new TotalProduct($test, $numbers, $balls, $conn);
-                    $test = $case -> testTotalProduct ();
-
-                    if($test){
-                        $html = '<div class="mt-3">';
-                        $html .= '<h4 class = "text-center text-success">La jugada es probable</h4>';
-                        $html .= '</div>';
-                        echo $html;
-                    } else {
-                        $html = '<div class="mt-3">';
-                        $html .= '<h4 class = "text-center text-danger">La jugada no es probable</h4>';
-                        $html .= '</div>';
-                        echo $html;
-                    }
+                    $html = '<div class="mt-3">';
+                    $html .= '<h4 class = "text-center text-danger">La jugada no es probable</h4>';
+                    $html .= '</div>';
+                    echo $html;
                 }
-            }    
+            }
+        }    
         ?>
     </div>
 </main>
