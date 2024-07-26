@@ -1,18 +1,14 @@
 <?php
-//Se requiere el archivo config.php para acceder a las variables globales
-require "classes/Database.Class.php";
-$conn = DatabaseClassLoto::dbConnection();
-
-//Special Variables
-$top = 40;
-$balls = 6;
-/*****************/
-
 //Se requiere el archivo head.php para mostrar los estilos de bootstrap
 require "partials/head.php";
 
 //Se requiere el archivo nav.php para mostrar la barra de navegación
 require "partials/nav.php";
+
+//Special Variables
+$top = 40;
+$balls = 6;
+/*****************/
 
 if(isset($_POST["numbers"])){
     $numbers = $_POST["numbers"];

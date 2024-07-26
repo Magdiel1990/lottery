@@ -1,9 +1,11 @@
 <?php
+//Include the head
 include "partials/head.php";
+//Include the nav
 include "partials/nav.php";
-require_once ("classes/Database.Class.php");
+
 require_once ("classes/Statistic.Class.php");
-$conn = DatabaseClass::dbConnection();
+
 $lotopool = new Statistic ();
 ?>
 

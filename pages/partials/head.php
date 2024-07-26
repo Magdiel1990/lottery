@@ -1,5 +1,10 @@
 <?php
-    session_start();
+//Initiate the session
+session_start();
+
+//Include the database
+require "classes/Database.Class.php";
+$conn = DatabaseClassLoto::dbConnection();
 ?>
 <!DOCTYPE html>
 <html lang="es">

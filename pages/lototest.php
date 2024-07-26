@@ -1,8 +1,10 @@
 
 <?php
-    //Conexión a la base de datos
-    require "classes/Database.Class.php";
-    $conn = DatabaseClassLoto::dbConnection();
+    //Head
+    require "partials/head.php";
+    
+    //Nav
+    require "partials/nav.php";   
 
     //Clase para probar el rango
     require "classes/RangeTest.Class.php";
@@ -25,13 +27,7 @@
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
-    /*****************/
-
-    //Head
-    require "partials/head.php";
-    
-    //Nav
-    require "partials/nav.php";  
+    /*****************/    
 ?>
 <main class="container p-4">
     <div class="row justify-content-center text-center mt-4"> 
