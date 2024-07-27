@@ -65,15 +65,15 @@
             //Se convierten los números a enteros
             for($i = 0; $i < count($numbers); $i++) {
                 $numbers[$i] = (int) $numbers[$i];
-            }         
+            }    
+            
+            //Se guardan los números en la sesión
+            $_SESSION ["numbers"] = $numbers;
 
             sort($numbers); //Se ordenan los números
             
             //Se eliminan los números de la sesión
-            unset($_SESSION["numbers"]);            
-
-            //Se guardan los números en la sesión
-            $_SESSION ["numbers"] = $numbers;
+            unset($_SESSION["numbers"]);             
 
             //Se verifica que no se repitan los números
             if(count(array_unique($numbers, SORT_NUMERIC)) < $balls) {
@@ -117,6 +117,22 @@
                     $html .= '</div>';
                     echo $html;
                 }
+
+            /******************Parámetros de la jugada********************/
+
+            
+
+
+
+            
+            
+            
+
+
+
+
+
+
             }
         }    
         ?>

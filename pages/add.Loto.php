@@ -105,7 +105,7 @@ $conn -> close();
                     for($i=1; $i<=$balls; $i++) {
                         $html .= '<th scope="col">'. $i .'º</th>';
                     }
-                    $html .= '<th class="text-center" scope="col">Acción</th>';
+                    $html .= '<th class="text-center" scope="col">Acciones</th>';
                     $html .= '</tr>';
             
                     echo $html;
@@ -131,7 +131,8 @@ $conn -> close();
                         while($rowNumbers =  $resultNumbers -> fetch_assoc()) {                        
                             $html .= "<td>" . $rowNumbers ["number"] . "</td>";                      
                         }
-                        $html .= '<td><a class="text-danger" href="' . root .'delete?date= ' . $dates[$i] . '">Eliminar</a></td>';      
+                        $html .= '<td><a class="text-danger" href="' . root .'delete?date= ' . $dates[$i] . '">Eliminar</a> ';   
+                        $html .= '<a class="text-info" href="' . root .'edit?date= ' . $dates[$i] . '">Editar</a></td>';   
                         $html .= '</tr>';            
                     }
                     echo $html;                           

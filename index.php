@@ -16,12 +16,14 @@ if($param == "") {
         root => "controllers/index.controller.php", 
         root . "estadistica" => "controllers/statistic.controller.php",
         root . "loto/agregar" => "controllers/Loto.agregar.controller.php",
-        root . "loto/test" => "controllers/lototest.controller.php"        
+        root . "loto/test" => "controllers/lototest.controller.php",
+        root . "update" => "controllers/update.controller.php"        
     ];
 } else {
     $routes = [
         root . "delete" => "controllers/delete.controller.php",
-        root . "reset" => "controllers/reset.controller.php"
+        root . "reset" => "controllers/reset.controller.php",
+        root . "edit" => "controllers/edit.controller.php"
     ];
 }
 
