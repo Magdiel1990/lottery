@@ -66,10 +66,11 @@
             for($i = 0; $i < count($numbers); $i++) {
                 $numbers[$i] = (int) $numbers[$i];
             }         
+
+            sort($numbers); //Se ordenan los números
             
             //Se eliminan los números de la sesión
-            unset($_SESSION["numbers"]);
-            
+            unset($_SESSION["numbers"]);            
 
             //Se guardan los números en la sesión
             $_SESSION ["numbers"] = $numbers;
