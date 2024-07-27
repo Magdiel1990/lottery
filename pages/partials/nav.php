@@ -11,10 +11,11 @@
       <li class="nav-item">
         <a class="nav-link" href="<?php echo root . 'estadistica'; ?>">Estadísticas</a>
       </li>
-
+<!--
       <li class="nav-item">
-        <a class="nav-link" id="reset" href="<?php echo root . 'reset?reset=true'; ?>">Reset</a>
+        <a class="nav-link" id="reset" href="<?php //echo root . 'reset?reset=true'; ?>">Reset</a>
       </li>
+-->
     </ul>
   </div>
 </nav>
