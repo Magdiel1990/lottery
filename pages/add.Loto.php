@@ -10,6 +10,9 @@ $top = 40;
 $balls = 6;
 /*****************/
 
+//Clase para la interfaz numerica
+require "classes/Interface.Class.php";
+
 if(isset($_POST["numbers"])){
     $numbers = $_POST["numbers"];
     $date = $_POST["date"];
@@ -65,20 +68,12 @@ $conn -> close();
             </div>
             <div class="col-auto">
                 <form action="" method="POST">
-                    <label for="numbers" class="form-label">Agregar números</label>
-                   
+                    <label for="numbers" class="form-label">Agregar números</label>                   
                     <?php
-                    $html = '<div class="d-flex flex-row justify-content-center flex-wrap">';
-                    //Se crean los inputs para los números
-                    for($i = 0; $i < $balls; $i++) {                        
-                        $html .= '<input name="numbers[]" class="form-control m-2 px-2" style="max-width:3rem;" type="number" id="numbers" required min="1" max="'. $top .'">';
-                    }          
-
-                    $html .= '</div>';
-
-                    echo $html;
-                    ?>
-                                
+                        //Se crea la interfaz numérica
+                        $interface = new NumbersEntriesInterface($balls, $top);
+                        $interface -> createInputs();
+                    ?>                                
                     <div class="row justify-content-center">
                         <div class="col-auto">
                             <input class="form-control m-2" type="date" name="date" required>

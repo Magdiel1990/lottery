@@ -4,7 +4,10 @@
     require "partials/head.php";
     
     //Nav
-    require "partials/nav.php";   
+    require "partials/nav.php";
+    
+    //Clase para la interfaz numerica
+    require "classes/Interface.Class.php";
 
     //Clase para probar el rango
     require "classes/RangeTest.Class.php";
@@ -38,20 +41,9 @@
             <form action="" method="POST">          
                 <label for="numbers" class="form-label">Ingresa la jugada</label>                
                 <?php
-                $html = '<div class="d-flex flex-row justify-content-center flex-wrap">';
-                //Se crean los inputs para los números
-                for($i = 0; $i < $balls; $i++) {
-                    //Se verifica si ya se han enviado los números
-                    $value = isset($_SESSION["numbers"][$i]) ? $_SESSION["numbers"][$i] : '';
-                    $html .= '<input name="numbers[]" value="' . $value . '" class="form-control m-2 px-2" style="max-width:3rem;" type="number" id="numbers" required min="1" max="'. $top .'">';
-                }          
-                
-                $html .= '</div>';
-        
-                echo $html;
-
-                 //Se eliminan los números de la sesión
-                 unset($_SESSION["numbers"]);
+                //Se crea la interfaz numérica
+                $interface = new NumbersEntriesInterface($balls, $top);
+                $interface -> createInputs();
                 ?>
                 <input class="btn btn-primary m-2" type="submit" value="Probar">
             </form>
@@ -71,9 +63,6 @@
             $_SESSION ["numbers"] = $numbers;
 
             sort($numbers); //Se ordenan los números
-            
-            //Se eliminan los números de la sesión
-            unset($_SESSION["numbers"]);             
 
             //Se verifica que no se repitan los números
             if(count(array_unique($numbers, SORT_NUMERIC)) < $balls) {
@@ -124,7 +113,7 @@
 
 
 
-            
+
             
             
 
