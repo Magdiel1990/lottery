@@ -9,6 +9,9 @@
     //Clase para la interfaz numerica
     require "classes/Interface.Class.php";
 
+    //Clase para las inserciones numéricas en el storages
+    require "classes/StoredNumbersQuery.Class.php";
+
     //Clase para probar el rango
     require "classes/RangeTest.Class.php";
 
@@ -48,6 +51,30 @@
                 <input class="btn btn-primary m-2" type="submit" value="Probar">
             </form>
         </div>
+        <div>
+        <?php
+        $result = $conn -> query("SELECT id, numbers FROM `stored`;"); //Se seleccionan los números insertados
+                            
+        $html = '';      
+
+        while($row = $result -> fetch_assoc()) {
+            $numbers = explode(" ", $row["numbers"]); //Se convierten los números en un array
+
+            $html .= '<div class="card my-2 mx-md-2" style="min-width: 12rem;">';
+            $html .= '<div class="card-body">';
+            for ($i = 0; $i < count($numbers); $i++) {
+                $html .= '<span class="mx-1">' . $numbers[$i] . '</span>';
+            }                        
+            $html .= '<a href="' . root . 'delete?storedId=' . $row ['id']. '" class="text-danger mx-2">Eliminar</a>';
+            $html .= '';
+            $html .= '</div>';
+            $html .='</div>';
+        }   
+
+        echo $html; //Se imprimen los números insertados
+        ?>
+        </div>
+
         <?php
         //Si se han enviado los números
         if(isset($_POST["numbers"])){
@@ -68,57 +95,69 @@
                 $html .= '</div>';
                 echo $html;                    
             } else {  
-                //Se prueba el rango
-                $case = new RangeClass($numbers, $conn);
-                $test = $case -> testRange();
+                //Se insertan los datos de la jugada de manera provisional
+                $stored = new StdInsertQuery ($numbers, $conn);
+                $stored -> insertQueryConfirm (); //Se insertan los números en la base de datos
 
-                //Se excluyen las jugadas anteriores
-                $case = new PreviousPlaysOut ($test, $conn, $balls, $numbers);
-                $test = $case -> lastNumbersExceptions();           
+                //Si se insertaron los números de manera provisional
+                if($stored) { 
+                    //Se prueba el rango
+                    $case = new RangeClass($numbers, $conn);
+                    $test = $case -> testRange();
 
-                //Se prueba la suma total
-                $case = new TotalSum($test, $conn, $numbers);
-                $test = $case -> testTotalSum();               
+                    //Se excluyen las jugadas anteriores
+                    $case = new PreviousPlaysOut ($test, $conn, $balls, $numbers);
+                    $test = $case -> lastNumbersExceptions();           
 
-                //Se prueba el promedio
-                $case = new Average($test, $conn, $numbers, $balls);
-                $test = $case -> averagePastGames();             
+                    //Se prueba la suma total
+                    $case = new TotalSum($test, $conn, $numbers);
+                    $test = $case -> testTotalSum();               
 
-                //Se prueba de desviación estándar
-                $case = new StandardDeviation($test, $numbers, $balls, $conn);
-                $test = $case -> StdDev();               
-                
-                //Se prueba el producto total
-                $case = new TotalProduct($test, $numbers, $balls, $conn);
-                $test = $case -> testTotalProduct ();
+                    //Se prueba el promedio
+                    $case = new Average($test, $conn, $numbers, $balls);
+                    $test = $case -> averagePastGames();             
 
-                if($test){
-                    $html = '<div class="mt-3">';
-                    $html .= '<h4 class = "text-center text-success">La jugada es probable</h4>';
-                    $html .= '</div>';
-                    echo $html;
-                } else {
-                    $html = '<div class="mt-3">';
-                    $html .= '<h4 class = "text-center text-danger">La jugada no es probable</h4>';
-                    $html .= '</div>';
-                    echo $html;
+                    //Se prueba de desviación estándar
+                    $case = new StandardDeviation($test, $numbers, $balls, $conn);
+                    $test = $case -> StdDev();               
+                    
+                    //Se prueba el producto total
+                    $case = new TotalProduct($test, $numbers, $balls, $conn);
+                    $test = $case -> testTotalProduct ();
+
+                    if($test){
+                        $html = '<div class="mt-3">';
+                        $html .= '<h4 class = "text-center text-success">La jugada es probable</h4>';
+                        $html .= '</div>';
+                        echo $html;
+
+                    } else {
+                        $html = '<div class="mt-3">';
+                        $html .= '<h4 class = "text-center text-danger">La jugada no es probable</h4>';
+                        $html .= '</div>';
+                        echo $html;
+                    }
+
+                /******************Parámetros de la jugada********************/
+
+                $html = '<div class="mt-3">';
+                $html .= '</div>';
+                echo $html;
+
+
+            
+
+
+
+
+            
+            
+
+
+
+
+
                 }
-
-            /******************Parámetros de la jugada********************/
-
-            
-
-
-
-
-            
-            
-
-
-
-
-
-
             }
         }    
         ?>
