@@ -55,10 +55,25 @@
         <?php
         $result = $conn -> query("SELECT id, numbers FROM `stored`;"); //Se seleccionan los números insertados
                             
-        $html = '';      
+        $html = ''; 
 
         while($row = $result -> fetch_assoc()) {
             $numbers = explode(" ", $row["numbers"]); //Se convierten los números en un array
+
+             //Se convierten los números a enteros
+            for($i = 0; $i < count($numbers); $i++) {
+                $numbers[$i] = (int) $numbers[$i];
+            }    
+
+            //Se calcula el promedio de los números insertados
+            $averageClass = new Average (true, $conn, $numbers, $balls); 
+            //Se obtiene el promedio
+            $average = $averageClass -> average($numbers);
+            //Se obtiene el rango
+            $rangeAvg = $averageClass -> maxMinRange();
+
+
+            
 
             $html .= '<div class="card my-2 mx-md-2" style="min-width: 12rem;">';
             $html .= '<div class="card-body">';
@@ -66,7 +81,9 @@
                 $html .= '<span class="mx-1">' . $numbers[$i] . '</span>';
             }                        
             $html .= '<a href="' . root . 'delete?storedId=' . $row ['id']. '" class="text-danger mx-2">Eliminar</a>';
-            $html .= '';
+            $html .= '<div class="row my-2">';
+            $html .= '<div class="col">Promedio (' . round($rangeAvg[0], 2) . ', ' . round ($rangeAvg[1], 2) . ') <br>' . round($average, 2) . '</div>';
+            $html .= '</div>';
             $html .= '</div>';
             $html .='</div>';
         }   

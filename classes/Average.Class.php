@@ -1,9 +1,9 @@
 <?php
 class Average {
-    public $conn;
-    public $test;
-    public $numbers;
-    public $balls;
+    private $conn;
+    private $test;
+    private $numbers;
+    private $balls;
 
     public function __construct($test, $conn, $numbers, $balls) {
         $this -> test = $test;
@@ -34,7 +34,7 @@ class Average {
         return $averageTotalArray;         
     }    
 
-    public function averagePastGames() {
+    public function maxMinRange () {
         //Se ordenan los promedios
         $averageTotalArray = $this -> totalAverage();
         $average = $this -> average($this -> numbers);
@@ -42,6 +42,14 @@ class Average {
         //Se obtienen los valores mínimo y máximo
         $minAvg = min($averageTotalArray);
         $maxAvg = max($averageTotalArray);
+
+        return [$minAvg, $maxAvg];
+    }
+
+    public function averagePastGames() {
+        //Se obtienen los valores mínimo y máximo
+        $minAvg = $this -> maxMinRange()[0];
+        $maxAvg = $this -> maxMinRange()[1];
 
         //Si no se ha pasado la prueba anterior
         if($this -> test == false) {
