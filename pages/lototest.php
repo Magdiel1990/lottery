@@ -59,9 +59,6 @@
                 $numbers[$i] = (int) $numbers[$i];
             }    
             
-            //Se guardan los números en la sesión
-            $_SESSION ["numbers"] = $numbers;
-
             sort($numbers); //Se ordenan los números
 
             //Se verifica que no se repitan los números
