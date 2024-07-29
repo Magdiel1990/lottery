@@ -16,7 +16,7 @@ class Average {
         $count = count($array);
 
         $sum = new TotalSum($this -> test, $this -> conn, $array);        
-        $sum = $sum -> sumArray ();
+        $sum = $sum -> sumArray ($array);
     
         return $media = $sum / $count;    
     }

@@ -1,8 +1,8 @@
 <?php
 Class TotalSum {
-    public $conn;
-    public $test;
-    public $numbers;
+    private $conn;
+    private $test;
+    private $numbers;
 
     public function __construct($test, $conn, $numbers) {
         $this -> test = $test;
@@ -24,8 +24,8 @@ Class TotalSum {
         return [min($sums), max($sums)];        
     }
     //Suma de los elementos de una jugada
-    public function sumArray() {
-        $count = count($this -> numbers);
+    public function sumArray($array) {
+        $count = count($array);
 
         if($count == 0) {
             return 0;
@@ -33,7 +33,7 @@ Class TotalSum {
 
         $sum = 0;
         for($i = 0; $i < $count; $i++) {
-            $sum += $this -> numbers [$i];
+            $sum += $array[$i];
         }
 
         return $sum;
@@ -43,12 +43,14 @@ Class TotalSum {
         //Rango de las sumas
         $sumsRange = $this -> sumsArrayNumbers();
         //Suma de la jugada actual
-        $sum = $this -> sumArray();
+        $sum = $this -> sumArray($this -> numbers);
         
+        //Si no está en el rango anterior
         if($this -> test == false) {
             return false;
         } 
 
+        //Si la suma no está en el rango
         if($sum < $sumsRange [0] || $sum > $sumsRange [1]) {
             return false;
         } else {

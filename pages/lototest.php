@@ -80,16 +80,21 @@
             //Se obtiene el rango de las desviaciones estándares totales
             $stdDevTotal = $stdDev -> StdDevRange();
 
+
             //Se calcula el producto de los números insertados
-            $productDev = new TotalProduct(true, $numbers, $balls, $conn);
-            $productDevArray = $productDev -> product( $numbers);
+            $product = new TotalProduct(true, $numbers, $balls, $conn);
+            $productArray = $product -> product( $numbers);
 
             //Se obtiene el rango de los productos
-            $productDevTotal = $productDev-> rangeProducts(); 
+            $productTotal = $product-> rangeProducts(); 
 
-            
 
-            
+            //Se calcula la suma total de los números insertados
+            $sum = new TotalSum(true, $conn, $numbers);
+            $sumArray = $sum -> sumArray($numbers);
+
+            //Se obtiene el rango de las sumas
+            $sumTotal = $sum -> sumsArrayNumbers();           
 
             $html .= '<div class="card my-2 mx-md-2" style="min-width: 12rem;">';
             $html .= '<div class="card-body">';
@@ -100,8 +105,8 @@
             $html .= '<div class="row my-2">';
             $html .= '<div class="col"><b>Promedio</b> (' . round($rangeAvg[0], 2) . ', ' . round ($rangeAvg[1], 2) . ') <br>' . round($average, 2) . '</div>';
             $html .= '<div class="col"><b>Desv. Est.</b> (' . round($stdDevTotal[0], 2) . ', ' . round ($stdDevTotal[1], 2) . ') <br>' . round($stdDevArray, 2) . '</div>';
-            $html .= '<div class="col"><b>Producto</b> (' . round($productDevTotal[0], 2) . ', ' . round ($productDevTotal[1], 2) . ') <br>' . round($productDevArray, 2) . '</div>';
-            $html .= '<div class="col"><b>Suma</b> (' . round($productDevTotal[0], 2) . ', ' . round ($productDevTotal[1], 2) . ') <br>' . round($productDevArray, 2) . '</div>';
+            $html .= '<div class="col"><b>Producto</b> (' . round($productTotal[0], 2) . ', ' . round ($productTotal[1], 2) . ') <br>' . round($productArray, 2) . '</div>';
+            $html .= '<div class="col"><b>Suma</b> (' . round($sumTotal[0], 2) . ', ' . round ($sumTotal[1], 2) . ') <br>' . round($sumArray, 2) . '</div>';
             $html .= '</div>';
             $html .= '</div>';
             $html .='</div>';

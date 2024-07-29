@@ -1,10 +1,10 @@
 <?php
 //RANGO DE DESVIACION ESTANDAR    
 class StandardDeviation {
-    public $test;
-    public $numbers;
-    public $balls;
-    public $conn;
+    private $test;
+    private $numbers;
+    private $balls;
+    private $conn;
 
     public function __construct($test, $numbers, $balls, $conn) {
         $this -> test = $test;
