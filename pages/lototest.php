@@ -80,6 +80,13 @@
             //Se obtiene el rango de las desviaciones estándares totales
             $stdDevTotal = $stdDev -> StdDevRange();
 
+            //Se calcula el producto de los números insertados
+            $productDev = new TotalProduct(true, $numbers, $balls, $conn);
+            $productDevArray = $productDev -> product( $numbers);
+
+            //Se obtiene el rango de los productos
+            $productDevTotal = $productDev-> rangeProducts(); 
+
             
 
             
@@ -93,6 +100,8 @@
             $html .= '<div class="row my-2">';
             $html .= '<div class="col"><b>Promedio</b> (' . round($rangeAvg[0], 2) . ', ' . round ($rangeAvg[1], 2) . ') <br>' . round($average, 2) . '</div>';
             $html .= '<div class="col"><b>Desv. Est.</b> (' . round($stdDevTotal[0], 2) . ', ' . round ($stdDevTotal[1], 2) . ') <br>' . round($stdDevArray, 2) . '</div>';
+            $html .= '<div class="col"><b>Producto</b> (' . round($productDevTotal[0], 2) . ', ' . round ($productDevTotal[1], 2) . ') <br>' . round($productDevArray, 2) . '</div>';
+            $html .= '<div class="col"><b>Suma</b> (' . round($productDevTotal[0], 2) . ', ' . round ($productDevTotal[1], 2) . ') <br>' . round($productDevArray, 2) . '</div>';
             $html .= '</div>';
             $html .= '</div>';
             $html .='</div>';

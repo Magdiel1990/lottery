@@ -2,10 +2,10 @@
 <?php
 //PRODUCTO DE TODOS LOS NUMEROS
 class TotalProduct {
-    public $test;
-    public $numbers;
-    public $balls;
-    public $conn;
+    private $test;
+    private $numbers;
+    private $balls;
+    private $conn;
 
     public function __construct($test, $numbers, $balls, $conn) {
         $this -> test = $test;
@@ -34,7 +34,7 @@ class TotalProduct {
     }
 
     //Rango de los productos
-    private function rangeProducts() {   
+    public function rangeProducts() {   
         $minProduct = min($this -> productArray());
         $maxProduct = max($this -> productArray());
 
