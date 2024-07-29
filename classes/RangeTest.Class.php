@@ -4,8 +4,8 @@
 
 class RangeClass {
 //1.SE ESTABLECE EL RANGO
-    public $data;
-    public $conn;
+    private $data;
+    private $conn;
 
     public function __construct($data, $conn) {
         $this -> data = $data;

@@ -45,23 +45,29 @@ class StandardDeviation {
 
         return $standardDevArray;
     }
-    
-    public function StdDev() {
+
+    public function StdDevRange() {
         //Arreglo de las desviaciones estándares
-        $totalStdDevArray = $this -> totalStdDev();
-        //Desviación estándar
-        $stdDev = $this -> standardDeviation($this -> numbers);
+        $totalStdDevArray = $this -> totalStdDev();        
 
         //Mínimo y máximo de las desviaciones estándares
         $minStdDev = min($totalStdDevArray);
         $maxStdDev = max($totalStdDevArray);
 
+        return [$minStdDev, $maxStdDev];
+    }
+    
+    public function StdDev() {
+        //Desviación estándar
+        $stdDev = $this -> standardDeviation($this -> numbers);
+
+        //Si no se ha pasado la prueba anterior
         if($this -> test == false) {
             return false;
         } 
         
         //Si la desviación estándar de la jugada actual está fuera del rango de las desviaciones estándares de las jugadas pasadas
-        if($stdDev < $minStdDev || $stdDev > $maxStdDev) {
+        if($stdDev < $this -> StdDevRange()[0] || $stdDev > $this -> StdDevRange()[1]) {
             return false;
         } else {
             return true;

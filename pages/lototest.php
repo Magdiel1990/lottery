@@ -73,6 +73,15 @@
             $rangeAvg = $averageClass -> maxMinRange();
 
 
+            //Se calcula la desviación estándar de la jugada
+            $stdDev = new StandardDeviation(true, $numbers, $balls, $conn);
+            $stdDevArray = $stdDev -> standardDeviation($numbers);
+
+            //Se obtiene el rango de las desviaciones estándares totales
+            $stdDevTotal = $stdDev -> StdDevRange();
+
+            
+
             
 
             $html .= '<div class="card my-2 mx-md-2" style="min-width: 12rem;">';
@@ -82,7 +91,8 @@
             }                        
             $html .= '<a href="' . root . 'delete?storedId=' . $row ['id']. '" class="text-danger mx-2">Eliminar</a>';
             $html .= '<div class="row my-2">';
-            $html .= '<div class="col">Promedio (' . round($rangeAvg[0], 2) . ', ' . round ($rangeAvg[1], 2) . ') <br>' . round($average, 2) . '</div>';
+            $html .= '<div class="col"><b>Promedio</b> (' . round($rangeAvg[0], 2) . ', ' . round ($rangeAvg[1], 2) . ') <br>' . round($average, 2) . '</div>';
+            $html .= '<div class="col"><b>Desv. Est.</b> (' . round($stdDevTotal[0], 2) . ', ' . round ($stdDevTotal[1], 2) . ') <br>' . round($stdDevArray, 2) . '</div>';
             $html .= '</div>';
             $html .= '</div>';
             $html .='</div>';

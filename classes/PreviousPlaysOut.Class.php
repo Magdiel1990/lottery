@@ -1,10 +1,10 @@
 <?php
 // EXCLUIR LAS JUGADAS ANTERIORES
 class PreviousPlaysOut {
-    public $numbers;
-    public $test;
-    public $conn;
-    public $balls;
+    private $numbers;
+    private $test;
+    private $conn;
+    private $balls;
 
     public function __construct($test, $conn, $balls, $numbers) {
         $this -> test = $test;
