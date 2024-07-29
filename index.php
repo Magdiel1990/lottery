@@ -30,6 +30,8 @@ if($param == "") {
 //If the uri exists the controllers is called
 if(array_key_exists($uri, $routes)) {
     require $routes[$uri];
+} else if ($uri == root . "loto") {
+    require "controllers/index.controller.php";
 } else {
     http_response_code(404);
     require "pages/404.php";
