@@ -71,30 +71,36 @@
             $average = $averageClass -> average($numbers);
             //Se obtiene el rango
             $rangeAvg = $averageClass -> maxMinRange();
+            //Se obtiene el color del texto
+            $textcoloraverage = ($average < $rangeAvg[0] || $average > $rangeAvg[1] ? "danger" : "success");
 
 
             //Se calcula la desviación estándar de la jugada
             $stdDev = new StandardDeviation(true, $numbers, $balls, $conn);
             $stdDevArray = $stdDev -> standardDeviation($numbers);
-
             //Se obtiene el rango de las desviaciones estándares totales
             $stdDevTotal = $stdDev -> StdDevRange();
+            //Se obtiene el color del texto
+            $textcolordev = ($stdDevArray < $stdDevTotal[0] || $stdDevArray > $stdDevTotal[1] ? "danger" : "success");
 
 
             //Se calcula el producto de los números insertados
             $product = new TotalProduct(true, $numbers, $balls, $conn);
             $productArray = $product -> product( $numbers);
-
             //Se obtiene el rango de los productos
             $productTotal = $product-> rangeProducts(); 
+            //Se obtiene el color del texto
+            $textcolorpro = ($productArray < $productTotal[0] || $productArray > $productTotal[1] ? "danger" : "success");
 
 
             //Se calcula la suma total de los números insertados
             $sum = new TotalSum(true, $conn, $numbers);
             $sumArray = $sum -> sumArray($numbers);
-
             //Se obtiene el rango de las sumas
-            $sumTotal = $sum -> sumsArrayNumbers();           
+            $sumTotal = $sum -> sumsArrayNumbers();     
+            //Se obtiene el color del texto
+            $textcolorsum = ($sumArray < $sumTotal[0] || $sumArray > $sumTotal[1] ? "danger" : "success");
+               
 
             $html .= '<div class="card my-2 mx-md-2" style="min-width: 12rem;">';
             $html .= '<div class="card-body">';
@@ -102,11 +108,11 @@
                 $html .= '<span class="mx-1">' . $numbers[$i] . '</span>';
             }                        
             $html .= '<a href="' . root . 'delete?storedId=' . $row ['id']. '" class="text-danger mx-2">Eliminar</a>';
-            $html .= '<div class="row my-2">';
-            $html .= '<div class="col"><b>Promedio</b> (' . round($rangeAvg[0], 2) . ', ' . round ($rangeAvg[1], 2) . ') <br>' . round($average, 2) . '</div>';
-            $html .= '<div class="col"><b>Desv. Est.</b> (' . round($stdDevTotal[0], 2) . ', ' . round ($stdDevTotal[1], 2) . ') <br>' . round($stdDevArray, 2) . '</div>';
-            $html .= '<div class="col"><b>Producto</b> (' . round($productTotal[0], 2) . ', ' . round ($productTotal[1], 2) . ') <br>' . round($productArray, 2) . '</div>';
-            $html .= '<div class="col"><b>Suma</b> (' . round($sumTotal[0], 2) . ', ' . round ($sumTotal[1], 2) . ') <br>' . round($sumArray, 2) . '</div>';
+            $html .= '<div class="row my-4">';
+            $html .= '<div class="col-4 bg-warning border"><b>Promedio</b> (' . round($rangeAvg[0], 2) . ', ' . round ($rangeAvg[1], 2) . ') <br><p class="text-' .  $textcoloraverage .'">' . round($average, 2) . '</p></div>';
+            $html .= '<div class="col-4 bg-warning border"><b>Desv. Est.</b> (' . round($stdDevTotal[0], 2) . ', ' . round ($stdDevTotal[1], 2) . ') <br><p class="text-' .  $textcolordev .'">' . round($stdDevArray, 2) . '</div>';
+            $html .= '<div class="col-4 bg-warning border"><b>Producto</b> (' . round($productTotal[0], 2) . ', ' . round ($productTotal[1], 2) . ') <br><p class="text-' .  $textcolorpro .'">' . round($productArray, 2) . '</p></div>';
+            $html .= '<div class="col-4 bg-warning border"><b>Suma</b> (' . round($sumTotal[0], 2) . ', ' . round ($sumTotal[1], 2) . ') <br><p class="text-' .  $textcolorsum .'">' . round($sumArray, 2) . '</p></div>';
             $html .= '</div>';
             $html .= '</div>';
             $html .='</div>';
