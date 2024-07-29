@@ -41,13 +41,13 @@ if(isset($_GET["date"])) {
 if(isset($_GET['storedId'])){
     $id = $_GET['storedId'];
 
-    $stmt = $conn -> prepare("SELECT id FROM stored WHERE id = ?;");
-    $stmt->bind_param("i", $storedId);    
+    $stmt = $conn -> prepare("SELECT id FROM `stored` WHERE id = ?;");
+    $stmt->bind_param("i", $id);    
     $stmt -> execute();
     $result = $stmt -> get_result(); 
 
     if($result -> num_rows > 0) {
-        $resultDelete = $conn -> query("DELETE FROM stored WHERE id = '". $id ."';");
+        $resultDelete = $conn -> query("DELETE FROM `stored` WHERE id = '$id';");
 
         if($resultDelete) {
             $_SESSION ["message"] = "Jugada eliminada correctamente";
