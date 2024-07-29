@@ -36,8 +36,7 @@ class Average {
 
     public function maxMinRange () {
         //Se ordenan los promedios
-        $averageTotalArray = $this -> totalAverage();
-        $average = $this -> average($this -> numbers);
+        $averageTotalArray = $this -> totalAverage();       
 
         //Se obtienen los valores mínimo y máximo
         $minAvg = min($averageTotalArray);
@@ -47,6 +46,9 @@ class Average {
     }
 
     public function averagePastGames() {
+        //Se obtiene el promedio
+        $average = $this -> average($this -> numbers);
+
         //Se obtienen los valores mínimo y máximo
         $minAvg = $this -> maxMinRange()[0];
         $maxAvg = $this -> maxMinRange()[1];
