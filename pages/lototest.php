@@ -54,7 +54,7 @@
                 <input class="btn btn-primary m-2" type="submit" value="Probar">
             </form>
         </div>
-        <div>
+        <div class="overflow">
         <?php
         $result = $conn -> query("SELECT id, numbers FROM `stored`;"); //Se seleccionan los números insertados
                             
@@ -104,7 +104,6 @@
             //Se obtiene el color del texto
             $textcolorsum = ($sumArray < $sumTotal[0] || $sumArray > $sumTotal[1] ? "danger" : "success");
 
-
             //Se excluyen las jugadas anteriores
             $previous = new PreviousPlaysOut (true, $conn, $balls, $numbers);
             $previous = $previous -> lastNumbersExceptions();
@@ -129,6 +128,29 @@
             $html .= '<div class="col-4 bg-warning border"><b>Producto</b> (' . round($productTotal[0], 2) . ', ' . round ($productTotal[1], 2) . ') <br><p class="text-' .  $textcolorpro .'">' . round($productArray, 2) . '</p></div>';
             $html .= '<div class="col-4 bg-warning border"><b>Suma</b> (' . round($sumTotal[0], 2) . ', ' . round ($sumTotal[1], 2) . ') <br><p class="text-' .  $textcolorsum .'">' . round($sumArray, 2) . '</p></div>';
             $html .= '<div class="col-4 bg-warning border"><b>Anteriores</b><br><p class="text-' .  $previousPlays .'">' . $previousPlaysResult .  '</p></div>';
+
+            //Diferencia de las posiciones de las jugadas
+            $diff = new DiffClass(true , $conn, $balls, $numbers);
+
+            for ($i = 1; $i < $balls; $i++) {
+                for ($j = $i + 1; $j <= $balls; $j++) {
+                    //Se obtienen las diferencias de las posiciones
+                    $minDiff = $diff -> minMaxDiffRange ($i, $j) [0];
+                    $maxDiff = $diff -> minMaxDiffRange ($i, $j) [1];
+                    //Se obtiene la diferencia de las posiciones
+                    $diffArray = $diff -> diffArray($numbers, $i, $j);
+
+                    //Se obtiene el color del texto
+                    if($diffArray < $minDiff || $diffArray > $maxDiff) {
+                        $textcolordiff = 'danger';
+                    } else {
+                        $textcolordiff = 'success';
+                    }
+
+                    $html .= '<div class="col-4 bg-warning border"><b>Dif. ('. $i . '° y ' . $j .'°) (' . $minDiff . ', ' . $maxDiff . ')</b><br><p class="text-' . $textcolordiff . '">' . $diffArray .  '</p></div>';
+                }
+            }            
+                   
             $html .= '</div>';
             $html .= '</div>';
             $html .='</div>';
@@ -210,20 +232,6 @@
                 $html = '<div class="mt-3">';
                 $html .= '</div>';
                 echo $html;
-
-
-            
-
-
-
-
-            
-            
-
-
-
-
-
                 }
             }
         }    
