@@ -100,7 +100,19 @@
             $sumTotal = $sum -> sumsArrayNumbers();     
             //Se obtiene el color del texto
             $textcolorsum = ($sumArray < $sumTotal[0] || $sumArray > $sumTotal[1] ? "danger" : "success");
-               
+
+
+            //Se excluyen las jugadas anteriores
+            $previous = new PreviousPlaysOut (true, $conn, $balls, $numbers);
+            $previous = $previous -> lastNumbersExceptions();
+            //Se obtiene el color del texto y el resultado
+            if($previous == false) {    
+                $previousPlaysResult = 'Se ha jugado';
+                $previousPlays = 'danger';               
+            } else {
+                $previousPlaysResult = 'No se ha jugado';
+                $previousPlays = 'success';               
+            }               
 
             $html .= '<div class="card my-2 mx-md-2" style="min-width: 12rem;">';
             $html .= '<div class="card-body">';
@@ -113,6 +125,7 @@
             $html .= '<div class="col-4 bg-warning border"><b>Desv. Est.</b> (' . round($stdDevTotal[0], 2) . ', ' . round ($stdDevTotal[1], 2) . ') <br><p class="text-' .  $textcolordev .'">' . round($stdDevArray, 2) . '</div>';
             $html .= '<div class="col-4 bg-warning border"><b>Producto</b> (' . round($productTotal[0], 2) . ', ' . round ($productTotal[1], 2) . ') <br><p class="text-' .  $textcolorpro .'">' . round($productArray, 2) . '</p></div>';
             $html .= '<div class="col-4 bg-warning border"><b>Suma</b> (' . round($sumTotal[0], 2) . ', ' . round ($sumTotal[1], 2) . ') <br><p class="text-' .  $textcolorsum .'">' . round($sumArray, 2) . '</p></div>';
+            $html .= '<div class="col-4 bg-warning border"><b>Anteriores</b><br><p class="text-' .  $previousPlays .'">' . $previousPlaysResult .  '</p></div>';
             $html .= '</div>';
             $html .= '</div>';
             $html .='</div>';
