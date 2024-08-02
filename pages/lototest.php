@@ -33,6 +33,9 @@
     //Clase para la diferencia de las jugadas
     require "classes/Difference.Class.php";
 
+    //Clase para la suma de las posiciones de los números
+    require "classes/PartialSum.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
@@ -147,9 +150,31 @@
                         $textcolordiff = 'success';
                     }
 
-                    $html .= '<div class="col-4 bg-warning border"><b>Dif. ('. $i . '° y ' . $j .'°) (' . $minDiff . ', ' . $maxDiff . ')</b><br><p class="text-' . $textcolordiff . '">' . $diffArray .  '</p></div>';
+                    $html .= '<div class="col-4 bg-warning border"><b>Dif.</b> ('. $i . '° y ' . $j .'°) (' . $minDiff . ', ' . $maxDiff . ')<br><p class="text-' . $textcolordiff . '">' . $diffArray .  '</p></div>';
                 }
-            }            
+            }    
+            
+            //Suma de las posiciones de las jugadas
+            $sum = new PartialSumClass (true , $conn, $balls, $numbers);
+
+            for ($i = 1; $i < $balls; $i++) {
+                for ($j = $i + 1; $j <= $balls; $j++) {
+                    //Se obtienen las sumas de las posiciones
+                    $minSum = $sum -> minMaxSumRange ($i, $j) [0];
+                    $maxSum = $sum -> minMaxSumRange ($i, $j) [1];
+                    //Se obtiene la suma de las posiciones
+                    $sumArray = $sum -> sumArray($numbers, $i, $j);
+
+                    //Se obtiene el color del texto
+                    if($sumArray < $minSum || $sumArray > $maxSum) {
+                        $textcolorsum = 'danger';
+                    } else {
+                        $textcolorsum = 'success';
+                    }
+
+                    $html .= '<div class="col-4 bg-warning border"><b>Suma</b> ('. $i . '° y ' . $j .'°) (' . $minSum . ', ' . $maxSum . ')<br><p class="text-' . $textcolorsum . '">' . $sumArray .  '</p></div>';
+                }
+            }               
                    
             $html .= '</div>';
             $html .= '</div>';
@@ -213,6 +238,10 @@
                     //Se prueba la diferencia de las jugadas
                     $case = new DiffClass($test, $conn, $balls, $numbers);
                     $test = $case -> diffPlaysCalculation();
+
+                    //Se prueba la suma de las posiciones de los números
+                    $case = new PartialSumClass ($test, $conn, $balls, $numbers);
+                    $test = $case -> sumPlaysCalculation();
 
                     if($test){
                         $html = '<div class="mt-3">';
