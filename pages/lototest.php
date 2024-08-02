@@ -256,8 +256,6 @@
                         echo $html;
                     }
 
-                /******************Parámetros de la jugada********************/
-
                 $html = '<div class="mt-3">';
                 $html .= '</div>';
                 echo $html;
