@@ -256,7 +256,7 @@ abstract class LotteryClass {
     /**********************************************************************************************/
 
     //6. CALCULAR EL RANGO DE LAS RESTAS DE UN NUMERO Y OTRO
-
+/*
     protected function number_diff ($down, $up, $conn) {
         $positionArrayDown = $this-> positionCalculation($down, $conn);
         $positionArrayUp = $this-> positionCalculation($up, $conn);
@@ -275,6 +275,7 @@ abstract class LotteryClass {
 
         return $this -> minMaxArray($array);
     }
+        */
 /*
 
     //7. RANGO DE DESVIACION ESTANDAR

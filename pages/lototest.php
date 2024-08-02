@@ -30,6 +30,9 @@
     //Clase para el producto de todos los números
     require "classes/TotalProduct.Class.php";
 
+    //Clase para la diferencia de las jugadas
+    require "classes/Difference.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
@@ -184,6 +187,10 @@
                     //Se prueba el producto total
                     $case = new TotalProduct($test, $numbers, $balls, $conn);
                     $test = $case -> testTotalProduct ();
+
+                    //Se prueba la diferencia de las jugadas
+                    $case = new DiffClass($test, $conn, $balls, $numbers);
+                    $test = $case -> diffPlaysCalculation();
 
                     if($test){
                         $html = '<div class="mt-3">';

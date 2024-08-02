@@ -14,7 +14,7 @@ class PreviousPlaysOut {
     }
 
     //Total de jugadas
-    private function positionCalculation($position) {
+    public function positionCalculation($position) {
         $result = $this -> conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date desc;");
 
         $positionArray = [];
