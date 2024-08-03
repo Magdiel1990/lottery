@@ -36,12 +36,15 @@
     //Clase para la suma de las posiciones de los números
     require "classes/PartialSum.Class.php";
 
+    //Clase de la cantidad de múltiplos
+    require "classes/Multiple.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
     /*****************/    
 ?>
-<main class="container p-4">
+<main class="container-fluid p-4">
     <div class="row justify-content-center text-center mt-4"> 
         <div class="mb-3">
             <a href="<?php echo root . 'loto/agregar';?>" class="btn btn-outline-info">Agregar</a>
@@ -174,7 +177,26 @@
 
                     $html .= '<div class="col-4 bg-warning border"><b>Suma</b> ('. $i . '° y ' . $j .'°) (' . $minSum . ', ' . $maxSum . ')<br><p class="text-' . $textcolorsum . '">' . $sumArray .  '</p></div>';
                 }
-            }               
+            }  
+            
+            //Se prueba la cantidad de múltiplos presentes
+            for ($i = 2; $i <= 20; $i++) {
+                $multiple = new MultipleClass(true, $numbers, $i, $balls, $conn);
+                //Se obtiene el rango de los múltiplos
+                $multipleTotal = $multiple -> multipleTotalCal();
+
+                //Se obtiene el múltiplo
+                $multipleArray = $multiple -> multipleArrayCal($numbers, $i);
+
+                //Se obtiene el color del texto
+                if(!in_array($multipleArray, $multipleTotal)) {
+                    $textcolormul = 'danger';
+                } else {
+                    $textcolormul = 'success';
+                }
+
+                $html .= '<div class="col-4 bg-warning border"><b>Múltiplos de </b>'. $i .' (' . $multipleTotal [0] . ', ' . $multipleTotal [1] . ')<br><p class="text-' . $textcolormul . '">' . $multipleArray .  '</p></div>';
+            }
                    
             $html .= '</div>';
             $html .= '</div>';
@@ -243,6 +265,17 @@
                     $case = new PartialSumClass ($test, $conn, $balls, $numbers);
                     $test = $case -> sumPlaysCalculation();
 
+                    //Se prueba la cantidad de múltiplos presentes
+                    for ($i = 2; $i <= 20; $i++) {
+                        $case = new MultipleClass($test, $numbers, $i, $balls, $conn);
+                        $test = $case -> multipleComparison();
+
+                        if($test == false) {
+                            break;
+                        }
+                    }
+
+                    //Se muestra el resultado
                     if($test){
                         $html = '<div class="mt-3">';
                         $html .= '<h4 class = "text-center text-success">La jugada es probable</h4>';
