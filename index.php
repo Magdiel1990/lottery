@@ -17,7 +17,8 @@ if($param == "") {
         root . "estadistica" => "controllers/statistic.controller.php",
         root . "loto/agregar" => "controllers/Loto.agregar.controller.php",
         root . "loto/test" => "controllers/lototest.controller.php",
-        root . "update" => "controllers/update.controller.php"        
+        root . "update" => "controllers/update.controller.php",
+        root . "create" => "controllers/create.controller.php"            
     ];
 } else {
     $routes = [
