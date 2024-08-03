@@ -48,6 +48,18 @@ class MultipleClass {
         return $multipleArray;        
     }
 
+    //Minimo y maximo de multiplos
+    public function minMaxMultiple() {
+        //Array de multiplos
+        $multipleArray = $this -> multipleTotalCal();
+
+        //Minimo y maximo de multiplos
+        $min = min($multipleArray);
+        $max = max($multipleArray);
+
+        return [$min, $max];
+    }
+
     //Comparacion de multiplos
     public function multipleComparison() {
         //Array de multiplos

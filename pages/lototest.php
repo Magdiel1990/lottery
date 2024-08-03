@@ -37,12 +37,12 @@
     require "classes/PartialSum.Class.php";
 
     //Clase de la cantidad de múltiplos
-    require "classes/Multiple.Class.php";
+    require "classes/Multiple.Class.php";    
 
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
-    /*****************/    
+    /*****************/  
 ?>
 <main class="container-fluid p-4">
     <div class="row justify-content-center text-center mt-4"> 
@@ -185,6 +185,8 @@
                 //Se obtiene el rango de los múltiplos
                 $multipleTotal = $multiple -> multipleTotalCal();
 
+                $minMax = $multiple -> minMaxMultiple(); //Se obtiene el mínimo y el máximo de los múltiplos
+
                 //Se obtiene el múltiplo
                 $multipleArray = $multiple -> multipleArrayCal($numbers, $i);
 
@@ -195,7 +197,7 @@
                     $textcolormul = 'success';
                 }
 
-                $html .= '<div class="col-4 bg-warning border"><b>Múltiplos de </b>'. $i .' (' . $multipleTotal [0] . ', ' . $multipleTotal [1] . ')<br><p class="text-' . $textcolormul . '">' . $multipleArray .  '</p></div>';
+                $html .= '<div class="col-4 bg-warning border"><b>Múltiplos de </b>'. $i .' (' . $minMax [0] . ', ' . $minMax [1] . ')<br><p class="text-' . $textcolormul . '">' . $multipleArray .  '</p></div>';
             }
                    
             $html .= '</div>';
