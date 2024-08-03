@@ -3,6 +3,9 @@
 require("classes/Database.Class.php");
 $conn = DatabaseClassLoto::dbConnection();
 
+//Initiate the session
+session_start();
+
 //Receive date
 if(isset($_GET["date"])) {
     $date = $_GET["date"];
