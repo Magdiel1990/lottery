@@ -3,6 +3,9 @@
 require("classes/Database.Class.php");
 $conn = DatabaseClassLoto::dbConnection();
 
+//Require the class to insert the numbers
+require("classes/StoredNumbersQuery.Class.php");
+
 //Initiate the session
 session_start();
 
@@ -13,13 +16,11 @@ if(isset($_POST['numbers'])) {
     //Se ordenan las jugadas
     sort($numbers);
 
-    $numbers = implode (' ', $numbers);
+    //Se insertan los datos de la jugada de manera provisional
+    $stored = new StdInsertQuery ($numbers, $conn);
+    $stored -> insertQueryConfirm (); //Se insertan los números en la base de datos
 
-    //Se almacena la jugada en la base de datos
-    $stmt = $conn -> prepare("INSERT INTO `stored` (numbers) VALUES (?)");
-    $stmt->bind_param("s", $numbers);
-
-    if($stmt->execute()) {
+    if($stored) {
         $_SESSION ["message"] = "Jugada almacenada correctamente";
         $_SESSION ["message-alert"] = "success";
 
@@ -31,11 +32,6 @@ if(isset($_POST['numbers'])) {
         
         header('Location: ' . root . 'loto/test');
         exit;
-    }
-
-
-
-   
+    }  
 }
-
 ?>
