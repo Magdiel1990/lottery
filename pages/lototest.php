@@ -47,6 +47,7 @@
 <main class="container-fluid p-4">
     <div class="row justify-content-center text-center mt-4"> 
         <?php
+        //Si se ha enviado un mensaje
             if(isset($_SESSION ["message"])){
                 $html = '<div class="mt-3">';
                 $html .= '<h4 class = "text-center text-'. $_SESSION ["message-alert"] .'">' . $_SESSION ["message"] . '</h4>';
@@ -221,6 +222,7 @@
         </div>
 
         <?php
+        /*
         //Si se han enviado los números
         if(isset($_POST["numbers"])){
             //Se recibe la jugada
@@ -308,6 +310,7 @@
                 }
             }
         }    
+        */
         ?>
     </div>
 </main>

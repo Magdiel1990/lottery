@@ -9,6 +9,10 @@ session_start();
 if(isset($_POST['numbers'])) {
     //Se recibe la jugada y se conviete en string separado por espacio
     $numbers = $_POST['numbers'];   
+
+    //Se ordenan las jugadas
+    sort($numbers);
+
     $numbers = implode (' ', $numbers);
 
     //Se almacena la jugada en la base de datos
