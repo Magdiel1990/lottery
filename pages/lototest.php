@@ -139,7 +139,7 @@
             for ($i = 0; $i < count($numbers); $i++) {
                 $html .= '<span class="mx-1">' . $numbers[$i] . '</span>';
             }                        
-            $html .= '<a href="' . root . 'delete?storedId=' . $row ['id']. '" class="text-danger mx-2" id="del">Eliminar</a>';
+            $html .= '<a href="' . root . 'delete?storedId=' . $row ['id']. '" class="text-danger mx-2 del">Eliminar</a>';
             $html .= '<div class="row my-4">';
             $html .= '<div class="col-4 bg-warning border"><b>Promedio</b> (' . round($rangeAvg[0], 2) . ', ' . round ($rangeAvg[1], 2) . ') <br><p class="text-' .  $textcoloraverage .'">' . round($average, 2) . '</p></div>';
             $html .= '<div class="col-4 bg-warning border"><b>Desv. Est.</b> (' . round($stdDevTotal[0], 2) . ', ' . round ($stdDevTotal[1], 2) . ') <br><p class="text-' .  $textcolordev .'">' . round($stdDevArray, 2) . '</div>';
@@ -309,15 +309,18 @@
     </div>
 </main>
 <script>
-    var deleteButton = document.getElementById('del');
+    var deleteButtons = document.getElementsByClassName('del');
 
-    deleteButton.addEventListener('click', function() {
-        var confirmDelete = confirm('¿Estás seguro de que deseas eliminar esta jugada?');
+    for (var i = 0; i < deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener('click', function(event) {
+            var confirmDelete = confirm('¿Estás seguro de que deseas eliminar esta jugada?');
 
-        if(!confirmDelete) {
-            event.preventDefault();
-        }
-    });    
+            if (!confirmDelete) {
+                event.preventDefault();
+            }
+        });
+    }
+</script>
 </script>
 <?php
 //Se cierra la conexión
