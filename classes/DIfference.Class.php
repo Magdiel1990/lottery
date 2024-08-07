@@ -66,8 +66,10 @@ class DiffClass {
         //Se calcula si la diferencia de las jugadas es igual a alguna de las diferencias de las posiciones
         for ($i = 1; $i < $this -> balls; $i++) {
             for ($j = $i + 1; $j <= $this -> balls; $j++) {
+                $diffArray = $this -> diffArray($this -> numbers, $i, $j);
+                $minMaxDiffRange =  $this -> minMaxDiffRange ($i, $j);
                 //Si la diferencia de las jugadas es igual a alguna de las diferencias de las posiciones
-                if (in_array ($this -> diffArray($this -> numbers, $i, $j), $this -> numbersDiff ($i, $j))) {
+                if ($diffArray < $minMaxDiffRange[0] || $diffArray > $minMaxDiffRange[1]) {
                     $result = false;
                     return $result;
                 }

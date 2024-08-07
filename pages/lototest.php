@@ -37,7 +37,7 @@
     require "classes/PartialSum.Class.php";
 
     //Clase de la cantidad de múltiplos
-    require "classes/Multiple.Class.php";    
+    require "classes/Multiple.Class.php";
 
     //Special Variables
     $top = 40; #Number of numbers to play
@@ -164,10 +164,10 @@
                     } else {
                         $textcolordiff = 'success';
                     }
-
+                    //Se imprime la diferencia de las posiciones
                     $html .= '<div class="col-4 bg-warning border"><b>Dif.</b> ('. $i . '° y ' . $j .'°) (' . $minDiff . ', ' . $maxDiff . ')<br><p class="text-' . $textcolordiff . '">' . $diffArray .  '</p></div>';
                 }
-            }    
+            }            
             
             //Suma de las posiciones de las jugadas
             $sum = new PartialSumClass (true , $conn, $balls, $numbers);
