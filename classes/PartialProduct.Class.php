@@ -1,6 +1,6 @@
 <?php
-//Clase para la diferencia de las jugadas dependiendo de las posición de los números
-class DiffClass {
+//Clase para el producto de las jugadas dependiendo de las posición de los números
+class PartialProductClass {
     private $conn;
     private $balls;
     private $numbers;
@@ -25,53 +25,53 @@ class DiffClass {
         return [$positionArrayDown, $positionArrayUp];
     }
     
-    //Diferencia de los números
-    private function numbersDiff ($down, $up) {
+    //producto de los números
+    private function numbersProduct ($down, $up) {
         //Se obtienen las posiciones de los números
         $positionArrayDown = $this-> numbersPosition ($down, $up) [0];
         $positionArrayUp = $this-> numbersPosition ($down, $up) [1];
 
-        $positionDiferences = [];
-        //Se calcula la diferencia de las posiciones
+        $positionPro = [];
+        //Se calcula el producto de las posiciones
         for($i = 0; $i < count($positionArrayDown); $i++) {
-            $positionDiferences [] = abs($positionArrayUp[$i] - $positionArrayDown[$i]);
+            $positionPro [] = $positionArrayUp[$i] * $positionArrayDown[$i];
         }
-        //Se retorna la diferencia de las posiciones
-        return $positionDiferences;
+        //Se retorna el producto de las posiciones
+        return $positionPro;
     }   
 
-    //Diferencia de los números de un array
-    public function diffArray($array, $down, $up) {
+    //producto de los números de un array
+    public function productArray($array, $down, $up) {
         $firstPosition = $array[$down - 1];
         $secondPosition = $array[$up - 1];
 
-        return abs($firstPosition - $secondPosition);
+        return $firstPosition * $secondPosition;
     }
 
-    //Rango de las diferencias
-    public function minMaxDiffRange ($down, $up) {
-        $minMaxArray = $this -> numbersDiff ($down, $up);
+    //Rango de las productos
+    public function minMaxProRange ($down, $up) {
+        $minMaxArray = $this -> numbersProduct ($down, $up);
 
         return [min($minMaxArray), max($minMaxArray)];
     }
 
-    //Comparación de las diferencias
-    public function diffPlaysCalculation () {
+    //Comparación de los productos
+    public function productPlaysCalculation() {
         //Se verifica el filtro anterior
         if($this -> test == false) {
             return false;
         }
         
         $result = true;
-        //Se calcula si la diferencia de las jugadas es igual a alguna de las diferencias de las posiciones
+        //Se calcula si el producto de las jugadas es igual a alguna de los productos de las posiciones
         for ($i = 1; $i < $this -> balls; $i++) {
             for ($j = $i + 1; $j <= $this -> balls; $j++) {
-                //Se obtiene la diferencia de las jugadas
-                $diffArray = $this -> diffArray($this -> numbers, $i, $j);
-                //Se obtiene el rango de las diferencias
-                $minMaxDiffRange =  $this -> minMaxDiffRange ($i, $j);
-                //Si la diferencia de las jugadas es igual a alguna de las diferencias de las posiciones
-                if ($diffArray < $minMaxDiffRange[0] || $diffArray > $minMaxDiffRange[1]) {
+                //Se obtiene el producto de las jugadas
+                $productArray = $this -> productArray($this -> numbers, $i, $j);
+                //Rango de los productos
+                $minMaxProRange = $this -> minMaxProRange ($i, $j);
+                //Si el producto de las jugadas es igual a alguna de los productos de las posiciones
+                if ($productArray < $minMaxProRange [0] || $productArray > $minMaxProRange [1]) {
                     $result = false;
                     return $result;
                 }

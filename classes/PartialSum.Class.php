@@ -66,8 +66,12 @@ class PartialSumClass {
         //Se calcula si la diferencia de las jugadas es igual a alguna de las diferencias de las posiciones
         for ($i = 1; $i < $this -> balls; $i++) {
             for ($j = $i + 1; $j <= $this -> balls; $j++) {
+                //Suma de los números
+                $sumArray = $this -> sumArray($this -> numbers, $i, $j);
+                //Rango de las sumas
+                $minMaxSumRange= $this -> minMaxSumRange ($i, $j);
                 //Si la diferencia de las jugadas es igual a alguna de las diferencias de las posiciones
-                if (in_array ($this -> sumArray($this -> numbers, $i, $j), $this -> numbersSum ($i, $j))) {
+                if ($sumArray < $minMaxSumRange[0] || $sumArray > $minMaxSumRange[1]) {
                     $result = false;
                     return $result;
                 }

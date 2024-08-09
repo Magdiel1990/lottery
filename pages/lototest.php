@@ -39,6 +39,9 @@
     //Clase de la cantidad de múltiplos
     require "classes/Multiple.Class.php";
 
+    //Clase para el producto de las posiciones de los números
+    require "classes/PartialProduct.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
@@ -188,6 +191,32 @@
                     }
 
                     $html .= '<div class="col-4 bg-warning border"><b>Suma</b> ('. $i . '° y ' . $j .'°) (' . $minSum . ', ' . $maxSum . ')<br><p class="text-' . $textcolorsum . '">' . $sumArray .  '</p></div>';
+                }
+            } 
+
+
+            ///Debug
+
+            /**************************************** */
+            //Se prueba los productos de las posiciones de las jugadas
+            $pro = new PartialProductClass (true , $conn, $balls, $numbers);
+
+            for ($i = 1; $i < $balls; $i++) {
+                for ($j = $i + 1; $j <= $balls; $j++) {
+                    //Se obtienen los productos de las posiciones
+                    $minPro = $pro -> minMaxProRange ($i, $j) [0];
+                    $maxPro = $pro -> minMaxProRange ($i, $j) [1];
+                    //Se obtiene el producto de las posiciones
+                    $productArray = $pro -> productArray($numbers, $i, $j);
+
+                    //Se obtiene el color del texto
+                    if($productArray < $minPro || $productArray > $maxPro) {
+                        $textcolorpro = 'danger';
+                    } else {
+                        $textcolorpro = 'success';
+                    }
+
+                    $html .= '<div class="col-4 bg-warning border"><b>Productos</b> ('. $i . '° y ' . $j .'°) (' . $minPro . ', ' . $maxPro . ')<br><p class="text-' . $textcolorpro . '">' . $productArray .  '</p></div>';
                 }
             }  
             
