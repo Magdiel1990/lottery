@@ -45,6 +45,9 @@
     //Clase para el producto o suma de los números pares e impares
     require "classes/OddEvenOpe.Class.php";
 
+    //Clase para la diferencia total de las jugadas
+    require "classes/TotalDifference.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
@@ -301,7 +304,24 @@
             $html .= '<div class="col-4 bg-warning border"><b>Producto números pares</b> (' . $maxMinEvenProduct [0] . ' y ' . $maxMinEvenProduct [1] . ')<br><p class="text-' . $textcolorproEven . '">' . $evenPro .  '</p></div>';
 
             $html .= '<div class="col-4 bg-warning border"><b>Producto números impares </b>(' . $maxMinOddProduct [0] . ' y ' . $maxMinOddProduct [1] . ')<br><p class="text-' . $textcolorproOdd . '">' . $oddPro .  '</p></div>';
+            
+                     
+            //Se prueba la diferencia total de las jugadas
+            $totalDiff = new TotalDifference (true, $conn, $numbers, $balls);
+            //Se obtiene el rango de las diferencias totales
+            $maxMinTotalDifference = $totalDiff -> maxMinTotalDifference();
+            //Se obtiene la diferencia total de la jugada
+            $arrayDifference = $totalDiff -> arrayDifference($numbers);
 
+            //Se obtiene el color del texto            
+            if($arrayDifference < $maxMinTotalDifference[0] || $arrayDifference > $maxMinTotalDifference[1]) {
+                $textcolortotalDiff = 'danger';
+            } else {
+                $textcolortotalDiff = 'success';
+            }
+
+            $html .= '<div class="col-4 bg-warning border"><b>Dif. Total</b> (' . $maxMinTotalDifference[0] . ', ' . $maxMinTotalDifference[1] . ')<br><p class="text-' . $textcolortotalDiff . '">' . $arrayDifference .  '</p></div>';
+            
             $html .= '</div>';
             $html .= '</div>';
             $html .='</div>';
