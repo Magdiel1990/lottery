@@ -53,7 +53,7 @@
     $balls = 6; #Number of balls
     /*****************/  
 ?>
-<main class="container-fluid p-4">
+<main class="container p-2">
     <div class="row justify-content-center text-center mt-4"> 
         <?php
         //Si se ha enviado un mensaje
