@@ -57,7 +57,7 @@ class OddEvenOpeClass {
     }
 
     //Suma de los números pares e impares
-    public function oddEvenTotalSums () {
+    private function oddEvenTotalSums () {
         //Total de jugadas
         $totalNumbers = new PreviousPlaysOut($this -> test, $this -> conn, $this -> balls, $this -> numbers);        
         $totalNumbers = $totalNumbers -> totalNumbers(); 
@@ -114,7 +114,7 @@ class OddEvenOpeClass {
     }
 
     //Producto de los números pares e impares
-    public function oddEvenTotalProduct () {
+    private function oddEvenTotalProduct () {
         //Total de jugadas
         $totalNumbers = new PreviousPlaysOut($this -> test, $this -> conn, $this -> balls, $this -> numbers);        
         $totalNumbers = $totalNumbers -> totalNumbers(); 
@@ -172,7 +172,7 @@ class OddEvenOpeClass {
     }
 
     //Comprobación de los productos de números pares e impares
-    public function oddEvenProductsCalculation() {
+    private function oddEvenProductsCalculation() {
         //Producto de los números pares e impares
         $oddEvenTotalProduct = $this -> oddEvenTotalProduct (); //[$oddProduct, $evenProduct]
 
@@ -194,7 +194,7 @@ class OddEvenOpeClass {
     }
 
     //Comprobación de las sumas de los números pares e impares
-    public function oddEvenSumsCalculation() {
+    private function oddEvenSumsCalculation() {
         //Suma de los números pares e impares
         $oddEvenTotalSums = $this -> oddEvenTotalSums (); //[$oddSum, $evenSum]
 
