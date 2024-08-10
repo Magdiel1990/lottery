@@ -42,6 +42,9 @@
     //Clase para el producto de las posiciones de los números
     require "classes/PartialProduct.Class.php";
 
+    //Clase para el producto o suma de los números pares e impares
+    require "classes/OddEvenOpe.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
@@ -194,10 +197,6 @@
                 }
             } 
 
-
-            ///Debug
-
-            /**************************************** */
             //Se prueba los productos de las posiciones de las jugadas
             $pro = new PartialProductClass (true , $conn, $balls, $numbers);
 
@@ -240,7 +239,69 @@
 
                 $html .= '<div class="col-4 bg-warning border"><b>Múltiplos de </b>'. $i .' (' . $minMax [0] . ', ' . $minMax [1] . ')<br><p class="text-' . $textcolormul . '">' . $multipleArray .  '</p></div>';
             }
-                   
+            
+            //Se prueba la suma de los números pares e impares
+            $sumOddEven = new OddEvenOpeClass (true, $conn, $balls, $numbers);
+            //Se obtiene el rango de las sumas de los números impares
+            $oddSum = $sumOddEven -> oddEvenSums($numbers) [0];
+            //Se obtiene el rango de las sumas de los números pares
+            $evenSum = $sumOddEven -> oddEvenSums($numbers) [1];
+
+            //Rango de las sumas de los números impares
+            $maxMinOddSums = $sumOddEven -> maxMinOddSums ();
+
+            //Rango de las sumas de los números pares
+            $maxMinEvenSums = $sumOddEven -> maxMinEvenSums ();
+
+            //Se obtiene el color del texto impar
+            if($oddSum < $maxMinOddSums [0] || $oddSum > $maxMinOddSums [1]) {
+                $textcolorsumOdd = 'danger';
+            } else {
+                $textcolorsumOdd = 'success';
+            }
+
+            //Se obtiene el color del texto par
+            if($evenSum < $maxMinEvenSums [0] || $evenSum > $maxMinEvenSums [1]) {
+                $textcolorsumEven = 'danger';
+            } else {
+                $textcolorsumEven = 'success';
+            }
+
+            $html .= '<div class="col-4 bg-warning border"><b>Suma números pares</b> (' . $maxMinEvenSums [0] . ' y ' . $maxMinEvenSums [1] . ')<br><p class="text-' . $textcolorsumEven . '">' . $evenSum .  '</p></div>';
+
+            $html .= '<div class="col-4 bg-warning border"><b>Suma números impares </b>(' . $maxMinOddSums [0] . ' y ' . $maxMinOddSums [1] . ')<br><p class="text-' . $textcolorsumOdd . '">' . $oddSum .  '</p></div>';
+
+            //Se prueba el producto de los números pares e impares
+            $proOddEven = new OddEvenOpeClass (true, $conn, $balls, $numbers);
+            //Se obtiene el rango de los productos de los números impares
+            $oddPro = $proOddEven -> oddEvenProducts($numbers) [0];
+            //Se obtiene el rango de los productos de los números pares
+            $evenPro = $proOddEven -> oddEvenProducts($numbers) [1];
+
+            //Rango de los productos de los números impares
+            $maxMinOddProduct = $proOddEven -> maxMinOddProduct ();
+
+            //Rango de los productos de los números pares
+            $maxMinEvenProduct = $proOddEven -> maxMinEvenProduct ();
+
+            //Se obtiene el color del texto impar
+            if($oddPro < $maxMinOddProduct [0] || $oddPro > $maxMinOddProduct [1]) {
+                $textcolorproOdd = 'danger';
+            } else {
+                $textcolorproOdd = 'success';
+            }
+
+            //Se obtiene el color del texto par
+            if($evenPro < $maxMinEvenProduct [0] || $evenPro > $maxMinEvenProduct [1]) {
+                $textcolorproEven = 'danger';
+            } else {
+                $textcolorproEven = 'success';
+            }
+
+            $html .= '<div class="col-4 bg-warning border"><b>Producto números pares</b> (' . $maxMinEvenProduct [0] . ' y ' . $maxMinEvenProduct [1] . ')<br><p class="text-' . $textcolorproEven . '">' . $evenPro .  '</p></div>';
+
+            $html .= '<div class="col-4 bg-warning border"><b>Producto números impares </b>(' . $maxMinOddProduct [0] . ' y ' . $maxMinOddProduct [1] . ')<br><p class="text-' . $textcolorproOdd . '">' . $oddPro .  '</p></div>';
+
             $html .= '</div>';
             $html .= '</div>';
             $html .='</div>';
@@ -249,92 +310,6 @@
         echo $html; //Se imprimen los números insertados
         ?>
         </div>
-
-        <?php
-        /*
-        //Si se han enviado los números
-        if(isset($_POST["numbers"])){
-            //Se recibe la jugada
-            $numbers = $_POST["numbers"];   
-            
-            //Se convierten los números a enteros
-            for($i = 0; $i < count($numbers); $i++) {
-                $numbers[$i] = (int) $numbers[$i];
-            }    
-            
-            sort($numbers); //Se ordenan los números
-
-            //Se verifica que no se repitan los números
-            if(count(array_unique($numbers, SORT_NUMERIC)) < $balls) {
-                $html = '<div class="mt-3">';
-                $html .= '<h4 class = "text-center text-danger">No se pueden repetir los números</h4>';
-                $html .= '</div>';
-                echo $html;                    
-            } else {  
-                //Se prueba el rango
-                $case = new RangeClass($numbers, $conn);
-                $test = $case -> testRange();
-
-                //Se excluyen las jugadas anteriores
-                $case = new PreviousPlaysOut ($test, $conn, $balls, $numbers);
-                $test = $case -> lastNumbersExceptions();           
-
-                //Se prueba la suma total
-                $case = new TotalSum($test, $conn, $numbers);
-                $test = $case -> testTotalSum();               
-
-                //Se prueba el promedio
-                $case = new Average($test, $conn, $numbers, $balls);
-                $test = $case -> averagePastGames();             
-
-                //Se prueba de desviación estándar
-                $case = new StandardDeviation($test, $numbers, $balls, $conn);
-                $test = $case -> StdDev();               
-                
-                //Se prueba el producto total
-                $case = new TotalProduct($test, $numbers, $balls, $conn);
-                $test = $case -> testTotalProduct ();
-
-                //Se prueba la diferencia de las jugadas
-                $case = new DiffClass($test, $conn, $balls, $numbers);
-                $test = $case -> diffPlaysCalculation();
-
-                //Se prueba la suma de las posiciones de los números
-                $case = new PartialSumClass ($test, $conn, $balls, $numbers);
-                $test = $case -> sumPlaysCalculation();
-
-                //Se prueba la cantidad de múltiplos presentes
-                for ($i = 2; $i <= 20; $i++) {
-                    $case = new MultipleClass($test, $numbers, $i, $balls, $conn);
-                    $test = $case -> multipleComparison();
-
-                    if($test == false) {
-                        break;
-                    }
-                }
-
-                //Se muestra el resultado
-                if($test){
-                    $html = '<div class="mt-3">';
-                    $html .= '<h4 class = "text-center text-success">La jugada es probable</h4>';
-                    $html .= '</div>';
-                    echo $html;
-
-                } else {
-                    $html = '<div class="mt-3">';
-                    $html .= '<h4 class = "text-center text-danger">La jugada no es probable</h4>';
-                    $html .= '</div>';
-                    echo $html;
-                }
-
-            $html = '<div class="mt-3">';
-            $html .= '</div>';
-            echo $html;
-                
-            }
-        }    
-        */
-        ?>
     </div>
 </main>
 <script>
