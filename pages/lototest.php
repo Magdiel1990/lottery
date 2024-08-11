@@ -61,7 +61,7 @@
                 $html = '<div class="mt-3">';
                 $html .= '<h4 class = "text-center text-'. $_SESSION ["message-alert"] .'">' . $_SESSION ["message"] . '</h4>';
                 $html .= '</div>';
-
+            
                 echo $html;
                 
                 unset($_SESSION ["message"], $_SESSION ["message-alert"]);
