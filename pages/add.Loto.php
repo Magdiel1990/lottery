@@ -130,7 +130,7 @@ $conn -> close();
                         $html .= '<a class="text-info" href="' . root .'edit?date= ' . $dates[$i] . '">Editar</a></td>';   
                         $html .= '</tr>';            
                     }
-                    echo $html;                           
+                    echo $html;               
                     ?>                       
                     </tbody>
                 </table>                

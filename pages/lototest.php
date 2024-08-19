@@ -48,6 +48,9 @@
     //Clase para la diferencia total de las jugadas
     require "classes/TotalDifference.Class.php";
 
+    //Clase para comparar las jugadas previas
+    require "classes/Previous.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
@@ -81,11 +84,12 @@
                 <input class="btn btn-primary m-2" type="submit" value="Probar">
             </form>
         </div>
-        <div class="overflow">
+       <!-- <div class="overflow"> -->
+        <div>
         <?php
         $result = $conn -> query("SELECT id, numbers FROM `stored`;"); //Se seleccionan los números insertados
                             
-        $html = ''; 
+        $html = '';        
 
         while($row = $result -> fetch_assoc()) {
             $numbers = explode(" ", $row["numbers"]); //Se convierten los números en un array
@@ -94,6 +98,22 @@
             for($i = 0; $i < count($numbers); $i++) {
                 $numbers[$i] = (int) $numbers[$i];
             }    
+
+
+                                
+
+              //test
+
+              $previous = new Previous (true, $conn, $numbers, $balls);
+              $previous = $previous -> previousElementCountArray () ;
+              
+  
+              echo "<pre>";
+            //  var_dump($previous);
+              print_r($previous);
+              echo "</pre>";      
+
+              exit;
 
             //Se calcula el promedio de los números insertados
             $averageClass = new Average (true, $conn, $numbers, $balls); 
