@@ -69,7 +69,7 @@ class Previous {
         return count($previousArrayMerge);
     }
 
-    private function previousElementCount ($element) {
+    public function previousElementCount ($element) {
         //Arreglo de las intersecciones de las jugadas pasadas
         $previousArrayMerge = $this -> previousArrayMerge();
 

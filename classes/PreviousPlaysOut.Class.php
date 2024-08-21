@@ -55,9 +55,40 @@ class PreviousPlaysOut {
         return $totalPosition;
     }
 
+    //Metodo para obtener la interseccion de los arreglos
+    public function previousElementIntersect ($array) {
+        $allPlays = $this -> totalNumbers();
+
+        $previous = [];
+        //Interseccion de los arreglos
+        for ($i = 0; $i < count($allPlays); $i++) {
+            $intersect = array_intersect($array, $allPlays[$i]);
+
+            $previous [] = count($intersect);                
+        }
+        //Retorna el arreglo de las intersecciones
+        return $previous;    
+    }
+
+    //Metodo para obtener frecuencia de la repeticion de un numero
+    public function intersectPosition ($array, $element) {
+        //Interseccion de los arreglos
+        $previous = $this -> previousElementIntersect ($array);
+
+        $count = 0;
+        
+        //Contar las veces que se repite un numero  
+        for ($i = 0; $i < count($previous); $i++) {
+            if ($previous[$i] == $element) {
+                $count += 1;
+            }           
+        }               
+
+        return $count;
+    }
+
+    //Excepciones de las ultimas jugadas
     public function lastNumbersExceptions() {
-        //Jugada actual
-        $arrayNumbers = $this-> numbers;
         //Todas las jugadas
         $totalNumbers = $this-> totalNumbers(); 
         
@@ -68,7 +99,7 @@ class PreviousPlaysOut {
 
         foreach ($totalNumbers as $subArray) {
             //Si la jugada actual es igual a alguna de las jugadas anteriores
-            if($subArray == $arrayNumbers) {
+            if($subArray == $this-> numbers) {
                 $return = false;   
                 break;     
             } else {

@@ -99,22 +99,6 @@
                 $numbers[$i] = (int) $numbers[$i];
             }    
 
-
-                                
-
-              //test
-
-              $previous = new Previous (true, $conn, $numbers, $balls);
-              $previous = $previous -> previousElementCountArray () ;
-              
-  
-              echo "<pre>";
-            //  var_dump($previous);
-              print_r($previous);
-              echo "</pre>";      
-
-              exit;
-
             //Se calcula el promedio de los números insertados
             $averageClass = new Average (true, $conn, $numbers, $balls); 
             //Se obtiene el promedio
@@ -152,7 +136,7 @@
             $textcolorsum = ($sumArray < $sumTotal[0] || $sumArray > $sumTotal[1] ? "danger" : "success");
 
             //Se excluyen las jugadas anteriores
-            $previous = new PreviousPlaysOut (true, $conn, $balls, $numbers);
+       /*     $previous = new PreviousPlaysOut (true, $conn, $balls, $numbers);
             $previous = $previous -> lastNumbersExceptions();
             //Se obtiene el color del texto y el resultado
             if($previous == false) {    
@@ -161,7 +145,7 @@
             } else {
                 $previousPlaysResult = 'No se ha jugado';
                 $previousPlays = 'success';               
-            }               
+            }               */
 
             $html .= '<div class="card my-2 mx-md-2" style="min-width: 12rem;">';
             $html .= '<div class="card-body">';
@@ -174,7 +158,40 @@
             $html .= '<div class="col-4 bg-warning border"><b>Desv. Est.</b> (' . round($stdDevTotal[0], 2) . ', ' . round ($stdDevTotal[1], 2) . ') <br><p class="text-' .  $textcolordev .'">' . round($stdDevArray, 2) . '</div>';
             $html .= '<div class="col-4 bg-warning border"><b>Producto</b> (' . round($productTotal[0], 2) . ', ' . round ($productTotal[1], 2) . ') <br><p class="text-' .  $textcolorpro .'">' . round($productArray, 2) . '</p></div>';
             $html .= '<div class="col-4 bg-warning border"><b>Suma</b> (' . round($sumTotal[0], 2) . ', ' . round ($sumTotal[1], 2) . ') <br><p class="text-' .  $textcolorsum .'">' . round($sumArray, 2) . '</p></div>';
-            $html .= '<div class="col-4 bg-warning border"><b>Anteriores</b><br><p class="text-' .  $previousPlays .'">' . $previousPlaysResult .  '</p></div>';
+            
+            //Instancia de la clase Previous
+            $previous = new PreviousPlaysOut (true, $conn, $balls, $numbers);
+            $preTotal = new Previous (true, $conn, $numbers, $balls);
+
+            //Se obtienen todas las jugadas
+            $totalNumbersCount = count($previous -> totalNumbers()); 
+
+            //Se obtienen todas las intersecciones de las jugadas anteriores
+            $preTotalCount = $preTotal -> totalIntersect ();
+
+            //Se obtiene la cantidad de numeros comunes con jugadas anteriores
+            for($i = 0; $i <= $balls; $i++) {
+                /******************Total percentage****************** */
+                $previousPlaysResult = $preTotal -> previousElementCount ($i);
+            
+                $percentageTotal = round (($previousPlaysResult / $preTotalCount) * 100); //Se obtiene el porcentaje de la cantidad de veces que se repite un número
+
+                 /******************Play percentage****************** */
+            //Se obtiene la cantidad de veces que se repite un número
+                $intersect = $previous -> intersectPosition ($numbers, $i);
+
+                //Se obtiene el porcentaje de la cantidad de veces que se repite un número
+                $percentage = round(($intersect / $totalNumbersCount) * 100); //Se obtiene el porcentaje de la cantidad de veces que se repite un número
+
+                //Calculo de los colores
+                if($percentage > $percentageTotal) {
+                    $textcolor = 'danger';
+                } else {
+                    $textcolor = 'success';
+                }
+
+                $html .= '<div class="col-4 bg-warning border"><b>' . $i . ' número común</b><br><p class="text-'. $textcolor .'">' . $percentage .  '% [' . $percentageTotal . '%]</p></div>';
+            }                
 
             //Diferencia de las posiciones de las jugadas
             $diff = new DiffClass(true , $conn, $balls, $numbers);
