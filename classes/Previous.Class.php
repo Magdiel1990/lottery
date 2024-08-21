@@ -68,7 +68,7 @@ class Previous {
 
         return count($previousArrayMerge);
     }
-
+    //Metodo para contar las veces que se repite un numero
     public function previousElementCount ($element) {
         //Arreglo de las intersecciones de las jugadas pasadas
         $previousArrayMerge = $this -> previousArrayMerge();
@@ -84,7 +84,6 @@ class Previous {
 
         return $count;
     }
-
     //Arreglo de las veces que se repite un numero
     public function previousElementCountArray () {
         $elementRepArray = [];
