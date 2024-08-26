@@ -24,7 +24,8 @@ if($param == "") {
     $routes = [
         root . "delete" => "controllers/delete.controller.php",
         root . "reset" => "controllers/reset.controller.php",
-        root . "edit" => "controllers/edit.controller.php"
+        root . "edit" => "controllers/edit.controller.php",
+        root . "update" => "controllers/update.controller.php"
     ];
 }
 
