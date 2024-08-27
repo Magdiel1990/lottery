@@ -51,6 +51,9 @@
     //Clase para comparar las jugadas previas
     require "classes/Previous.Class.php";
 
+    //Clase para llevar de string a array
+    require "classes/StringArray.Class.php";
+
     //Special Variables
     $top = 40; #Number of numbers to play
     $balls = 6; #Number of balls
@@ -92,12 +95,8 @@
         $html = '';        
 
         while($row = $result -> fetch_assoc()) {
-            $numbers = explode(" ", $row["numbers"]); //Se convierten los números en un array
-
-             //Se convierten los números a enteros
-            for($i = 0; $i < count($numbers); $i++) {
-                $numbers[$i] = (int) $numbers[$i];
-            }    
+            $strArr = new StringArray($row["numbers"]); //Se convierte la cadena en un array
+            $numbers = $strArr -> stringtoArray();
 
             //Se calcula el promedio de los números insertados
             $averageClass = new Average (true, $conn, $numbers, $balls); 
