@@ -5,6 +5,9 @@ require "partials/head.php";
 //Se requiere el archivo nav.php para mostrar la barra de navegación
 require "partials/nav.php";
 
+//Clase para llevar de array a string
+require "classes/StringArray.Class.php";
+
 //Special Variables
 $top = 40;
 $balls = 6;
@@ -16,22 +19,26 @@ require "classes/Interface.Class.php";
 if(isset($_POST["numbers"])){
     $numbers = $_POST["numbers"];
     $date = $_POST["date"];
-    $result = $conn -> query("SELECT id FROM numbers WHERE date = '$date';"); 
+    //Se verifica si la jugada ya existe
+    $result = $conn -> query("SELECT id FROM `bid` WHERE date = '$date';"); 
 
     if($result -> num_rows == 0) {
+        //Si no existe se verifica que no haya números repetidos
         $numbersSorted = array_unique($numbers, SORT_NUMERIC);
         
+        //Si no hay números repetidos se agregan a la base de datos
         if(count($numbersSorted) === count($numbers)) {    
-
+            //Se ordenan los números
             sort($numbers);
 
-            $sql = "";
+            //Se convierten los números en un string
+            $stringArray = new StringArray();
+            $numbers = $stringArray -> arrayToString($numbers);
 
-            for($i = 0; $i < count($numbers); $i++) {
-                $sql .= "INSERT INTO numbers (number, position, date) VALUES ('" . $numbers[$i] . "', " . $i+1 . ", '$date');";
-            }
+            //Se crea la consulta
+            $sql = "INSERT INTO `bid` (`numbers`, `date`) VALUES ('" . $numbers . "', '" . $date . "');";
 
-            if($conn -> multi_query($sql)) {
+            if($conn -> query($sql)) {
                 $_SESSION ["message"] = "Números agregados con éxito";
                 $_SESSION ["message-alert"] = "success";
             } else {
@@ -85,7 +92,7 @@ $conn -> close();
         </div>
         <?php
             $conn = DatabaseClassLoto::dbConnection();
-            $result = $conn -> query("SELECT id FROM numbers LIMIT 1;");
+            $result = $conn -> query("SELECT id FROM `bid` LIMIT 1;");
 
             if ($result -> num_rows > 0) {   
         ?>
@@ -102,30 +109,32 @@ $conn -> close();
                     }
                     $html .= '<th class="text-center" scope="col">Acciones</th>';
                     $html .= '</tr>';
-            
-                    echo $html;
                     ?>                            
                     </thead>
                     <tbody>
                     <?php 
-                    $resultDate = $conn -> query("SELECT DISTINCT date FROM numbers ORDER BY date desc;");
+                    //Se obtienen las fechas de la base de datos
+                    $stringArray = new StringArray();
+                    $dates = $stringArray -> datesArray();
 
-                    $dates = [];
-            
-                    while($rowDate = $resultDate -> fetch_assoc()) {
-                        $dates[] = $rowDate ["date"];
-                    }
-            
-                    $html = '';
-            
+                    //Se muestran los números            
                     for($i=0; $i < count($dates); $i++) {                  
                         $html .= '<tr>';
                         $html .= '<th scope="row" style="width: 150px; display: block;">' . date("d-M-Y", strtotime($dates[$i])) . '</th>';
-                        
-                        $resultNumbers = $conn -> query("SELECT number FROM numbers WHERE date = '". $dates[$i] ."';");
-                        while($rowNumbers =  $resultNumbers -> fetch_assoc()) {                        
-                            $html .= "<td>" . $rowNumbers ["number"] . "</td>";                      
+                        //Se obtienen los números de la base de datos
+                        $resultNumbers = $conn -> query("SELECT numbers FROM `bid` WHERE date = '". $dates[$i] ."';");
+
+                        while($rowNumbers =  $resultNumbers -> fetch_assoc()) { 
+                            //Se convierten los números en un array
+                            $number = $stringArray -> stringtoArray($rowNumbers ["numbers"]);   
+
+                            //Se muestran los números
+                            for($j=0; $j < count($number); $j++) {
+                                $html .= "<td>" . $number[$j] . "</td>";
+                            }                                      
                         }
+
+                        //Se agregan los botones de eliminar y editar
                         $html .= '<td><a class="text-danger" href="' . root .'delete?date= ' . $dates[$i] . '">Eliminar</a> ';   
                         $html .= '<a class="text-info" href="' . root .'edit?date= ' . $dates[$i] . '">Editar</a></td>';   
                         $html .= '</tr>';            

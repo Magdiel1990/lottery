@@ -95,8 +95,8 @@
         $html = '';        
 
         while($row = $result -> fetch_assoc()) {
-            $strArr = new StringArray($row["numbers"]); //Se convierte la cadena en un array
-            $numbers = $strArr -> stringtoArray();
+            $strArr = new StringArray(); //Se convierte la cadena en un array
+            $numbers = $strArr -> stringtoArray($row["numbers"]);
 
             //Se calcula el promedio de los números insertados
             $averageClass = new Average (true, $conn, $numbers, $balls); 
