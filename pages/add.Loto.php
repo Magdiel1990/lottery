@@ -79,7 +79,7 @@ $conn -> close();
                     <?php
                         //Se crea la interfaz numérica
                         $interface = new NumbersEntriesInterface($balls, $top);
-                        $interface -> createInputs();
+                        echo $interface -> createInputs();
                     ?>                                
                     <div class="row justify-content-center">
                         <div class="col-auto">

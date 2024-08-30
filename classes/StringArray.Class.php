@@ -4,13 +4,17 @@ class StringArray {
     //Se convierte la cadena en un array
     public function stringtoArray($string) {
     //Se convierten los números en un array
-    $numbers = explode(" ", $string);
+        if($string == "") {
+            $numbers = null;
+        } else {
+        $numbers = explode(" ", $string);
 
-    //Se convierten los números a enteros
-        for($i = 0; $i < count($numbers); $i++) {
-            $numbers[$i] = (int) $numbers[$i];
-        }   
-
+        //Se convierten los números a enteros
+            for($i = 0; $i < count($numbers); $i++) {
+                $numbers[$i] = (int) $numbers[$i];
+            }              
+        }
+        
         return $numbers;
     }
 
@@ -18,7 +22,8 @@ class StringArray {
     public function arrayToString ($array) {
         //Variable para guardar la cadena
         $string = "";
-
+        
+        //Se convierten los números en una cadena
         for($i = 0; $i < count($array); $i++) {
             $string .= strval($array[$i]) . " ";
         }
@@ -37,11 +42,29 @@ class StringArray {
 
         $dates = [];
 
+        //Se guardan las fechas en un array
         while($row = $result -> fetch_assoc()) {
             $dates [] = $row ["date"];
         }
 
         return $dates;
+    }
+
+    //Se obtienen los números de una fecha
+    public function getPlays($date) {
+        //Se obtienen los números de la base de datos
+        $conn = DatabaseClassLoto::dbConnection();
+        $result = $conn -> query("SELECT `numbers` FROM `bid` WHERE `date` = '$date';");
+
+        //Si hay números
+        if($result -> num_rows > 0) {            
+            $row = $result -> fetch_assoc();
+            $plays = $row["numbers"];
+        } else {
+            $plays = "";
+        }
+
+        return $plays;
     }
 }
 ?>

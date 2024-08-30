@@ -11,8 +11,8 @@ class NumbersEntriesInterface {
     }
 
     //Metodo para crear los inputs
-    public function createInputs() {
-        $html = '<div class="d-flex flex-row justify-content-center flex-wrap">';
+    public function createInputs($html = "") {
+        $html .= '<div class="d-flex flex-row flex-wrap">';
         //Se crean los inputs para los números
         if($this -> values != null) {
             for($i = 0; $i < $this -> balls; $i++) {
@@ -26,7 +26,7 @@ class NumbersEntriesInterface {
 
         $html .= '</div>';
 
-        echo $html;
+        return $html;
     }
 }
 ?>
