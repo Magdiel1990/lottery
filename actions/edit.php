@@ -8,6 +8,9 @@ require "pages/partials/nav.php";
 //Clase para la interfaz numerica
 require "classes/Interface.Class.php";
 
+//Clase para llevar de strings a arrays
+require "classes/StringArray.Class.php";
+
 //Special Variables
 $balls = 6;
 $top = 40;
@@ -19,32 +22,25 @@ $top = 40;
         //Receive date
         if(isset($_GET["date"])) {
             $html = "";
-            $html .= ' <form action="' . root . 'update" method="POST">';
+            $html .= '<form action="' . root . 'update" method="POST" class="text-center">';
             $html .= '<input type="hidden" name="date" value="'. $_GET["date"] .'">';
             $html .= '<label for="numbers" class="form-label">Números</label>';
-
-            echo $html;
 
             //Receive date
             $date = $_GET["date"];
 
-            //Query to get the numbers
-            $result = $conn -> query ("SELECT `position`, `number` FROM `numbers` WHERE `date` = '$date' ORDER BY `position` ASC;");
+            //Instance of the class to get the string of the play
+            $stringArray = new StringArray();
+            $string = $stringArray -> getPlays($date);
 
-            //If there are numbers
-            if($result -> num_rows > 0) {
-                $plays = [];
-                //Get the numbers
-                while($row = $result -> fetch_assoc()) {
-                    $plays[] = intval($row["number"]);                           
-                }   
+            //Convert the string into an array
+            $plays = $stringArray -> stringtoArray($string);
 
-                //Se crea la interfaz numérica
-                $interface = new NumbersEntriesInterface($balls, $top, $plays);
-                $interface -> createInputs();
-            }
+            //Se crea la interfaz numérica
+            $interface = new NumbersEntriesInterface($balls, $top, $plays);
+            $html = $interface -> createInputs($html);            
         }
-        $html = "";
+
         $html .= '<input class="btn btn-primary m-2" type="submit" value="Editar">';
         $html .= '</form>';
 
