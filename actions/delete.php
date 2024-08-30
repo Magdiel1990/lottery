@@ -3,20 +3,23 @@
 require("classes/Database.Class.php");
 $conn = DatabaseClassLoto::dbConnection();
 
+//Require the class to convert strings to arrays
+require ("classes/StringArray.Class.php");
+
 //Initiate the session
 session_start();
 
 //Eliminar números
 if(isset($_GET["date"])) {
     $date = $_GET["date"];
+    
+    //Instance of the class to get all the data of the play
+    $getAllDataFromPlays = new StringArray();
+    $result = $getAllDataFromPlays -> getAllDataFromPlays($date);
 
-    $stmt = $conn -> prepare("SELECT id FROM numbers WHERE date = ?;");
-    $stmt->bind_param("s", $date);    
-    $stmt -> execute();
-    $result = $stmt -> get_result(); 
-
+    //Check if the date exists
     if($result -> num_rows > 0) {
-        $resultDelete = $conn -> query("DELETE FROM numbers WHERE date = '". $date ."';");
+        $resultDelete = $conn -> query("DELETE FROM `bid` WHERE date = '". $date ."';");
 
         if($resultDelete) {
             $_SESSION ["message"] = "Números eliminados correctamente";

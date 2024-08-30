@@ -31,7 +31,7 @@ $top = 40;
 
             //Instance of the class to get the string of the play
             $stringArray = new StringArray();
-            $string = $stringArray -> getPlays($date);
+            $string = $stringArray -> getNumbers($date);
 
             //Convert the string into an array
             $plays = $stringArray -> stringtoArray($string);

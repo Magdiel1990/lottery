@@ -50,21 +50,23 @@ class StringArray {
         return $dates;
     }
 
-    //Se obtienen los números de una fecha
-    public function getPlays($date) {
+    //Se obtienen todos los datos de una fechas
+    public function getAllDataFromPlays($date) {
         //Se obtienen los números de la base de datos
         $conn = DatabaseClassLoto::dbConnection();
-        $result = $conn -> query("SELECT `numbers` FROM `bid` WHERE `date` = '$date';");
+        $result = $conn -> query("SELECT * FROM `bid` WHERE `date` = '$date';");
 
-        //Si hay números
-        if($result -> num_rows > 0) {            
-            $row = $result -> fetch_assoc();
-            $plays = $row["numbers"];
-        } else {
-            $plays = "";
-        }
+        return $result;     
+    }
 
-        return $plays;
+    //Se obtienen los números de una fecha
+    public function getNumbers($date) {
+        //Se obtienen los números de la base de datos
+        $result = $this -> getAllDataFromPlays ($date);
+        $row = $result -> fetch_assoc();   
+
+        //Se devuelven los números    
+        return $row["numbers"];
     }
 }
 ?>
