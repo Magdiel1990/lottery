@@ -82,7 +82,7 @@
                 <?php
                 //Se crea la interfaz numérica
                 $interface = new NumbersEntriesInterface($balls, $top);
-                $interface -> createInputs();
+                echo $interface -> createInputs();
                 ?>
                 <input class="btn btn-primary m-2" type="submit" value="Probar">
             </form>
