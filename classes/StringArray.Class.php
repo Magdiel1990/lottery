@@ -34,11 +34,19 @@ class StringArray {
         return $string;
     }
 
-    //Se obtiene un array con las fechas
-    public function datesArray() {
+    //Metodo para obtener los datos
+    private function allData($table) {
         //Se obtienen las fechas de la base de datos
         $conn = DatabaseClassLoto::dbConnection();
-        $result = $conn -> query("SELECT `date` FROM `bid` ORDER BY `date` desc;");
+        $result = $conn -> query("SELECT " . $table . " FROM `bid` ORDER BY `date` desc;");
+
+        return $result;        
+    }
+
+    //Se obtiene un array con las fechas
+    public function datesArray() {
+        //Se utiliza la función allData para obtener las fechas
+        $result = $this -> allData("date");
 
         $dates = [];
 
@@ -50,8 +58,25 @@ class StringArray {
         return $dates;
     }
 
+    //Se obtienen los números de una fecha
+    public function getNumbers() {
+        //Se utiliza la función allData para obtener las jugadas
+        $result = $this -> allData("numbers");
+
+        $numbers = [];
+
+        //Se obtienen los números de la base de datos
+        while($row = $result -> fetch_assoc()) {
+            //Se convierten los números en un array
+            $numbers []= $this -> stringtoArray($row["numbers"]);
+        }       
+
+        //Se devuelven los números   
+        return $numbers;         
+    }
+
     //Se obtienen todos los datos de una fechas
-    public function getAllDataFromPlays($date) {
+    public function getAllDataFromDate($date) {
         //Se obtienen los números de la base de datos
         $conn = DatabaseClassLoto::dbConnection();
         $result = $conn -> query("SELECT * FROM `bid` WHERE `date` = '$date';");
@@ -60,7 +85,7 @@ class StringArray {
     }
 
     //Se obtienen los números de una fecha
-    public function getNumbers($date) {
+    public function getNumbersFromDate($date) {
         //Se obtienen los números de la base de datos
         $result = $this -> getAllDataFromPlays ($date);
         $row = $result -> fetch_assoc();   

@@ -13,37 +13,29 @@ Class TotalSum {
     //Array de la suma de todas las jugadas hechas
 
     public function sumsArrayNumbers() {
-        $result = $this -> conn -> query ("SELECT sum(number) AS suma FROM numbers GROUP BY date ORDER BY suma;");
+        //Instancia de la clase StringArray
+        $getNumbers = new StringArray();
+        $numbers = $getNumbers -> getNumbers();
 
+        //Array de las sumas
         $sums = [];
 
-        while($row = $result -> fetch_assoc()) {
-             $sums []  = intval($row ["suma"]);
+        //Se suman los números de cada jugada
+        for($i = 0; $i < count($numbers); $i++) {
+            $sums [] = array_sum($numbers[$i]);
         }
+        //Se ordena el array
+        sort($sums);
 
+        //Se retorna el array de mínimos y máximos de las sumas
         return [min($sums), max($sums)];        
-    }
-    //Suma de los elementos de una jugada
-    public function sumArray($array) {
-        $count = count($array);
-
-        if($count == 0) {
-            return 0;
-        }
-
-        $sum = 0;
-        for($i = 0; $i < $count; $i++) {
-            $sum += $array[$i];
-        }
-
-        return $sum;
     }
 
     public function testTotalSum() {
         //Rango de las sumas
         $sumsRange = $this -> sumsArrayNumbers();
         //Suma de la jugada actual
-        $sum = $this -> sumArray($this -> numbers);
+        $sum = $this -> array_sum($this -> numbers);
         
         //Si no está en el rango anterior
         if($this -> test == false) {

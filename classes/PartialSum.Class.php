@@ -40,12 +40,11 @@ class PartialSumClass {
         return $positionSum;
     }   
 
-    //Diferencia de los números de un array
+    //Suma de los números de un array
     public function sumArray($array, $down, $up) {
-        $firstPosition = $array[$down - 1];
-        $secondPosition = $array[$up - 1];
+        $arrayPos = [$array[$down - 1], $array[$up - 1]];
 
-        return $firstPosition + $secondPosition;
+        return array_sum($arrayPos);
     }
 
     //Rango de las diferencias

@@ -15,14 +15,19 @@ class PreviousPlaysOut {
 
     //Total de jugadas
     public function positionCalculation($position) {
-        $result = $this -> conn -> query ("SELECT number FROM numbers WHERE position = '$position' ORDER BY date desc;");
+        //Instancia de la clase StringArray
+        $getNumbers = new StringArray();
+        $numbers = $getNumbers -> getNumbers();
 
+        //Arreglo de la posición deseada
         $positionArray = [];
 
-        while($row = $result -> fetch_assoc()) {
-            $positionArray[] = intval($row["number"]);
+        //Se obtiene el número de la posición deseada
+        for($i = 0; $i < count($numbers); $i++) {
+            $positionArray [] = $numbers[$i][$position - 1];
         }
 
+        //Se retorna el número de la posición deseada
         return $positionArray;
     }
     

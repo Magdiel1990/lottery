@@ -15,7 +15,7 @@ if(isset($_GET["date"])) {
     
     //Instance of the class to get all the data of the play
     $getAllDataFromPlays = new StringArray();
-    $result = $getAllDataFromPlays -> getAllDataFromPlays($date);
+    $result = $getAllDataFromPlays -> getAllDataFromDate($date);
 
     //Check if the date exists
     if($result -> num_rows > 0) {

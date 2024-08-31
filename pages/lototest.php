@@ -9,6 +9,9 @@
     //Clase para la interfaz numerica
     require "classes/Interface.Class.php";
 
+    //Clase para llevar de string a array
+    require "classes/StringArray.Class.php";
+
     //Clase para las inserciones numéricas en el storages
     require "classes/StoredNumbersQuery.Class.php";
 
@@ -50,9 +53,6 @@
 
     //Clase para comparar las jugadas previas
     require "classes/Previous.Class.php";
-
-    //Clase para llevar de string a array
-    require "classes/StringArray.Class.php";
 
     //Special Variables
     $top = 40; #Number of numbers to play
@@ -126,16 +126,16 @@
             $textcolorpro = ($productArray < $productTotal[0] || $productArray > $productTotal[1] ? "danger" : "success");
 
 
-            //Se calcula la suma total de los números insertados
-            $sum = new TotalSum(true, $conn, $numbers);
-            $sumArray = $sum -> sumArray($numbers);
+            //Se calcula la suma total de los números insertados        
+            $sumArray = array_sum($numbers);
             //Se obtiene el rango de las sumas
+            $sum = new TotalSum(true, $conn, $numbers);
             $sumTotal = $sum -> sumsArrayNumbers();     
             //Se obtiene el color del texto
             $textcolorsum = ($sumArray < $sumTotal[0] || $sumArray > $sumTotal[1] ? "danger" : "success");
 
             //Se excluyen las jugadas anteriores
-       /*     $previous = new PreviousPlaysOut (true, $conn, $balls, $numbers);
+            $previous = new PreviousPlaysOut (true, $conn, $balls, $numbers);
             $previous = $previous -> lastNumbersExceptions();
             //Se obtiene el color del texto y el resultado
             if($previous == false) {    
@@ -144,7 +144,7 @@
             } else {
                 $previousPlaysResult = 'No se ha jugado';
                 $previousPlays = 'success';               
-            }               */
+            }               
 
             $html .= '<div class="card my-2 mx-md-2" style="min-width: 12rem;">';
             $html .= '<div class="card-body">';
@@ -213,7 +213,7 @@
                     $html .= '<div class="col-4 bg-warning border"><b>Dif.</b> ('. $i . '° y ' . $j .'°) (' . $minDiff . ', ' . $maxDiff . ')<br><p class="text-' . $textcolordiff . '">' . $diffArray .  '</p></div>';
                 }
             }            
-            
+                
             //Suma de las posiciones de las jugadas
             $sum = new PartialSumClass (true , $conn, $balls, $numbers);
 
@@ -235,7 +235,7 @@
                     $html .= '<div class="col-4 bg-warning border"><b>Suma</b> ('. $i . '° y ' . $j .'°) (' . $minSum . ', ' . $maxSum . ')<br><p class="text-' . $textcolorsum . '">' . $sumArray .  '</p></div>';
                 }
             } 
-
+            
             //Se prueba los productos de las posiciones de las jugadas
             $pro = new PartialProductClass (true , $conn, $balls, $numbers);
 
